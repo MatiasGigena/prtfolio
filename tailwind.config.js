@@ -7,12 +7,23 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "375px",
+        xsm: "475px"
+      },
+      colors: {
+        black: "#000000",
+        sec: "#ffffff",
+      },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        HKanimate: "url('/huntek/logo-text-animate/W(D).svg')",
+        HKtext: "url('/huntek/logo-text/W(D).svg')",
+        HKGtext: "url('/huntek/logo-text/G(D).svg')",
+        HKlogo: "url('/huntek/logo/W.svg')",
+        HKGlogo: "url('/huntek/logo/G.svg')",
+        Huntek: "url('/huntek/text/W(D).svg')",
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }
