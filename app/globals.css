@@ -65,7 +65,7 @@ transition: all 0.3s linear;
 
 
 .plane:nth-of-type(1) img:nth-of-type(1) {
-  left: 70%;
+  left: 8%;
   top: 70%;
 }
 
@@ -75,7 +75,7 @@ transition: all 0.3s linear;
 }
 
 .plane:nth-of-type(1) img:nth-of-type(3) {
-  left: 40%;
+  left: 20%;
   top: 0%;
 }
 
@@ -87,7 +87,7 @@ transition: all 0.3s linear;
 }
 
 .plane:nth-of-type(2) img:nth-of-type(2) {
-  left: 80%;
+  left: 70%;
   top: 5%;
 }
 
@@ -129,10 +129,10 @@ transition: all 0.3s linear;
 
 .plane2 .image-3 {
   top: 73%;
-  left: 60%;
+  left: 40%;
 }
 .plane2 .image-4 {
-  top: 10%;
+  top: 13%;
   left: 45%;
 }
 
@@ -156,11 +156,11 @@ transition: all 0.3s linear;
 
 .plane2 .image-9 {
   top: 12%;
-  left: 10%;
+  left: 14%;
 }
 .plane2 .image-10 {
   top: 30%;
-  right: 20%;
+  right: 40%;
 }
 .column:nth-of-type(1){
   top: -55%;

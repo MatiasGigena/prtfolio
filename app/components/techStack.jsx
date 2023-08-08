@@ -5,16 +5,6 @@ import { useRef, useEffect } from "react";
 import useDimension from "@/hooks/useDimension";
 const AboutPage = () => {
   const { height } = useDimension();
-  useEffect(() => {
-    (async () => {
-      const LocomotiveScroll = (await import("locomotive-scroll")).default;
-      const locomotiveScroll = new LocomotiveScroll({
-        lenisOptions: {
-          duration: 1,
-        },
-      });
-    })();
-  }, []);
   const ref = useRef(null);
   const myImages = [
     "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg",
