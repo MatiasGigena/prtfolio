@@ -56,20 +56,20 @@ const Aptitudes = () => {
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg"
           alt="JavaScript"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
         />
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg"
           alt="JavaScript"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
         />
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/wordpress/wordpress-plain.svg"
           alt="JavaScript"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
           style={{ filter: "brightness(100) contrast(100)" }}
         />
       </div>
@@ -77,106 +77,106 @@ const Aptitudes = () => {
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg"
           alt="JavaScript"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
         />
-        <Image src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" alt="HTML" width="80" height="80" />
-        <Image src="https://www.vectorlogo.zone/logos/w3_css/w3_css-icon.svg" alt="CSS" width="80" height="80" />
+        <Image src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" alt="HTML" width="70" height="70" />
+        <Image src="https://www.vectorlogo.zone/logos/w3_css/w3_css-icon.svg" alt="CSS" width="70" height="70" />
       </div>
       <div ref={plane3} className="plane">
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/materialui/materialui-plain.svg"
           alt="CSS"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
         />
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg"
           alt="React"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
         />
-        <Image src="https://www.vectorlogo.zone/logos/framer/framer-icon.svg" alt="Framer" width="80" height="80" />
+        <Image src="https://www.vectorlogo.zone/logos/framer/framer-icon.svg" alt="Framer" width="70" height="70" />
       </div>
       <div ref={plane4} className="plane2">
         <Image
           src="/images/greensock-gsap-icon-seeklogo.com.svg"
           alt="Framer"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
           className="image-1"
         />
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg"
           alt="Redux"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
           className="image-2"
         />
 
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-line.svg"
           alt="Next"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
           className="image-3"
         />
         <Image
           src="https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg"
           alt="Node"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
           className="image-4"
         />
 
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg"
           alt="Express"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
           className="image-5"
         />
 
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/sequelize/sequelize-original.svg"
           alt="Sequelize"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
           className="image-6"
         />
 
         <Image
           src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg"
           alt="Tailwind"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
           className="image-7"
         />
         <Image
           src="https://www.vectorlogo.zone/logos/postgresql/postgresql-icon.svg"
           alt="PostgreSQL"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
           className="image-8"
         />
         <Image
           src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg"
           alt="Postman"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
           className="image-9"
         />
         <Image
           src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg"
           alt="GitFlow"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
           className="image-10"
         />
       </div>
       <div className=" w-full h-full flex flex-col justify-center items-center">
         <h1 className="text-4xl text-black">My tech stack</h1>
-        <p className="opacity-80 text-black">Not just front-end.</p>
+        <p className="opacity-70 text-black">Not just front-end.</p>
       </div>
     </div>
   );
