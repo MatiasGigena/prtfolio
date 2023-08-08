@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "gsap";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -33,6 +35,19 @@ const drawerWidth = 240;
 const navItems = ["Home", "About", "Contact"];
 
 const NavBar = () => {
+  const ref = useRef(null)
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to(ref.current, {
+      scrollTrigger: {
+        trigger: document.documentElement,
+        start: 0,
+        end: window.innerHeight,
+        onLeave: () => {gsap.to(ref.current, {scale: 0, duration: 0.25, ease: "power1.out"})},
+        onEnterBack: () => {gsap.to(ref.current, {scale: 1, duration: 0.25, ease: "power1.out"})},
+      }
+    })
+  },[])
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -63,7 +78,7 @@ const NavBar = () => {
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar sx={{ boxShadow: "none", zIndex: "40" }} component="nav">
+        <AppBar ref={ref} sx={{ boxShadow: "none", zIndex: "40" }} component="nav">
           <Toolbar>
             <IconButton
               color="inherit"

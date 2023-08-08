@@ -37,7 +37,7 @@ const Modal = ({ modal, projects }) => {
   },[])
   return (
     <>
-      <motion.div ref={ref} variants={scaleAnimation} initial={"initial"} animate={active ? "open" : "closed"} className="pointer-events-none h-[350px] w-[400px] flex items-center justify-center fixed overflow-hidden">
+      <motion.div ref={ref} variants={scaleAnimation} initial={"initial"} animate={active ? "open" : "closed"} className="pointer-events-none h-[200px] w-[250px]  sm:h-[350px] sm:w-[400px] flex items-center justify-center fixed overflow-hidden">
         <div style={{ top: index * -100 + "%"}} className="h-full w-full absolute animacion ">
           {projects.map((project, index) => {
             const { src, color } = project;

@@ -29,7 +29,7 @@ gsap.to(refs.current, {
     phrase.split(" ").forEach((word, index) => {
       const letters = splitLetters(word);
       body.push(
-        <p className="text-[4vw] xl:text-[4vw] mr-2" key={`word_${index}`}>
+        <p className="text-[4vw] mr-2" key={`word_${index}`}>
           {letters}
         </p>
       );
