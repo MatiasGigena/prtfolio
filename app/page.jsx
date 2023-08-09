@@ -28,9 +28,9 @@ const HomePage = () => {
         isLoading && <Preloader/>
       }
       </AnimatePresence>
-      <LandingPage id="Home"/>
+      <LandingPage />
       <section className="min-h-screen w-full bg-black flex flex-col relative justify-start items-start text-white">
-        <Projects id="About"/>
+        <Projects />
         <div className="bg-sec h-full w-full">
           <AboutPage/>
           <Aptitudes/>

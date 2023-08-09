@@ -41,14 +41,14 @@ const LandingPage = () => {
     xPercent += 0.1 * direction;
   };
   return (
-    <main  className="h-screen bg-black relative overflow-hidden flex ">
+    <main id="Home" className="h-screen bg-black relative overflow-hidden flex ">
       <Image src="/images/portfolio12-removebg.png" fill={true} alt="" priority={true} className="my-image" />
       <div className="sliderContainer">
         <div ref={slider} className=" relative whitespace-nowrap ">
-          <p ref={firstText} className="text-white text-[6rem] pr-8 sm:text-[230px] sm:pr-[50px] m-0 relative font-extralight" style={{textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)"}}>
+          <p ref={firstText} className="text-white text-[6rem] pr-8 sm:text-[230px] sm:pr-[50px] m-0 relative font-thin" style={{textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)"}}>
             Front End Developer -
           </p>
-          <p ref={secondText} className="text-white text-[6rem] pr-8 sm:text-[230px] sm:pr-[50px] top-0 font-extralight absolute left-[100%]">
+          <p ref={secondText} className="text-white text-[6rem] pr-8 sm:text-[230px] sm:pr-[50px] top-0 font-thin absolute left-[100%]">
             Front End Developer -
           </p>
         </div>

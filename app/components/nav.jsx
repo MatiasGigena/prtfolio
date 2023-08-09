@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Magnetic from "./reusable/Magnetic";
 import { gsap } from "gsap";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -35,20 +36,33 @@ const drawerWidth = 240;
 const navItems = ["Home", "About", "Contact"];
 
 const NavBar = () => {
-  const ref = useRef(null)
+  const ref = useRef(null);
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     gsap.to(ref.current, {
       scrollTrigger: {
         trigger: document.documentElement,
         start: 0,
-        end: window.innerHeight,
-        onLeave: () => {gsap.to(ref.current, {scale: 0, duration: 0.25, ease: "power1.out"})},
-        onEnterBack: () => {gsap.to(ref.current, {scale: 1, duration: 0.25, ease: "power1.out"})},
-      }
-    })
-  },[])
+        end: window.innerHeight / 1.25,
+        onLeave: () => {
+          gsap.to(ref.current, { scale: 0, duration: 0.25, ease: "power3.out" });
+        },
+        onEnterBack: () => {
+          gsap.to(ref.current, { scale: 1, duration: 0.25, ease: "power1.out" });
+        },
+      },
+    });
+  }, []);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const handleLinkClick = (targetId) => {
+    const targetElement = document.querySelector(targetId);
+
+    if (targetElement) {
+      const scrollTop = targetElement.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: scrollTop, behavior: "smooth" }); // Usar window.scrollTo directamente
+      handleDrawerToggle(); // Cerrar el menú si se hace clic en un enlace
+    }
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -61,13 +75,11 @@ const NavBar = () => {
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <Link href={`#${item}`} key={item} passHref style={{ textDecoration: "none", color: "inherit" }}>
-              <ListItemButton sx={{ textAlign: "center" }}>
-                <ListItemText primary={item} />
-              </ListItemButton>
-            </Link>
+        {navItems.map((item, index) => (
+          <ListItem key={index} disablePadding>
+            <ListItemButton onClick={() => handleLinkClick(`#${item}`)} sx={{ textAlign: "center" }}>
+              <ListItemText primary={item} />
+            </ListItemButton>
           </ListItem>
         ))}
       </List>
@@ -98,12 +110,12 @@ const NavBar = () => {
               Matías Gigena
             </Typography>
             <Box sx={{ display: { xs: "none", sm: "block" }, color: "white" }}>
-              {navItems.map((item) => (
-                <Link href={`#${item}`} key={item} passHref style={{ textDecoration: "none", color: "inherit" }}>
-                  <Button key={item} sx={{ color: "white" }}>
+              {navItems.map((item, index) => (
+                <Magnetic key={index}>
+                  <Button onClick={() => handleLinkClick(`#${item}`)} sx={{ color: "white" }}>
                     {item}
                   </Button>
-                </Link>
+                </Magnetic>
               ))}
             </Box>
           </Toolbar>
