@@ -59,7 +59,7 @@ const Column = ({ myImages, y = 0 }) => {
       {myImages.map((src, index) => {
         return (
           <div key={index} className="h-full grid  place-items-center w-full relative">
-            <Image src={src} height="100" width="100" alt="logo" className="object-cover" />
+            <Image src={src} height="100" width="100" alt="logo" loading="eager" className="object-cover" />
           </div>
         );
       })}

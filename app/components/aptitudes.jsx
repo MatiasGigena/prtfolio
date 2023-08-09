@@ -58,18 +58,21 @@ const Aptitudes = () => {
           alt="JavaScript"
           width="70"
           height="70"
+          loading="eager"
         />
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg"
           alt="JavaScript"
           width="70"
           height="70"
+          loading="eager"
         />
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/wordpress/wordpress-plain.svg"
           alt="JavaScript"
           width="70"
           height="70"
+          loading="eager"
           style={{ filter: "brightness(100) contrast(100)" }}
         />
       </div>
@@ -79,9 +82,12 @@ const Aptitudes = () => {
           alt="JavaScript"
           width="70"
           height="70"
+          loading="eager"
         />
-        <Image src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" alt="HTML" width="70" height="70" />
-        <Image src="https://www.vectorlogo.zone/logos/w3_css/w3_css-icon.svg" alt="CSS" width="70" height="70" />
+        <Image src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" alt="HTML" width="70" height="70"
+        loading="eager" />
+        <Image src="https://www.vectorlogo.zone/logos/w3_css/w3_css-icon.svg" alt="CSS" width="70" height="70"
+        loading="eager" />
       </div>
       <div ref={plane3} className="plane">
         <Image
@@ -89,14 +95,17 @@ const Aptitudes = () => {
           alt="CSS"
           width="70"
           height="70"
+          loading="eager"
         />
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg"
           alt="React"
           width="70"
           height="70"
+          loading="eager"
         />
-        <Image src="https://www.vectorlogo.zone/logos/framer/framer-icon.svg" alt="Framer" width="70" height="70" />
+        <Image src="https://www.vectorlogo.zone/logos/framer/framer-icon.svg" alt="Framer" width="70" height="70"
+        loading="eager" />
       </div>
       <div ref={plane4} className="plane2">
         <Image
@@ -104,6 +113,7 @@ const Aptitudes = () => {
           alt="Framer"
           width="70"
           height="70"
+          loading="eager"
           className="image-1"
         />
         <Image
@@ -111,6 +121,7 @@ const Aptitudes = () => {
           alt="Redux"
           width="70"
           height="70"
+          loading="eager"
           className="image-2"
         />
 
@@ -119,6 +130,7 @@ const Aptitudes = () => {
           alt="Next"
           width="70"
           height="70"
+          loading="eager"
           className="image-3"
         />
         <Image
@@ -126,6 +138,7 @@ const Aptitudes = () => {
           alt="Node"
           width="70"
           height="70"
+          loading="eager"
           className="image-4"
         />
 
@@ -134,6 +147,7 @@ const Aptitudes = () => {
           alt="Express"
           width="70"
           height="70"
+          loading="eager"
           className="image-5"
         />
 
@@ -142,6 +156,7 @@ const Aptitudes = () => {
           alt="Sequelize"
           width="70"
           height="70"
+          loading="eager"
           className="image-6"
         />
 
@@ -150,6 +165,7 @@ const Aptitudes = () => {
           alt="Tailwind"
           width="70"
           height="70"
+          loading="eager"
           className="image-7"
         />
         <Image
@@ -157,6 +173,7 @@ const Aptitudes = () => {
           alt="PostgreSQL"
           width="70"
           height="70"
+          loading="eager"
           className="image-8"
         />
         <Image
@@ -164,6 +181,7 @@ const Aptitudes = () => {
           alt="Postman"
           width="70"
           height="70"
+          loading="eager"
           className="image-9"
         />
         <Image
@@ -171,6 +189,7 @@ const Aptitudes = () => {
           alt="GitFlow"
           width="70"
           height="70"
+          loading="eager"
           className="image-10"
         />
       </div>
