@@ -6,6 +6,8 @@ import Aptitudes from "./components/aptitudes";
 import Preloader from "./components/preloader";
 import { AnimatePresence } from "framer-motion";
 import AboutPage from "./components/techStack";
+import MaskComponent from "./components/reusable/componentX";
+import MaskComponentY from "./components/reusable/componentY";
 const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
@@ -13,7 +15,7 @@ const HomePage = () => {
       const LocomotiveScroll = (await import("locomotive-scroll")).default;
       const locomotiveScroll = new LocomotiveScroll({
         lenisOptions: {
-          duration: 1,
+          duration: 1.5,
         },
       });
       setTimeout(() => {
@@ -32,8 +34,8 @@ const HomePage = () => {
       <section className="min-h-screen w-full bg-black flex flex-col relative justify-start items-start text-white">
         <Projects />
         <div className="bg-sec h-full w-full">
-          <AboutPage/>
-          <Aptitudes/>
+          <MaskComponent components={[AboutPage]}/>
+          <MaskComponentY components={[Aptitudes]}/>
         </div>
       </section>
     </main>

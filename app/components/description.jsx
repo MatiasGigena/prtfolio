@@ -16,7 +16,7 @@ gsap.to(refs.current, {
   stagger: 0.1,
   scrollTrigger: {
     trigger: container.current,
-    start: () => `top+=${window.innerHeight - 1000}`,
+    start: () => `top+=${window.innerHeight - 1200}`,
     end: `+=${window.innerHeight/ 1.5}`,
     scrub: true,
   }
