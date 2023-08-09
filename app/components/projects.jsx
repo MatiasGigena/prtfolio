@@ -10,21 +10,25 @@ const Projects = () => {
       title: "Huntek",
       color: "#fff",
       src: "https://picsum.photos/1900/1080",
+      link: "https://vercel.com/matiasgigena/pi-food-main-matias-gigena"
     },
     {
       title: "Silencio",
       color: "#8C8C8C",
-      src: "/images/firstproject.jpg",
+      src: "/images/fpro.jpg",
+      link: "https://vercel.com/matiasgigena/pi-food-main-matias-gigena"
     },
     {
       title: "Miralibres",
       color: "#EFE8D3",
       src: "https://picsum.photos/1920/1080",
+      link: "https://vercel.com/matiasgigena/pi-food-main-matias-gigena"
     },
     {
       title: "E-Pay",
       color: "#706D63",
       src: "https://picsum.photos/1920/1080",
+      link: "https://vercel.com/matiasgigena/pi-food-main-matias-gigena"
     },
   ];
   return (
@@ -32,7 +36,7 @@ const Projects = () => {
       <Description />
       <div className="flex flex-col lg:flex-row gap-[55px] lg:gap-[2.5vw] lg:justify-center lg:px-3 xl:gap-12 lg:w-full xl:px-3 xl:mt-20 mt-5 xsm:mt-10 sm:mt-14 md:mt-24">
         {projects.map((project, index) => {
-          return <Project key={index} index={index} title={project.title} setModal={setModal} />;
+          return <Project key={index} index={index} link={project.link} title={project.title} setModal={setModal} />;
         })}
       </div>
       <Modal modal={modal} projects={projects} />
