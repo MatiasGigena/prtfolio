@@ -8,18 +8,21 @@ import { AnimatePresence } from "framer-motion";
 import AboutPage from "./components/techStack";
 import MaskComponent from "./components/reusable/componentX";
 import MaskComponentY from "./components/reusable/componentY";
-const HomePage = () => {
+import MaskTextPhrase from "./components/maskph2";
+  const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     (async () => {
       const LocomotiveScroll = (await import("locomotive-scroll")).default;
       const locomotiveScroll = new LocomotiveScroll({
         lenisOptions: {
-          duration: 1,
+          duration: 2,
         },
       });
       setTimeout(() => {
         setIsLoading(false)
+        document.body.style.cursor = "default"
+        document.body.style.overflowY = "scroll"
       }, 2000)
     })();
   }, []);
@@ -37,6 +40,7 @@ const HomePage = () => {
           <MaskComponent components={[AboutPage]}/>
           <MaskComponentY components={[Aptitudes]}/>
         </div>
+        <MaskComponentY components={[MaskTextPhrase]}/>
       </section>
     </main>
   )

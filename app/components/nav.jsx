@@ -59,8 +59,7 @@ const NavBar = () => {
 
     if (targetElement) {
       const scrollTop = targetElement.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: scrollTop, behavior: "smooth" }); // Usar window.scrollTo directamente
-      handleDrawerToggle(); // Cerrar el menú si se hace clic en un enlace
+      window.scrollTo({ top: scrollTop, behavior: "smooth" }); 
     }
   };
 

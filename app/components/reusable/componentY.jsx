@@ -6,8 +6,9 @@ const MaskComponentY = ({ components }) => {
   const main = useRef(null);
   const isInView = useInView(main, { once: false, margin: "-10%" });
   const animate = {
-    initial: { scale:0, transition: {duration: 1} },
+    initial: { scale:0, opacity:0, transition: {duration: 1} },
     open: (i) => ({
+      opacity: 1,
       scale: 1,
       transition: {
         duration: 1,
@@ -18,7 +19,7 @@ const MaskComponentY = ({ components }) => {
 };
 
   return (
-    <div ref={main}>
+    <div ref={main} className="w-full">
       {components.map((Component, index) => {
         return (
           <div key={index} className="overflow-hidden">
