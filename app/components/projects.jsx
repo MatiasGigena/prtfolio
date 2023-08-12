@@ -32,7 +32,7 @@ const Projects = () => {
     },
   ];
   return (
-    <div id="About" className="flex flex-col mt-5 p-5 sm:mt-14 z-40 gap-10 xl:mb-36 xsm:mt-8 md:py-0 md:px-5 lg:p-0 lg:mt-10 items-start md:mt-24  xl:mt-20 lg:items-center justify-start h-screen ">
+    <div id="Work" className="flex flex-col mt-5 p-5 sm:mt-14 z-40 gap-10 xl:mb-36 xsm:mt-8 md:py-0 md:px-5 lg:p-0 lg:mt-10 items-start md:mt-24  xl:mt-20 lg:items-center justify-start h-screen ">
       <Description />
       <div className="flex flex-col lg:flex-row gap-[55px] lg:gap-[2.5vw] lg:justify-center lg:px-3 xl:gap-12 lg:w-full xl:px-3 xl:mt-20 mt-5 xsm:mt-10 sm:mt-14 md:mt-24">
         {projects.map((project, index) => {

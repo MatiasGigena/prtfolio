@@ -30,7 +30,7 @@ const MaskTextPhrase = () => {
       <h1 className="text-5xl sm:text-7xl">
         About <span className="text-white font-bold">ME.</span>
       </h1>
-      <div className="gap-44 my-24 flex flex-col">
+      <div className="gap-72 my-24 flex flex-col">
         <MaskText phrases={phrases} />
         <MaskText phrases={phrases1} />
         <MaskText phrases={phrases2} />

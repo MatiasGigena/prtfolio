@@ -13,7 +13,11 @@ body {
   position: absolute;
   top: calc(100vh - 290px);
 }
-
+@media screen and (max-width: 1024px) {
+  body {
+    overflow-y: scroll;
+  }
+}
 @media screen and (max-width: 640px) {
   .sliderContainer {
     position: absolute;

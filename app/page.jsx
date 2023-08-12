@@ -9,40 +9,44 @@ import AboutPage from "./components/techStack";
 import MaskComponent from "./components/reusable/componentX";
 import MaskComponentY from "./components/reusable/componentY";
 import MaskTextPhrase from "./components/maskph2";
-  const HomePage = () => {
-  const [isLoading, setIsLoading] = useState(true)
+import NavBar from "./components/nav";
+import MaskComponentXY from "./components/reusable/ComponentXY";
+const HomePage = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [locomotiveScroll, setLocomotiveScroll] = useState(null);
+
   useEffect(() => {
     (async () => {
       const LocomotiveScroll = (await import("locomotive-scroll")).default;
-      const locomotiveScroll = new LocomotiveScroll({
+      const locomotiveScrollInstance = new LocomotiveScroll({
         lenisOptions: {
-          duration: 2,
+          duration: 4,
         },
       });
+      setLocomotiveScroll(locomotiveScrollInstance);
       setTimeout(() => {
-        setIsLoading(false)
-        document.body.style.cursor = "default"
-        document.body.style.overflowY = "scroll"
-      }, 2000)
+        setIsLoading(false);
+        document.body.style.cursor = "default";
+        locomotiveScrollInstance.scrollTo(0, 0);
+      }, 2000);
     })();
   }, []);
+
   return (
     <main>
-      <AnimatePresence mode="wait">
-      {
-        isLoading && <Preloader/>
-      }
-      </AnimatePresence>
+      <AnimatePresence mode="wait">{isLoading && <Preloader />}</AnimatePresence>
+      <NavBar locomotiveScroll={locomotiveScroll} />
       <LandingPage />
       <section className="min-h-screen w-full bg-black flex flex-col relative justify-start items-start text-white">
         <Projects />
         <div className="bg-sec h-full w-full">
-          <MaskComponent components={[AboutPage]}/>
-          <MaskComponentY components={[Aptitudes]}/>
+          <MaskComponent components={[AboutPage]} />
+          <MaskComponentY components={[Aptitudes]} />
         </div>
-        <MaskComponentY components={[MaskTextPhrase]}/>
+        <MaskComponentXY components={[MaskTextPhrase]} />
       </section>
     </main>
-  )
-}
-export default HomePage
+  );
+};
+
+export default HomePage;

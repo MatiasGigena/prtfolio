@@ -33,9 +33,9 @@ const theme = createTheme({
   },
 });
 const drawerWidth = 240;
-const navItems = ["Home", "About", "Contact"];
+const navItems = ["Work", "About", "Contact"];
 
-const NavBar = () => {
+const NavBar = ({ locomotiveScroll }) => {
   const ref = useRef(null);
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -56,10 +56,12 @@ const NavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleLinkClick = (targetId) => {
     const targetElement = document.querySelector(targetId);
-
-    if (targetElement) {
-      const scrollTop = targetElement.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: scrollTop, behavior: "smooth" }); 
+  
+    if (targetElement && locomotiveScroll) {
+      locomotiveScroll.scrollTo(targetElement, {
+        offset: 0,
+        duration: 2,
+      });
     }
   };
 

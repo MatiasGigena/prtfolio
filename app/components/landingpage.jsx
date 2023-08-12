@@ -41,7 +41,7 @@ const LandingPage = () => {
     xPercent += 0.1 * direction;
   };
   return (
-    <main id="Home" className="h-screen bg-black relative overflow-hidden flex ">
+    <main className="h-screen bg-black relative overflow-hidden flex ">
       <Image src="/images/portfolio12-removebg.png" fill={true} alt="" priority={true} className="my-image" />
       <div className="sliderContainer">
         <div ref={slider} className=" relative whitespace-nowrap ">
