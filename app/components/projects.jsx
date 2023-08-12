@@ -9,7 +9,7 @@ const Projects = () => {
     {
       title: "Huntek",
       color: "#fff",
-      src: "https://picsum.photos/1900/1080",
+      src: "/images/huntek.png",
       link: "https://vercel.com/matiasgigena/pi-food-main-matias-gigena"
     },
     {

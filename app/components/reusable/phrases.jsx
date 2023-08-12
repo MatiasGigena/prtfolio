@@ -10,7 +10,7 @@ const MaskText = ({ phrases}) => {
   };
 
   return (
-    <div ref={main} className=" px-2 text-lg xsm:text-xl sm:text-2xl md:text-3xl xsm:px-3 sm:px-4 md:px-6 xl:w-[80rem] xl:px-0 space-y-20 ">
+    <div ref={main} className="px-2 text-lg xsm:text-xl sm:text-2xl md:text-3xl xsm:px-3 sm:px-4 md:px-6 xl:w-[80rem] xl:px-0 space-y-20 ">
       {phrases.map((p, index) => {
         const parts = p.split(/({{.*?}})/);
         return (
@@ -24,8 +24,8 @@ const MaskText = ({ phrases}) => {
             >
               {parts.map((part, partIndex) => {
                 if (part.startsWith("{{") && part.endsWith("}}")) {
-                  const text = part.substring(2, part.length - 2); // Extrae el contenido variable
-                  const colorClass = partIndex % 2 === 0 ? "text-white" : "text-green-600 font-bold text-xl xsm:text-2xl sm:text-3xl md:text-4xl"; // Alterna el color
+                  const text = part.substring(2, part.length - 2);
+                  const colorClass = partIndex % 2 === 0 ? "text-white" : "text-white font-bold text-xl xsm:text-2xl sm:text-3xl md:text-4xl"; // Alterna el color
                   return (
                     <span key={partIndex} className={colorClass}>
                       {text}

@@ -55,7 +55,7 @@ const Modal = ({ modal, projects }) => {
           })}
         </div>
       </motion.div>
-      <motion.div ref={cursor} variants={scaleAnimation} initial={"initial"} animate={active ? "open" : "closed"} className="w-24 h-24 flex items-center fixed bg-green-600 shadow-xl rounded-full pointer-events-none justify-center text-sec"></motion.div>
+      <motion.div ref={cursor} variants={scaleAnimation} initial={"initial"} animate={active ? "open" : "closed"} className="w-24 h-24 flex items-center fixed bg-black shadow-xl rounded-full pointer-events-none justify-center text-sec"></motion.div>
       <motion.div ref={cursorLabel} variants={scaleAnimation} initial={"initial"} animate={active ? "open" : "closed"} className="w-24 h-24 text-xl font-extralight flex items-center fixed bg-transparent rounded-full pointer-events-none justify-center text-sec">Lets go!</motion.div>
     </>
   );
