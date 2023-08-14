@@ -60,7 +60,7 @@ const NavBar = ({ locomotiveScroll }) => {
     if (targetElement && locomotiveScroll) {
       locomotiveScroll.scrollTo(targetElement, {
         offset: 0,
-        duration: 2,
+        duration: 4,
       });
     }
   };
