@@ -113,7 +113,9 @@ const NavBar = ({ locomotiveScroll }) => {
             <Box sx={{ display: { xs: "none", sm: "block" }, color: "white" }}>
               {navItems.map((item, index) => (
                 <Magnetic key={index}>
-                  <Button onClick={() => handleLinkClick(`#${item}`)} sx={{ color: "white" }}>
+                  <Button onClick={() => {handleLinkClick(`#${item}`)
+                setMobileOpen(false)
+                }} sx={{ color: "white" }}>
                     {item}
                   </Button>
                 </Magnetic>
@@ -131,7 +133,7 @@ const NavBar = ({ locomotiveScroll }) => {
             }}
             sx={{
               display: { xs: "block", sm: "none" },
-              "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
+              "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth, backgroundColor: "transparent", color: "white", backdropFilter: "blur(20px)" },
             }}>
             {drawer}
           </Drawer>
