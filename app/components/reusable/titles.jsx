@@ -1,7 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { useInView, motion } from "framer-motion";
-const MaskText = ({ phrases, isLast}) => {
+const MaskTitles = ({ phrases, isLast}) => {
   const main = useRef(null);
   const isInView = useInView(main, { once: false, margin: "-10%" });
   const animate = {
@@ -10,11 +10,11 @@ const MaskText = ({ phrases, isLast}) => {
   };
 
   return (
-    <div ref={main} className={`px-2 text-lg xsm:text-xl sm:text-2xl md:text-3xl xsm:px-3 sm:px-4 md:px-6 xl:w-[80rem] xl:px-0 space-y-20 `}>
+    <div ref={main} className={`px-2 text-lg flex flex-col justify-center items-center xsm:text-xl sm:text-2xl md:text-3xl xsm:px-3 sm:px-4 md:px-6 xl:w-[80rem] xl:px-0 space-y-20`}>
       {phrases.map((p, index) => {
         const parts = p.split(/({{.*?}})/);
         return (
-          <div key={index} className="overflow-hidden">
+          <div key={index} className="overflow-hidden lg:h-52 flex items-center">
             <motion.p
               custom={index}
               variants={animate}
@@ -25,7 +25,7 @@ const MaskText = ({ phrases, isLast}) => {
               {parts.map((part, partIndex) => {
                 if (part.startsWith("{{") && part.endsWith("}}")) {
                   const text = part.substring(2, part.length - 2);
-                  const colorClass = partIndex % 2 === 0 ? "text-white" : "text-white font-bold text-xl xsm:text-2xl sm:text-3xl md:text-4xl"; // Alterna el color
+                  const colorClass = partIndex % 2 === 0 ? "text-white" : "text-white font-bold text-6xl sm:text-8xl md:text-[12rem]"; // Alterna el color
                   return (
                     <span key={partIndex} className={colorClass}>
                       {text}
@@ -41,4 +41,4 @@ const MaskText = ({ phrases, isLast}) => {
     </div>
   );
 };
-export default MaskText;
+export default MaskTitles;

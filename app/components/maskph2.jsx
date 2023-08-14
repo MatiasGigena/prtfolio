@@ -1,9 +1,10 @@
 "use client";
-import useMousePosition from "@/hooks/useMousePosition";
+import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import MaskText from "../components/reusable/phrases";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import MaskTitles from "./reusable/titles";
 
 const MaskTextPhrase = () => {
   const phrases = [
@@ -23,6 +24,9 @@ const MaskTextPhrase = () => {
     "Embracing {{leadership}}, {{approachability}}, and {{strong social skills}} for trust.",
     "Dedicated {{hard worker}}, pushing limits to {{elevate}} projects.",
     "Engaging coding pursuits and a friendly disposition for {{impactful contributions}}.",
+  ];
+  const phrases3 = [
+   "{{Contact ME.}}",
   ];
   const sectionref = useRef(null);
   const triggerRef = useRef(null);
@@ -54,7 +58,7 @@ const MaskTextPhrase = () => {
     }
   }, []);
   return (
-    <section id="About" className="lg:overflow-hidden">
+    <section id="About" className=" w-full lg:overflow-hidden">
       <div ref={triggerRef}>
         <div ref={sectionref} className="min-h-screen lg:w-[400vw] w-full flex relative lg:flex-row flex-col gap-20 lg:gap-0 my-10 lg:my-0">
           <div className="h-screen flex-col w-full lg:w-[100vw] flex justify-center gap-14 items-center">
@@ -69,8 +73,9 @@ const MaskTextPhrase = () => {
           <div className="h-screen w-full lg:w-[100vw] flex justify-center items-center">
             <MaskText phrases={phrases2} />
           </div>
-          <div className="h-screen w-full lg:w-[100vw] flex justify-center items-center">
-          <div className="text-7xl font-bold text-white">↓</div>
+          <div className="h-[20vh] lg:h-screen w-full lg:w-[100vw] flex flex-col justify-center gap-20 items-center">
+            <MaskTitles phrases={phrases3} isLast/>
+            <span className="animate-bounce"><ExpandCircleDownIcon style={{fontSize: "6rem"}} /></span>
           </div>
         </div>
       </div>
