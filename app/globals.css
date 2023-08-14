@@ -16,6 +16,7 @@ body {
 @media screen and (max-width: 1024px) {
   body {
     overflow-y: scroll;
+    overflow-x: hidden;
   }
 }
 @media screen and (max-width: 640px) {
@@ -81,7 +82,7 @@ transition: all 0.3s linear;
 }
 
 .plane:nth-of-type(1) img:nth-of-type(3) {
-  left: 20%;
+  left: 60%;
   top: 0%;
 }
 
@@ -138,7 +139,7 @@ transition: all 0.3s linear;
 
 
 .plane2 .image-3 {
-  left: 75%;
+  left: 81%;
   top: 2.5%;
 }
 .plane2 .image-4 {

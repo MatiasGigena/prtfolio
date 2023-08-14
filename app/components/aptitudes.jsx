@@ -73,7 +73,6 @@ const Aptitudes = () => {
           width="70"
           height="70"
           loading="eager"
-          style={{ filter: "brightness(100) contrast(100)" }}
         />
       </div>
       <div ref={plane2} className="plane">

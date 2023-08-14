@@ -10,7 +10,7 @@ const MaskComponent = ({ components }) => {
     open: (i) => ({
       x: "0%",
       transition: {
-        duration: 1,
+        duration: 2,
         delay: 0.1 * i,
         ease: [0.33, 1, 0.68, 1],
       },

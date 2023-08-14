@@ -7,10 +7,9 @@ import Preloader from "./components/preloader";
 import { AnimatePresence } from "framer-motion";
 import AboutPage from "./components/techStack";
 import MaskComponent from "./components/reusable/componentX";
-import MaskComponentY from "./components/reusable/componentY";
 import MaskTextPhrase from "./components/maskph2";
 import NavBar from "./components/nav";
-import MaskComponentXY from "./components/reusable/ComponentXY";
+import Contact from "./components/contact";
 const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [locomotiveScroll, setLocomotiveScroll] = useState(null);
@@ -20,7 +19,9 @@ const HomePage = () => {
       const LocomotiveScroll = (await import("locomotive-scroll")).default;
       const locomotiveScrollInstance = new LocomotiveScroll({
         lenisOptions: {
-          duration: 4,
+          duration: 3.5,
+          smoothTouch: true,
+          touchMultiplier: 1.5,
         },
       });
       setLocomotiveScroll(locomotiveScrollInstance);
@@ -41,9 +42,10 @@ const HomePage = () => {
         <Projects />
         <div className="bg-sec h-full w-full">
           <MaskComponent components={[AboutPage]} />
-          <MaskComponentY components={[Aptitudes]} />
+          <Aptitudes />
         </div>
-        <MaskComponentXY components={[MaskTextPhrase]} />
+        <MaskTextPhrase/>
+        <Contact />
       </section>
     </main>
   );
