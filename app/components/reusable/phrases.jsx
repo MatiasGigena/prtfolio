@@ -10,11 +10,11 @@ const MaskText = ({ phrases, isLast}) => {
   };
 
   return (
-    <div ref={main} className={`px-2 text-lg xsm:text-xl sm:text-2xl md:text-3xl xsm:px-3 sm:px-4 md:px-6 xl:w-[80rem] xl:px-0 space-y-20 `}>
+    <div ref={main} className={`pl-4 text-lg xsm:text-xl sm:text-2xl md:text-3xl xsm:px-3 sm:px-4 md:px-6 xl:w-[80rem] xl:px-0 space-y-20 `}>
       {phrases.map((p, index) => {
         const parts = p.split(/({{.*?}})/);
         return (
-          <div key={index} className="overflow-hidden">
+          <div key={index} className="overflow-hidden lg:h-12">
             <motion.p
               custom={index}
               variants={animate}

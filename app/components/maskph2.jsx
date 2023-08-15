@@ -1,7 +1,8 @@
 "use client";
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import MaskText from "../components/reusable/phrases";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MaskTitles from "./reusable/titles";
@@ -30,10 +31,10 @@ const MaskTextPhrase = () => {
   ];
   const sectionref = useRef(null);
   const triggerRef = useRef(null);
+  const about = useRef(null)
   gsap.registerPlugin(ScrollTrigger);
   useEffect(() => {
     if (window.innerWidth >= 1024) {
-      // Only apply the animation on screens with size lg or larger
       const pin = gsap.fromTo(
         sectionref.current,
         {
@@ -57,14 +58,19 @@ const MaskTextPhrase = () => {
       };
     }
   }, []);
+  const isInView = useInView(about, { once: false});
+  const animate = {
+    initial: { x: "-50%", opacity: 0 },
+    open: ({ x: "0%", opacity: 1, transition: { duration: 1.2, delay: 0.1 , ease: [0.33, 1, 0.68, 1] } }),
+  };
   return (
     <section id="About" className=" w-full lg:overflow-hidden">
       <div ref={triggerRef}>
         <div ref={sectionref} className="min-h-screen lg:w-[400vw] w-full flex relative lg:flex-row flex-col gap-20 lg:gap-0 my-10 lg:my-0">
           <div className="h-screen flex-col w-full lg:w-[100vw] flex justify-center gap-14 items-center">
-            <h1 className="text-5xl sm:text-7xl">
+            <motion.h1 ref={about} initial="initial" variants={animate} animate={isInView ? "open" : ""} className="text-5xl sm:text-7xl">
               About <span className="text-white font-bold">ME.</span>
-            </h1>
+            </motion.h1>
             <MaskText phrases={phrases} />
           </div>
           <div className="h-screen w-full lg:w-[100vw] flex justify-center items-center">

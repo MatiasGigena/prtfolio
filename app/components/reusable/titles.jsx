@@ -25,7 +25,7 @@ const MaskTitles = ({ phrases, isLast}) => {
               {parts.map((part, partIndex) => {
                 if (part.startsWith("{{") && part.endsWith("}}")) {
                   const text = part.substring(2, part.length - 2);
-                  const colorClass = partIndex % 2 === 0 ? "text-white" : "text-white font-bold text-6xl sm:text-8xl md:text-[12rem]"; // Alterna el color
+                  const colorClass = partIndex % 2 === 0 ? "text-white" : "text-white font-bold text-4xl xsm:text-6xl xs:text-[3.5rem] xsm:text-6xl sm:text-8xl md:text-[7rem] lg:text-[9.5rem] xl:text-[12rem] xxl:text-[13rem]"; // Alterna el color
                   return (
                     <span key={partIndex} className={colorClass}>
                       {text}

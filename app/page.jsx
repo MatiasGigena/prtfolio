@@ -10,6 +10,7 @@ import MaskComponent from "./components/reusable/componentX";
 import MaskTextPhrase from "./components/maskph2";
 import NavBar from "./components/nav";
 import Contact from "./components/contact";
+import MaskComponentY from "./components/reusable/componentY";
 const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [locomotiveScroll, setLocomotiveScroll] = useState(null);
@@ -22,6 +23,7 @@ const HomePage = () => {
           duration: 3.5,
           smoothTouch: true,
           touchMultiplier: 1.5,
+          lerp: 0.1,
         },
       });
       setLocomotiveScroll(locomotiveScrollInstance);
@@ -42,7 +44,7 @@ const HomePage = () => {
         <Projects />
         <div className="bg-sec h-full w-full">
           <MaskComponent components={[AboutPage]} />
-          <Aptitudes />
+          <MaskComponentY components={[Aptitudes]} />
         </div>
         <MaskTextPhrase/>
         <Contact />
