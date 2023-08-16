@@ -27,7 +27,7 @@ const Preloader = () => {
   }
   
   return (
-    <motion.div variants={slideUp} initial="initial" exit="exit" className="min-h-screen fixed w-full bg-black top-0 left-0 z-50 text-white flex items-center justify-center">
+    <motion.div variants={slideUp} initial="initial" exit="exit" className="min-h-screen fixed w-full  bg-black top-0 left-0 z-50 text-white flex items-center justify-center">
       <p className="flex flex-col items-center w-full"><span className="font-bold text-4xl mr-2 ">Get creative!</span> <span className="flex text-2xl font-thin gap-3">Matias Gigena <AnimationIcon className="animate-spin" style={{ fontSize: "2rem" }}/></span> </p>
       <div className="absolute w-full h-full flex ">
         {

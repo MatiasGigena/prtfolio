@@ -1,12 +1,13 @@
 export const slideUp = {
   initial: {
-    y: "0",
+    clipPath: "circle(125%)",
   },
   exit: {
-    y: "-100vh",
-    transition: { duration: 1.2, ease: [0.68, -0.6, 0.32, 1.6], delay: 0.2 },
+    clipPath: "circle(0%)",
+    transition: { duration: 1.5, ease: [0.76, 0, 0.24, 1], delay: 0.2 },
   },
 };
+
 export const slideRight = {
   initial: {
     x: "0",
