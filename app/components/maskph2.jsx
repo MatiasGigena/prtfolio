@@ -66,20 +66,20 @@ const MaskTextPhrase = () => {
   return (
     <section id="About" className=" w-full lg:overflow-hidden">
       <div ref={triggerRef}>
-        <div ref={sectionref} className="min-h-screen lg:w-[400vw] w-full flex relative lg:flex-row flex-col gap-20 lg:gap-0 my-10 lg:my-0">
-          <div className="h-screen flex-col w-full lg:w-[100vw] flex justify-center gap-14 items-center">
+        <div ref={sectionref} className="min-h-screen lg:w-[400vw] w-full flex relative lg:flex-row flex-col  lg:gap-0 lg:my-0">
+          <div className="h-screen flex-col w-full lg:w-[100vw] flex justify-center gap-24 lg:gap-14 items-center">
             <motion.h1 ref={about} initial="initial" variants={animate} animate={isInView ? "open" : ""} className="text-5xl sm:text-7xl">
               About <span className="text-white font-bold">ME.</span>
             </motion.h1>
             <MaskText phrases={phrases} />
           </div>
-          <div className="h-screen w-full lg:w-[100vw] flex justify-center items-center">
+          <div className="h-[80vh] w-full lg:w-[100vw] flex justify-center items-center">
             <MaskText phrases={phrases1} />
           </div>
-          <div className="h-screen w-full lg:w-[100vw] flex justify-center items-center">
+          <div className="h-[90vh] w-full lg:w-[100vw] flex justify-center items-center">
             <MaskText phrases={phrases2} />
           </div>
-          <div className="h-[20vh] lg:h-screen w-full lg:w-[100vw] flex flex-col justify-center gap-20 items-center">
+          <div className="h-[20vh] lg:h-screen w-full lg:w-[100vw] flex flex-col justify-center mt-52 lg:mt-0 gap-20 items-center">
             <MaskTitles phrases={phrases3} isLast/>
             <span className="animate-bounce"><ExpandCircleDownIcon style={{fontSize: "6rem"}} /></span>
           </div>

@@ -23,7 +23,7 @@ const HomePage = () => {
           duration: 3.5,
           smoothTouch: true,
           touchMultiplier: 1.5,
-          lerp: 0.1,
+          lerp: 0.01,
         },
       });
       setLocomotiveScroll(locomotiveScrollInstance);
