@@ -6,12 +6,11 @@ const MaskComponentY = ({ components }) => {
   const main = useRef(null);
   const isInView = useInView(main, { once: false, margin: "-10%" });
   const animate = {
-    initial: { scale:0, opacity:0, transition: {duration: 1} },
+    initial: { opacity:0, transition: {duration: 1} },
     open: (i) => ({
       opacity: 1,
-      scale: 1,
       transition: {
-        duration: 1,
+        duration: 1.2,
         delay: 0.1 * i,
         ease: [0.33, 1, 0.68, 1],
       },
