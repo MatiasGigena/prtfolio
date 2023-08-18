@@ -48,7 +48,7 @@ const Modal = ({ modal, projects }) => {
                 width={390}
                 height={0}
                 alt="image"
-                className="h-auto"
+                className="h-auto rounded-2xl"
                 />
               </div>
             )

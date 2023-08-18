@@ -74,7 +74,7 @@ const NavBar = ({ locomotiveScroll }) => {
       <Typography variant="h6" sx={{ my: 2 }}>
         Matías Gigena
       </Typography>
-      <Divider />
+      <Divider className="bg-white text-white"/>
       <List>
         {navItems.map((item, index) => (
           <ListItem key={index} disablePadding>

@@ -1,4 +1,4 @@
-const Project = ({ index, title, setModal, link }) => {
+const Project = ({ index, title, setModal, link, Description }) => {
   return (
     <div
       key={index}
@@ -7,7 +7,7 @@ const Project = ({ index, title, setModal, link }) => {
       onMouseLeave={() => setModal({ active: false, index: index })}>
       <a href={link} target="_blank">
         <h1>{title}</h1>
-        <p className="text-sm sm:text-base font-extralight w-full mt-4">Design & Development</p>
+        <p className="text-sm sm:text-base font-extralight w-full mt-4">{Description}</p>
       </a>
     </div>
   );

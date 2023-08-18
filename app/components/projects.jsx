@@ -14,28 +14,33 @@ const Projects = () => {
   };
   const projects = [
     {
-      title: "Huntek",
-      color: "#fff",
-      src: "/images/huntek.png",
-      link: "https://vercel.com/matiasgigena/pi-food-main-matias-gigena"
+      title: "Debut",
+      color: "#000",
+      src: "/images/598shots_so.png",
+      link: "https://pi-food-main-matias-gigena.vercel.app/",
+      Description: "Design & Development & Interaction",
     },
     {
-      title: "Silencio",
-      color: "#8C8C8C",
-      src: "/images/fpro.jpg",
-      link: "https://pi-food-main-matias-gigena.vercel.app/"
+      title: "Huntek",
+      color: "#000",
+      src: "/images/199shots_so.png",
+      link: "https://vercel.com/matiasgigena/pi-food-main-matias-gigena",
+      Description: "Design & Development & Interaction",
+
     },
     {
       title: "Miralibres",
-      color: "#EFE8D3",
-      src: "https://picsum.photos/1920/1080",
-      link: "https://vercel.com/matiasgigena/pi-food-main-matias-gigena"
+      color: "#000",
+      src: "/images/157shots_so.png",
+      link: "https://chakra-app-two.vercel.app/",
+      Description: "Design & Development",
     },
     {
-      title: "E-Pay",
-      color: "#706D63",
-      src: "https://picsum.photos/1920/1080",
-      link: "https://vercel.com/matiasgigena/pi-food-main-matias-gigena"
+      title: "E-pay",
+      color: "#000",
+      src: "/images/693shots_so.png",
+      link: "https://vercel.com/matiasgigena/pi-food-main-matias-gigena",
+      Description: "Time will tell . . ."
     },
   ];
   return (
@@ -44,9 +49,9 @@ const Projects = () => {
       <motion.div ref={project}
       variants={animate}
       initial="initial"
-      animate={isInView ? "open" : "initial"} className="flex flex-col lg:flex-row gap-[55px] lg:gap-[2.5vw] lg:justify-center lg:px-3 xl:gap-12 xxl:gap-24 lg:w-full xl:px-3 xl:mt-20 mt-5 xsm:mt-10 sm:mt-14 md:mt-24">
+      animate={isInView ? "open" : "initial"} className="flex flex-col lg:flex-row gap-[55px] lg:gap-[2.5vw] lg:justify-center lg:px-3 xl:gap-12 xxl:gap-16 lg:w-full xl:px-3 xl:mt-20 mt-5 xsm:mt-10 sm:mt-14 md:mt-24">
         {projects.map((project, index) => {
-          return <Project key={index} index={index} link={project.link} title={project.title} setModal={setModal} />;
+          return <Project key={index} index={index} link={project.link} Description={project.Description} title={project.title} setModal={setModal} />;
         })}
       </motion.div>
       <Modal modal={modal} projects={projects} />
