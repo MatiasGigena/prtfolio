@@ -22,7 +22,7 @@ const HomePage = () => {
         lenisOptions: {
           duration: 3.5,
           smoothTouch: true,
-          touchMultiplier: 1.5,
+          touchMultiplier: 1.7,
           lerp: 0.01,
         },
       });
