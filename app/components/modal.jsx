@@ -42,7 +42,7 @@ const Modal = ({ modal, projects }) => {
           {projects.map((project, index) => {
             const { src, color } = project;
             return (
-              <div key={`modal_${index}`} style={{backgroundColor: color}} className="relative h-full flex items-center justify-center">
+              <div key={`modal_${index}`} style={{backgroundColor: "transparent"}} className="relative h-full flex items-center justify-center">
                 <Image
                 src={src}
                 width={390}
