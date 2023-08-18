@@ -88,7 +88,7 @@ const Contact = () => {
             </div>
           </form>
           <div className="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
-            <a className="text-white">matias.gigena7@outlook.es</a>
+            <a href="mailto:matias.gigena7@outlook.es" className="text-white">matias.gigena7@outlook.es</a>
             <p className="leading-normal my-5">Agronomía, C15.  
               <br/>Ciudad Autónoma de Buenos Aires.
             </p>
