@@ -33,10 +33,10 @@ const Projects = () => {
       color: "#000",
       src: "/images/157shots_so.png",
       link: "https://chakra-app-two.vercel.app/",
-      Description: "Design & Development",
+      Description: "Design & Development | Interaction soon!",
     },
     {
-      title: "E-pay",
+      title: "????",
       color: "#000",
       src: "/images/693shots_so.png",
       link: "https://vercel.com/matiasgigena/pi-food-main-matias-gigena",
