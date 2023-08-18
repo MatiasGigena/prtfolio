@@ -133,7 +133,7 @@ const NavBar = ({ locomotiveScroll }) => {
             }}
             sx={{
               display: { xs: "block", sm: "none" },
-              "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth, backgroundColor: "transparent", color: "white", backdropFilter: "blur(20px)" },
+              "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth, backgroundColor: "transparent", color: "white", backdropFilter: "blur(20px)", zIndex: "50" },
             }}>
             {drawer}
           </Drawer>
