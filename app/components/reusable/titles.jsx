@@ -1,7 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { useInView, motion } from "framer-motion";
-const MaskTitles = ({ phrases, isLast}) => {
+const MaskTitles = ({ phrases }) => {
   const main = useRef(null);
   const isInView = useInView(main, { once: false, margin: "-10%" });
   const animate = {
@@ -25,7 +25,7 @@ const MaskTitles = ({ phrases, isLast}) => {
               {parts.map((part, partIndex) => {
                 if (part.startsWith("{{") && part.endsWith("}}")) {
                   const text = part.substring(2, part.length - 2);
-                  const colorClass = partIndex % 2 === 0 ? "text-white" : "text-white font-bold text-4xl xsm:text-6xl xs:text-[3.5rem] xsm:text-6xl sm:text-8xl md:text-[7rem] lg:text-[9.5rem] xl:text-[12rem] xxl:text-[13.5rem]"; // Alterna el color
+                  const colorClass = partIndex % 2 === 0 ? "text-white" : "text-white font-bold text-4xl xsm:text-6xl xs:text-[3.5rem] xsm:text-6xl sm:text-8xl md:text-[7rem] lg:text-[9.5rem] xl:text-[12rem] xxl:text-[13rem]";
                   return (
                     <span key={partIndex} className={colorClass}>
                       {text}
