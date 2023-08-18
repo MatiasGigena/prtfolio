@@ -7,7 +7,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { useForm, ValidationError,  } from "@formspree/react";
 const Contact = () => {
   const [state, handleSubmit] = useForm("mjvqyner");
-  console.log(state)
+  
   if (state.succeeded) {
     document.getElementById("name").value = "";
     document.getElementById("email").value = "";
@@ -60,7 +60,7 @@ const Contact = () => {
     <div className="container px-5 border-0 lg:pt-11 lg:pb-4 pt-6 pb-3 mx-auto">
       <div className="flex flex-col text-center w-full mb-12">
         <motion.h1 ref={ref} initial="initial" variants={animate4} animate={isInView4 ? "open" : ""} className="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">Drop me an email.</motion.h1>
-        <motion.p ref={ref2} initial="initial" variants={animate5} animate={isInView5 ? "open" : ""} className="lg:w-2/3 mx-auto text-white leading-relaxed text-base">I hope you've found inspiration along the way. Let&apos;s connect.</motion.p>
+        <motion.p ref={ref2} initial="initial" variants={animate5} animate={isInView5 ? "open" : ""} className="lg:w-2/3 mx-auto text-white leading-relaxed text-base">I hope you&apos;ve found inspiration along the way. Let&apos;s connect.</motion.p>
       </div>
       <div className="lg:w-1/2 md:w-2/3 mx-auto">
         <div >
