@@ -56,7 +56,7 @@ const Contact = () => {
   };
   
   return (
-    <motion.section ref={container} initial="initial" variants={loader} animate={isInView3 ? "open" : ""} className="text-gray-600 lg:border-0 lg:rounded-b-full lg:border-b-2 border-2 w-full mt-60 lg:mt-0 body-font relative">
+    <motion.section ref={container} initial="initial" variants={loader} animate={isInView3 ? "open" : ""} className="text-gray-600 lg:border-0 lg:rounded-b-full lg:border-b-2 border-2  rounded-xl w-full mt-60 lg:mt-0 md:mt-96 body-font relative">
     <div className="container px-5 border-0 lg:pt-11 lg:pb-4 pt-6 pb-3 mx-auto">
       <div className="flex flex-col text-center w-full mb-12">
         <motion.h1 ref={ref} initial="initial" variants={animate4} animate={isInView4 ? "open" : ""} className="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">Drop me an email.</motion.h1>

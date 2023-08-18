@@ -79,7 +79,7 @@ const MaskTextPhrase = () => {
           <div className="h-[80vh] lg:h-screen w-full lg:w-[100vw] flex justify-center items-center">
             <MaskText phrases={phrases2} />
           </div>
-          <div className="h-[20vh] lg:h-screen w-full lg:w-[100vw] flex flex-col justify-center z-50 mt-60 lg:mt-0 gap-20 items-center">
+          <div className="h-[20vh]  w-full lg:w-[100vw] flex flex-col justify-center z-50 mt-60 lg:mt-72 gap-20 items-center">
             <MaskTitles phrases={phrases3} isLast/>
             <span className="animate-bounce"><ExpandCircleDownIcon style={{fontSize: "6rem"}} /></span>
           </div>
