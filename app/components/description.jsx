@@ -1,35 +1,38 @@
-"use client";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
+'use client';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef } from 'react';
 const Description = () => {
-  const refs = useRef([])
-  const container = useRef(null)
+  const refs = useRef([]);
+  const container = useRef(null);
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    createAnimations()
+    createAnimations();
   }, []);
   const createAnimations = () => {
-gsap.to(refs.current, {
-  opacity: 1,
-  ease:"none",
-  stagger: 0.1,
-  scrollTrigger: {
-    trigger: container.current,
-    start: () => `top+=${window.innerHeight - 1200}`,
-    end: `+=${window.innerHeight/ 1.5}`,
-    scrub: true,
-  }
-})
-  }
+    gsap.to(refs.current, {
+      opacity: 1,
+      ease: 'none',
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: container.current,
+        start: () => `top+=${window.innerHeight - 1200}`,
+        end: `+=${window.innerHeight / 1.5}`,
+        scrub: true,
+      },
+    });
+  };
   const phrase =
-    "It's not just a Project. I take pride in crafting digital experiences that not only meet functional requirements but also delight users with intuitive interfaces and smooth interactions."
+    "It's not just a Project. I take pride in crafting digital experiences that not only meet functional requirements but also delight users with intuitive interfaces and smooth interactions.";
   const splitWords = () => {
     let body = [];
-    phrase.split(" ").forEach((word, index) => {
+    phrase.split(' ').forEach((word, index) => {
       const letters = splitLetters(word);
       body.push(
-        <p className="text-[4vw] mr-2" key={`word_${index}`}>
+        <p
+          className='text-[4vw] mr-2'
+          key={`word_${index}`}
+        >
           {letters}
         </p>
       );
@@ -38,9 +41,15 @@ gsap.to(refs.current, {
   };
   const splitLetters = (word) => {
     let letters = [];
-    word.split("").forEach((letter, index) => {
+    word.split('').forEach((letter, index) => {
       letters.push(
-        <span ref={e => {refs.current.push(e)}} className="opacity-50" key={`letter_${index}`}>
+        <span
+          ref={(e) => {
+            refs.current.push(e);
+          }}
+          className='opacity-50'
+          key={`letter_${index}`}
+        >
           {letter}
         </span>
       );
@@ -48,8 +57,13 @@ gsap.to(refs.current, {
     return letters;
   };
   return (
-    <div ref={container} className="h-[20%] lg:h-[50%] xl:h-screen flex items-center justify-start lg:justify-center text-sec">
-      <div className="w-11/12 flex items-center mb-4  flex-wrap">{splitWords()}</div>
+    <div
+      ref={container}
+      className='flex items-center xlxl:px-6 mt-8 lg:mt-12 justify-start lg:justify-evenly  text-sec'
+    >
+      <div className='w-11/12 flex items-center  h-full  flex-wrap'>
+        {splitWords()}
+      </div>
     </div>
   );
 };
