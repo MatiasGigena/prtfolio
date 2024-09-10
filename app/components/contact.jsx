@@ -1,33 +1,32 @@
-'use client';
-import Magnetic from './reusable/Magnetic';
-import { useInView, motion } from 'framer-motion';
-import { useRef } from 'react';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import { useForm, ValidationError } from '@formspree/react';
+'use client'
+import Magnetic from './reusable/Magnetic'
+import { useInView, motion } from 'framer-motion'
+import { useRef } from 'react'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'
+import { useForm, ValidationError } from '@formspree/react'
 const Contact = () => {
-  const [state, handleSubmit] = useForm('mjvqyner');
+  const [state, handleSubmit] = useForm('mjvqyner')
 
   if (state.succeeded) {
-    document.getElementById('name').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('message').value = '';
+    document.getElementById('name').value = ''
+    document.getElementById('email').value = ''
+    document.getElementById('message').value = ''
   }
-  const container = useRef(null);
-  const about = useRef(null);
-  const about2 = useRef(null);
-  const about3 = useRef(null);
-  const ref2 = useRef(null);
-  const ref = useRef(null);
-  const isInView = useInView(about, { once: false });
-  const isInView2 = useInView(about2, { once: false });
-  const isInView3 = useInView(container, { once: false });
-  const isInView4 = useInView(ref, { once: false });
-  const isInView5 = useInView(ref2, { once: false });
+  const container = useRef(null)
+  const about = useRef(null)
+  const about2 = useRef(null)
+  const about3 = useRef(null)
+  const ref2 = useRef(null)
+  const ref = useRef(null)
+  const isInView = useInView(about, { once: false })
+  const isInView2 = useInView(about2, { once: false })
+  const isInView3 = useInView(container, { once: false })
+  const isInView4 = useInView(ref, { once: false })
+  const isInView5 = useInView(ref2, { once: false })
   const animate = {
-    initial: { x: '-100%', opacity: 0 },
+    initial: { opacity: 0 },
     open: {
-      x: '0%',
       opacity: 1,
       transition: {
         duration: 1.2,
@@ -35,11 +34,10 @@ const Contact = () => {
         ease: [0.33, 1, 0.68, 1],
       },
     },
-  };
+  }
   const animate2 = {
-    initial: { x: '100%', opacity: 0 },
+    initial: { opacity: 0 },
     open: {
-      x: '0%',
       opacity: 1,
       transition: {
         duration: 1.2,
@@ -47,7 +45,7 @@ const Contact = () => {
         ease: [0.33, 1, 0.68, 1],
       },
     },
-  };
+  }
   const animate3 = {
     initial: { y: '100%', opacity: 0 },
     open: {
@@ -59,7 +57,7 @@ const Contact = () => {
         ease: [0.33, 1, 0.68, 1],
       },
     },
-  };
+  }
   const animate4 = {
     initial: { opacity: 0 },
     open: {
@@ -70,7 +68,7 @@ const Contact = () => {
         ease: [0.33, 1, 0.68, 1],
       },
     },
-  };
+  }
   const animate5 = {
     initial: { opacity: 0 },
     open: {
@@ -81,7 +79,7 @@ const Contact = () => {
         ease: [0.33, 1, 0.68, 1],
       },
     },
-  };
+  }
   const loader = {
     initial: {
       clipPath: 'circle(0%)',
@@ -95,7 +93,7 @@ const Contact = () => {
         delay: 0.1,
       },
     },
-  };
+  }
 
   return (
     <motion.section
@@ -293,6 +291,6 @@ const Contact = () => {
         </div>
       </div>
     </motion.section>
-  );
-};
-export default Contact;
+  )
+}
+export default Contact
