@@ -62,14 +62,21 @@ const Aptitudes = () => {
         />
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg"
-          alt="JavaScript"
+          alt="TypeScript"
           width="70"
           height="70"
           loading="eager"
         />
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/wordpress/wordpress-plain.svg"
-          alt="JavaScript"
+          alt="WordPress"
+          width="70"
+          height="70"
+          loading="eager"
+        />
+        <Image
+          src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+          alt="AWS"
           width="70"
           height="70"
           loading="eager"
@@ -78,7 +85,7 @@ const Aptitudes = () => {
       <div ref={plane2} className="plane">
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg"
-          alt="JavaScript"
+          alt="GitHub"
           width="70"
           height="70"
           loading="eager"
@@ -87,24 +94,45 @@ const Aptitudes = () => {
         loading="eager" />
         <Image src="https://www.vectorlogo.zone/logos/w3_css/w3_css-icon.svg" alt="CSS" width="70" height="70"
         loading="eager" />
+        <Image
+          src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg"
+          alt="Docker"
+          width="70"
+          height="70"
+          loading="eager"
+        />
       </div>
       <div ref={plane3} className="plane">
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/materialui/materialui-plain.svg"
-          alt="CSS"
+          alt="Material UI"
           width="70"
           height="70"
           loading="eager"
         />
         <Image
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg"
-          alt="React"
+          alt="React / React Native"
           width="70"
           height="70"
           loading="eager"
         />
         <Image src="https://www.vectorlogo.zone/logos/framer/framer-icon.svg" alt="Framer" width="70" height="70"
         loading="eager" />
+        <Image
+          src="/images/neptune.png"
+          alt="Neptune"
+          width="70"
+          height="70"
+          loading="eager"
+        />
+        <Image
+          src="/images/gremlin.png"
+          alt="Gremlin"
+          width="70"
+          height="70"
+          loading="eager"
+        />
       </div>
       <div ref={plane4} className="plane2">
         <Image

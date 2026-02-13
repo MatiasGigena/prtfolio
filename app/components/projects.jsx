@@ -24,26 +24,25 @@ const Projects = () => {
   };
   const projects = [
     {
-      title: 'Miralibres',
-      color: '#000',
-      src: '/images/157shots_so.png',
-      link: 'https://chakra-app-two.vercel.app/',
-      Description:
-        'Design & Development | Interaction soon!',
-    },
-    {
-      title: 'Huntek',
-      color: '#000',
-      src: '/images/199shots_so.png',
-      link: 'https://vercel.com/',
-      Description: 'Design & Development & Interaction',
-    },
-    {
       title: 'Rekon',
       color: '#000',
       src: '/images/266shots_so.png',
       link: 'https://www.rekonmedia.com/',
       Description: 'Design & Development',
+    },
+    {
+      title: 'Nexiafy',
+      color: '#000',
+      src: '/images/clipboard-image-1770985279.avif',
+      link: 'https://nexiafy.useteam.io/',
+      Description: 'Design & Development',
+    },
+    {
+      title: 'Huntek',
+      color: '#000',
+      src: '/images/199shots_so.png',
+      link: 'https://huntek-website.vercel.app/',
+      Description: 'Design & Development & Interaction',
     },
     {
       title: '????',

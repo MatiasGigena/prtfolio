@@ -30,7 +30,7 @@ const Description = () => {
       const letters = splitLetters(word);
       body.push(
         <p
-          className='text-[4vw] mr-2'
+          className='text-[4vw] mr-3 mb-2'
           key={`word_${index}`}
         >
           {letters}
@@ -59,7 +59,7 @@ const Description = () => {
   return (
     <div
       ref={container}
-      className='flex items-center xlxl:px-6 mt-8 lg:mt-12 justify-start lg:justify-evenly  text-sec'
+      className='flex items-center xlxl:px-6 mt-8 lg:mt-16 justify-start lg:justify-evenly text-sec py-8 lg:py-12'
     >
       <div className='w-11/12 flex items-center  h-full  flex-wrap'>
         {splitWords()}

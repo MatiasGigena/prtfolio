@@ -11,8 +11,8 @@ const MaskTextPhrase = () => {
   const phrases = [
     "I'm {{Matias Gigena}}, your {{argentinian}} guide through the digital wonderland.",
     'Crafting the virtual world as a {{Front End Developer}}.',
-    "Graduated from {{Soy Henry's}} immersive 800-hour bootcamp.",
-    'Currently employed at {{Huntek}}.',
+    "Over {{4 years}} of {{self-driven}} learning, building, and shipping real-world projects.",
+    'Currently employed at {{UseTeam}}.',
   ];
   const phrases1 = [
     '{{Advanced}} English speaker at {{C1}} level.',

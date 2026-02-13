@@ -26,6 +26,11 @@ const AboutPage = () => {
     "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg",
     "https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg",
     "/images/greensock-gsap-icon-seeklogo.com.svg",
+    "https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+    "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg",
+    "https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg",
+    "/images/neptune.png",
+    "/images/gremlin.png",
   ];
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -38,14 +43,14 @@ const AboutPage = () => {
     <div className="min-h-screen w-full bg-white text-sec flex flex-col justify-center items-center">
       <div ref={ref} className="h-[170vh] flex  overflow-hidden gap-[6vw] p-[2vw] box-border">
         <Column
-          myImages={[myImages[0], myImages[1], myImages[2], myImages[3], myImages[4], myImages[5]]}
+          myImages={[myImages[0], myImages[1], myImages[2], myImages[3], myImages[4], myImages[5], myImages[6], myImages[7]]}
           y={y}
         />
         <Column
-          myImages={[myImages[6], myImages[7], myImages[8], myImages[9], myImages[10], myImages[11]]} y={y2}
+          myImages={[myImages[8], myImages[9], myImages[10], myImages[11], myImages[12], myImages[13], myImages[14], myImages[15]]} y={y2}
         />
         <Column
-          myImages={[myImages[12], myImages[13], myImages[14], myImages[15], myImages[16], myImages[17]]} y={y3}
+          myImages={[myImages[16], myImages[17], myImages[18], myImages[19], myImages[20], myImages[21], myImages[22], myImages[23]]} y={y3}
         />
       </div>
     </div>

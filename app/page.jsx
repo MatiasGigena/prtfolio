@@ -11,6 +11,7 @@ import MaskTextPhrase from './components/maskph2'
 import NavBar from './components/nav'
 import Contact from './components/contact'
 import MaskComponentY from './components/reusable/componentY'
+import Books from './components/books'
 const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [locomotiveScroll, setLocomotiveScroll] =
@@ -53,6 +54,7 @@ const HomePage = () => {
           <MaskComponent components={[AboutPage]} />
           <MaskComponentY components={[Aptitudes]} />
         </div>
+        <MaskComponentY components={[Books]} />
         <MaskTextPhrase />
         <Contact />
       </section>
