@@ -1,9 +1,10 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type { Config } from 'tailwindcss';
+
+const config = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{ts,tsx,mdx}',
+    './components/**/*.{ts,tsx,mdx}',
+    './app/**/*.{ts,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -18,8 +19,7 @@ module.exports = {
         sec: '#ffffff',
       },
       backgroundImage: {
-        HKanimate:
-          "url('/huntek/logo-text-animate/W(D).svg')",
+        HKanimate: "url('/huntek/logo-text-animate/W(D).svg')",
         HKtext: "url('/huntek/logo-text/W(D).svg')",
         HKGtext: "url('/huntek/logo-text/G(D).svg')",
         HKlogo: "url('/huntek/logo/W.svg')",
@@ -28,5 +28,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require('daisyui')],
-};
+  plugins: [],
+} satisfies Config;
+
+export default config;

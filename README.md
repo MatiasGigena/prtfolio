@@ -1,34 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Matías Gigena — Portfolio
 
-## Getting Started
+A responsive portfolio built with Next.js, React, and strict TypeScript. The interface uses GSAP and Framer Motion for scroll, pointer, and spring-driven interactions, with reduced-motion fallbacks throughout.
 
-First, run the development server:
+## Requirements
+
+- Node.js 24 (see `.nvmrc`)
+- npm
+
+## Development
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Quality checks
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+npm run typecheck
+npm run lint
+npm run build
+```
 
-## Learn More
+TypeScript is configured in strict mode with unchecked indexed access enabled. Application code lives in `app/` and `hooks/`; portfolio content and typed models are centralized in `app/data/portfolio.ts` and `app/types/portfolio.ts`.
 
-To learn more about Next.js, take a look at the following resources:
+## Motion and accessibility
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Pointer-driven interactions are limited to fine-pointer devices.
+- Gesture animations are interruptible and preserve release velocity.
+- `prefers-reduced-motion` disables marquee, parallax, pinned horizontal movement, and carousel auto-rotation.
+- `prefers-reduced-transparency` and `prefers-contrast` provide more legible navigation materials.
