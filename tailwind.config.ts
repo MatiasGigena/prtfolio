@@ -18,6 +18,12 @@ const config = {
         black: '#000000',
         sec: '#ffffff',
       },
+      height: {
+        screen: 'var(--screen-h)',
+      },
+      minHeight: {
+        screen: 'var(--screen-h)',
+      },
       backgroundImage: {
         HKanimate: "url('/huntek/logo-text-animate/W(D).svg')",
         HKtext: "url('/huntek/logo-text/W(D).svg')",

@@ -27,14 +27,18 @@ export default function Reveal({
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once, margin: '-10%' });
   const reduceMotion = useReducedMotion();
-  const transform = direction === 'fade' || reduceMotion ? 'none' : hiddenTransform[direction];
+  const transform = direction === 'fade' ? 'none' : hiddenTransform[direction];
+  const visibleTransform = direction === 'fade' ? 'none' : 'translate3d(0, 0, 0)';
 
   return (
     <div ref={ref} className={className}>
       <motion.div
         initial={{ opacity: 0, transform }}
-        animate={isInView ? { opacity: 1, transform: 'none' } : { opacity: 0, transform }}
-        transition={{ duration: reduceMotion ? 0.2 : 0.45, ease: EASE_OUT }}
+        animate={isInView ? { opacity: 1, transform: visibleTransform } : { opacity: 0, transform }}
+        transition={{
+          opacity: { duration: reduceMotion ? 0.2 : 0.45, ease: EASE_OUT },
+          transform: { duration: reduceMotion ? 0 : 0.45, ease: EASE_OUT },
+        }}
       >
         {children}
       </motion.div>

@@ -1,8 +1,8 @@
 import type {
+  AboutChapter,
   Book,
   NavigationItem,
   PortfolioProject,
-  RichPhrase,
   SkillPlane,
 } from '@/app/types/portfolio';
 
@@ -40,77 +40,88 @@ export const PROJECTS: readonly PortfolioProject[] = [
 ];
 
 export const BOOKS: readonly Book[] = [
-  { id: 1, title: 'Clean Code', image: '/images/cleancode.avif' },
-  { id: 2, title: 'The Pragmatic Programmer', image: '/images/thepragmaticprogrammer.avif' },
-  { id: 3, title: 'Design Patterns', image: '/images/designpatterns.avif' },
-  { id: 4, title: 'Refactoring to Patterns', image: '/images/refactoringtopatterns.avif' },
-  { id: 5, title: "You Don't Know JS Yet", image: '/images/youdontknowjsyet.avif' },
-  { id: 6, title: 'Eloquent JavaScript', image: '/images/eloquentjavascript.avif' },
-  { id: 7, title: 'Structure & Interpretation', image: '/images/structureandinterpretation.avif' },
+  {
+    id: 1,
+    title: 'Clean Code',
+    author: 'Robert C. Martin',
+    image: '/images/cleancode.avif',
+    accent: '#b9c7b3',
+  },
+  {
+    id: 2,
+    title: 'The Pragmatic Programmer',
+    author: 'Andrew Hunt & David Thomas',
+    image: '/images/thepragmaticprogrammer.avif',
+    accent: '#8fa1ae',
+  },
+  {
+    id: 3,
+    title: 'Design Patterns',
+    author: 'Erich Gamma, Richard Helm, Ralph Johnson & John Vlissides',
+    image: '/images/designpatterns.avif',
+    accent: '#6cabc8',
+  },
+  {
+    id: 4,
+    title: 'Refactoring to Patterns',
+    author: 'Joshua Kerievsky',
+    image: '/images/refactoringtopatterns.avif',
+    accent: '#ba4d4d',
+  },
+  {
+    id: 5,
+    title: "You Don't Know JS Yet",
+    author: 'Kyle Simpson',
+    image: '/images/youdontknowjsyet.avif',
+    accent: '#d7a73f',
+  },
+  {
+    id: 6,
+    title: 'Eloquent JavaScript',
+    author: 'Marijn Haverbeke',
+    image: '/images/eloquentjavascript.avif',
+    accent: '#4f7552',
+  },
+  {
+    id: 7,
+    title: 'Structure and Interpretation of Computer Programs',
+    author: 'Harold Abelson & Gerald Jay Sussman',
+    image: '/images/structureandinterpretation.avif',
+    accent: '#8c6b52',
+  },
 ];
 
-export const ABOUT_PHRASES = [
-  [
-    [
-      "I'm ",
-      { emphasis: 'Matias Gigena' },
-      ', your ',
-      { emphasis: 'argentinian' },
-      ' guide through the digital wonderland.',
-    ],
-    ['Crafting the virtual world as a ', { emphasis: 'Front End Developer' }, '.'],
-    [
-      'Over ',
-      { emphasis: '4 years' },
-      ' of ',
-      { emphasis: 'self-driven' },
-      ' learning, building, and shipping real-world projects.',
-    ],
-    ['Currently employed at ', { emphasis: 'UseTeam' }, '.'],
-  ],
-  [
-    [{ emphasis: 'Advanced' }, ' English speaker at ', { emphasis: 'C1' }, ' level.'],
-    [
-      'Validated through international ',
-      { emphasis: 'Certificate in Advanced English' },
-      ' (CAE).',
-    ],
-    [
-      'Enriching experience at ',
-      { emphasis: 'Harrows House International College' },
-      ' in Swanage.',
-    ],
-    ['Proud alumnus of Escuela del Mirador, a ', { emphasis: 'bilingual' }, ' school.'],
-  ],
-  [
-    ["Beyond a developer, I'm a ", { emphasis: 'coding enthusiast' }, ' refining my skills.'],
-    [
-      'Embracing ',
-      { emphasis: 'leadership' },
-      ', ',
-      { emphasis: 'approachability' },
-      ', and ',
-      { emphasis: 'strong social skills' },
-      ' for trust.',
-    ],
-    [
-      'Dedicated ',
-      { emphasis: 'hard worker' },
-      ', pushing limits to ',
-      { emphasis: 'elevate' },
-      ' projects.',
-    ],
-    [
-      'Engaging coding pursuits and a friendly disposition for ',
-      { emphasis: 'impactful contributions' },
-      '.',
-    ],
-  ],
-] as const satisfies readonly (readonly RichPhrase[])[];
-
-export const CONTACT_PHRASE = [
-  [{ emphasis: 'Contact ME.' }],
-] as const satisfies readonly RichPhrase[];
+export const ABOUT_CHAPTERS: readonly AboutChapter[] = [
+  {
+    id: 'craft',
+    eyebrow: '01 / Craft',
+    title: 'I build where design and engineering meet.',
+    body: 'For more than four years, I have learned by shipping—turning rough ideas into responsive products, then refining the details until they feel obvious to use.',
+    details: ['Front-end development', 'Interaction and motion', 'Responsive systems'],
+  },
+  {
+    id: 'method',
+    eyebrow: '02 / Method',
+    title: 'Clarity first. Motion with a reason.',
+    body: 'I like the point where a layout stops being a mockup and starts behaving like a product: clear hierarchy, resilient code, accessible states, and feedback that arrives exactly when it should.',
+    details: ['Purpose before polish', 'Accessible by default', 'Built for real devices'],
+  },
+  {
+    id: 'communication',
+    eyebrow: '03 / Communication',
+    title: 'Technical enough to build it. Human enough to explain it.',
+    body: 'I am based in Buenos Aires and currently work at UseTeam. I collaborate comfortably in Spanish or English, with a C1 level backed by Cambridge CAE and time studying in Swanage, UK.',
+    details: ['Buenos Aires, Argentina', 'Spanish + C1 English', 'Currently at UseTeam'],
+  },
+  {
+    id: 'direction',
+    eyebrow: '04 / Direction',
+    title: 'Still curious. Still shipping.',
+    body: 'I am a self-directed learner who reads, prototypes, and revisits the work. The goal is never more effects for their own sake—it is a stronger product and a better experience.',
+    details: ['Read widely', 'Prototype early', 'Refine relentlessly'],
+    cta: { label: 'Start a conversation', href: '#Contact' },
+  },
+];
 
 export const TECH_COLUMNS = [
   {

@@ -61,7 +61,7 @@ export default function TechStack(): JSX.Element {
       className='min-h-screen w-full bg-white text-sec flex flex-col justify-center items-center'
       aria-label='Technology gallery'
     >
-      <div ref={ref} className='h-[170vh] flex overflow-hidden gap-[6vw] p-[2vw] box-border'>
+      <div ref={ref} className='h-[calc(var(--screen-h)*1.7)] flex overflow-hidden gap-[6vw] p-[2vw] box-border'>
         {TECH_COLUMNS.map((column) => (
           <Column
             key={column.id}

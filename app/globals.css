@@ -5,6 +5,15 @@
 :root {
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  /* svh stays fixed while mobile toolbars collapse, so full-height sections
+     measure the same in every browser instead of tracking the URL bar. */
+  --screen-h: 100vh;
+}
+
+@supports (height: 100svh) {
+  :root {
+    --screen-h: 100svh;
+  }
 }
 
 html {
@@ -21,7 +30,7 @@ body {
 
 .sliderContainer {
   position: absolute;
-  top: calc(100vh - 290px);
+  top: calc(var(--screen-h) - 290px);
 }
 
 .my-image {
@@ -80,26 +89,195 @@ body {
   top: -75%;
 }
 
-.book-card {
+.about-track {
+  scrollbar-width: none;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.about-track::-webkit-scrollbar {
+  display: none;
+}
+
+.about-track:focus-visible {
+  box-shadow: inset 0 0 0 2px rgb(255 255 255 / 65%);
+}
+
+.book-marquee {
+  overflow-x: clip;
+  overflow-y: visible;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+}
+
+.book-marquee-track {
+  display: flex;
+  width: max-content;
+  padding-block: 1.25rem 1.75rem;
+  animation: book-marquee 48s linear infinite;
+}
+
+.book-marquee:hover .book-marquee-track,
+.book-marquee:focus-within .book-marquee-track {
+  animation-play-state: paused;
+}
+
+.book-marquee-group {
+  display: flex;
+  align-items: flex-end;
+}
+
+.book-marquee-group > * {
+  margin-right: 1.25rem;
+}
+
+/* Shift by exactly one group; the copy count is mirrored in BooksCarousel. */
+@keyframes book-marquee {
+  to {
+    transform: translate3d(calc(-100% / 3), 0, 0);
+  }
+}
+
+.shelf-book {
+  width: 6.9rem;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.book-object {
+  position: relative;
+  display: block;
+  width: 6.9rem;
+  height: 10.15rem;
+  transform: rotate(-0.5deg);
+  transform-origin: bottom center;
+  transition: transform 180ms var(--ease-out);
+}
+
+.shelf-book[aria-pressed='true'] .book-object {
+  transform: translate3d(0, -0.35rem, 0) rotate(-1deg);
+}
+
+.shelf-book:focus-visible .book-object,
+.shelf-book:hover .book-object {
+  transform: translate3d(0, -0.9rem, 0) rotate(0deg);
+}
+
+.shelf-book:focus-visible .shelf-book-cover,
+.shelf-book:hover .shelf-book-cover {
   box-shadow:
-    -5px 0 15px rgb(0 0 0 / 30%),
-    5px 0 15px rgb(0 0 0 / 30%),
-    0 10px 30px rgb(0 0 0 / 50%);
+    0 1.6rem 2.2rem rgb(0 0 0 / 46%),
+    0 0.3rem 0.6rem rgb(0 0 0 / 52%);
 }
 
-.carousel-dot {
-  opacity: 0.8;
-  transform: scaleX(0.333);
-  transform-origin: center;
-  transition:
-    transform 180ms var(--ease-out),
-    background-color 180ms ease,
-    opacity 180ms ease;
+.book-board,
+.book-page-edge,
+.shelf-book-cover {
+  position: absolute;
+  display: block;
 }
 
-.carousel-dot.is-active {
-  opacity: 1;
-  transform: scaleX(1);
+.book-board {
+  inset: 0.2rem 0.45rem 0.4rem 0.18rem;
+  transform: translate3d(0.16rem, 0.16rem, 0);
+  border-radius: 0.1rem 0.42rem 0.42rem 0.1rem;
+  filter: brightness(0.62);
+}
+
+.book-page-edge {
+  z-index: 2;
+  border: 1px solid rgb(85 72 55 / 22%);
+  background-color: #eee7d7;
+}
+
+.book-page-edge-right {
+  top: 0.3rem;
+  right: 0;
+  bottom: 0.42rem;
+  width: 0.5rem;
+  clip-path: polygon(0 0, 100% 3%, 100% 97%, 0 100%);
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent 1px,
+    rgb(106 91 69 / 22%) 1px,
+    rgb(106 91 69 / 22%) 2px
+  );
+}
+
+.book-page-edge-bottom {
+  right: 0.44rem;
+  bottom: 0;
+  left: 0.26rem;
+  height: 0.45rem;
+  clip-path: polygon(0 0, 100% 0, 97% 100%, 3% 100%);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 1px,
+    rgb(106 91 69 / 22%) 1px,
+    rgb(106 91 69 / 22%) 2px
+  );
+}
+
+.shelf-book-cover {
+  inset: 0 0.45rem 0.4rem 0;
+  z-index: 3;
+  overflow: hidden;
+  border-radius: 0.1rem 0.42rem 0.42rem 0.1rem;
+  background: #171717;
+  box-shadow:
+    0 0.85rem 1.5rem rgb(0 0 0 / 38%),
+    0 0.15rem 0.35rem rgb(0 0 0 / 45%);
+  transition: box-shadow 180ms var(--ease-out);
+}
+
+.book-cover-hinge,
+.book-cover-light {
+  position: absolute;
+  inset-block: 0;
+  pointer-events: none;
+}
+
+.book-cover-hinge {
+  left: 0.42rem;
+  z-index: 2;
+  width: 1px;
+  background: rgb(0 0 0 / 28%);
+  box-shadow: 1px 0 rgb(255 255 255 / 14%);
+}
+
+.book-cover-light {
+  inset-inline: 0;
+  background: linear-gradient(
+    105deg,
+    rgb(255 255 255 / 14%),
+    transparent 20%,
+    transparent 76%,
+    rgb(0 0 0 / 18%)
+  );
+}
+
+@media (min-width: 768px) {
+  .shelf-book,
+  .book-object {
+    width: 7.4rem;
+  }
+
+  .book-object {
+    height: 11rem;
+  }
+
+  .book-marquee-group > * {
+    margin-right: 1.75rem;
+  }
 }
 
 .contact-field {
@@ -114,6 +292,18 @@ body {
     transform 140ms var(--ease-out),
     color 180ms ease,
     background-color 180ms ease;
+}
+
+/* Compositor-driven so the overlay still clears when the main thread is busy hydrating. */
+.preloader-overlay {
+  height: var(--screen-h);
+  animation: preloader-out var(--preloader-exit) var(--ease-out) var(--preloader-hold) forwards;
+}
+
+@keyframes preloader-out {
+  to {
+    opacity: 0;
+  }
 }
 
 .preloader-icon {
@@ -171,6 +361,30 @@ body {
   }
 }
 
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .about-trigger {
+    height: auto !important;
+  }
+
+  .about-section header {
+    position: relative;
+  }
+
+  .about-track {
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+    margin-top: 0;
+  }
+
+  .about-panel {
+    width: 100% !important;
+    height: auto !important;
+    min-height: calc(var(--screen-h) * 0.85);
+    border-top: 1px solid rgb(255 255 255 / 10%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
     scroll-behavior: auto;
@@ -181,6 +395,15 @@ body {
     animation: none;
   }
 
+  .book-marquee {
+    overflow-x: auto;
+  }
+
+  .book-marquee-track {
+    animation: none;
+  }
+
+  .book-object,
   .mobile-menu,
   .preview-track,
   .project-link h3,

@@ -6,15 +6,17 @@ import Lenis from 'lenis';
 import { useEffect } from 'react';
 
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+const DESKTOP_POINTER_QUERY = '(min-width: 768px) and (hover: hover) and (pointer: fine)';
 
 export default function SmoothScroll(): null {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const reducedMotion = window.matchMedia(REDUCED_MOTION_QUERY);
+    const desktopPointer = window.matchMedia(DESKTOP_POINTER_QUERY);
     let lenis: Lenis | null = null;
 
     const start = (): void => {
-      if (reducedMotion.matches || lenis) return;
+      if (reducedMotion.matches || !desktopPointer.matches || lenis) return;
 
       lenis = new Lenis({
         autoRaf: true,
@@ -31,8 +33,8 @@ export default function SmoothScroll(): null {
       lenis = null;
     };
 
-    const updateMotionPreference = (): void => {
-      if (reducedMotion.matches) {
+    const updateScrollingMode = (): void => {
+      if (reducedMotion.matches || !desktopPointer.matches) {
         stop();
       } else {
         start();
@@ -40,10 +42,12 @@ export default function SmoothScroll(): null {
     };
 
     start();
-    reducedMotion.addEventListener('change', updateMotionPreference);
+    reducedMotion.addEventListener('change', updateScrollingMode);
+    desktopPointer.addEventListener('change', updateScrollingMode);
 
     return () => {
-      reducedMotion.removeEventListener('change', updateMotionPreference);
+      reducedMotion.removeEventListener('change', updateScrollingMode);
+      desktopPointer.removeEventListener('change', updateScrollingMode);
       stop();
     };
   }, []);

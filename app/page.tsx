@@ -1,7 +1,6 @@
 'use client';
 
-import { AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import About from './components/About';
 import BooksCarousel from './components/BooksCarousel';
 import Contact from './components/Contact';
@@ -13,19 +12,12 @@ import SkillsCloud from './components/SkillsCloud';
 import TechStack from './components/TechStack';
 import Reveal from './components/ui/Reveal';
 
-const PRELOADER_VISIBLE_MS = 900;
-
 export default function HomePage(): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const timeout = window.setTimeout(() => setIsLoading(false), PRELOADER_VISIBLE_MS);
-    return () => window.clearTimeout(timeout);
-  }, []);
-
   return (
     <main>
-      <AnimatePresence mode='wait'>{isLoading ? <Preloader /> : null}</AnimatePresence>
+      {isLoading ? <Preloader onFinish={() => setIsLoading(false)} /> : null}
       <Navigation />
       <Hero />
       <section className='min-h-screen w-full bg-black flex flex-col relative justify-start items-start text-white'>

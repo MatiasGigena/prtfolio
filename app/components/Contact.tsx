@@ -21,7 +21,7 @@ export default function Contact(): JSX.Element {
     <Reveal className='w-full' direction='up'>
       <section
         id='Contact'
-        className='text-gray-600 lg:border-0 min-h-screen flex items-center justify-center lg:rounded-b-full lg:border-b-2 border-2 rounded-xl w-full mt-32 lg:mt-0 body-font relative'
+        className='text-gray-600 min-h-screen flex items-center justify-center rounded-b-full border-b-2 w-full body-font relative'
         aria-labelledby='contact-heading'
       >
         <div className='container px-5 border-0 lg:pt-11 lg:pb-4 pt-6 pb-3 mx-auto'>
