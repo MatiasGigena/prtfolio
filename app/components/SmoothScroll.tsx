@@ -52,5 +52,26 @@ export default function SmoothScroll(): null {
     };
   }, []);
 
+  useEffect(() => {
+    const { hash } = window.location;
+    if (!hash) return;
+    const target = document.querySelector(hash);
+    if (!(target instanceof HTMLElement)) return;
+
+    // Pinned sections only get their real height once ScrollTrigger has
+    // measured them, so the browser's initial hash jump lands short.
+    const realign = (): void => {
+      ScrollTrigger.refresh();
+      target.scrollIntoView({ behavior: 'auto', block: 'start' });
+    };
+
+    if (document.readyState === 'complete') {
+      realign();
+      return;
+    }
+    window.addEventListener('load', realign, { once: true });
+    return () => window.removeEventListener('load', realign);
+  }, []);
+
   return null;
 }

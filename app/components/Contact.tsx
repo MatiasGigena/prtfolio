@@ -7,7 +7,7 @@ import Magnetic from './ui/Magnetic';
 import Reveal from './ui/Reveal';
 
 const fieldClassName =
-  'contact-field w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3';
+  'contact-field w-full bg-white/5 rounded border border-white/25 focus:border-white/70 focus:bg-white/10 focus:ring-2 focus:ring-white/20 text-base outline-none text-white py-1 px-3';
 
 export default function Contact(): JSX.Element {
   const [state, handleSubmit] = useForm('mjvqyner');
