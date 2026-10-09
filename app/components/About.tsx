@@ -2,6 +2,7 @@
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowDownRight } from 'lucide-react';
 import { useEffect, useRef, type UIEvent } from 'react';
 import { ABOUT_CHAPTERS } from '@/app/data/portfolio';
 
@@ -91,7 +92,7 @@ export default function About(): JSX.Element {
           tabIndex={0}
           onScroll={updateMobileProgress}
         >
-          {ABOUT_CHAPTERS.map((chapter, index) => (
+          {ABOUT_CHAPTERS.map((chapter) => (
             <article
               key={chapter.id}
               aria-labelledby={`about-${chapter.id}`}
@@ -130,18 +131,11 @@ export default function About(): JSX.Element {
                       className='about-cta pressable mt-9 inline-flex items-center gap-3 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black'
                     >
                       {chapter.cta.label}
-                      <span aria-hidden='true'>↘</span>
+                      <ArrowDownRight className='h-4 w-4' strokeWidth={2.25} aria-hidden='true' />
                     </a>
                   ) : null}
                 </div>
               </div>
-
-              <span
-                aria-hidden='true'
-                className='absolute -bottom-10 right-2 text-[10rem] font-semibold leading-none tracking-[-0.08em] text-white/[0.06] sm:text-[14rem] lg:bottom-6 lg:right-12 lg:text-[19rem]'
-              >
-                {String(index + 1).padStart(2, '0')}
-              </span>
             </article>
           ))}
         </div>
