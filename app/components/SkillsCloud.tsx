@@ -85,7 +85,7 @@ export default function SkillsCloud(): JSX.Element {
           aria-hidden='true'
         >
           {/* Inset by one logo size so percentage positions keep every logo on screen. */}
-          <div className='absolute left-3 top-3 bottom-[calc(44px+0.75rem)] right-[calc(44px+0.75rem)] sm:left-0 sm:top-0 sm:bottom-[70px] sm:right-[70px]'>
+          <div className='absolute left-3 top-3 bottom-[calc(36px+0.75rem)] right-[calc(36px+0.75rem)] xs:bottom-[calc(44px+0.75rem)] xs:right-[calc(44px+0.75rem)] sm:left-0 sm:top-0 sm:bottom-[70px] sm:right-[70px]'>
             {plane.logos.map((logo) => (
               <Image
                 key={logo.alt}
@@ -93,7 +93,7 @@ export default function SkillsCloud(): JSX.Element {
                 alt={logo.alt}
                 width={70}
                 height={70}
-                className={`absolute h-11 w-11 object-contain sm:h-[70px] sm:w-[70px] ${logo.className} ${DARK_LOGO_SOURCES.has(logo.src) ? 'invert hue-rotate-180' : ''}`}
+                className={`absolute h-9 w-9 object-contain xs:h-11 xs:w-11 sm:h-[70px] sm:w-[70px] ${logo.className} ${DARK_LOGO_SOURCES.has(logo.src) ? 'invert hue-rotate-180' : ''}`}
               />
             ))}
           </div>

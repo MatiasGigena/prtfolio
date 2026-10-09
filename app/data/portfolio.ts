@@ -211,12 +211,12 @@ export const SKILL_PLANES: readonly SkillPlane[] = [
       {
         src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg',
         alt: 'GitHub',
-        className: 'left-[5%] top-[8%]',
+        className: 'left-[5%] top-[12%] lg:top-[8%]',
       },
       {
         src: 'https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg',
         alt: 'HTML',
-        className: 'left-[80%] top-[58%] sm:top-[51%]',
+        className: 'left-[100%] top-[58%] sm:left-[80%] sm:top-[51%]',
       },
       {
         src: 'https://www.vectorlogo.zone/logos/w3_css/w3_css-icon.svg',
@@ -249,7 +249,7 @@ export const SKILL_PLANES: readonly SkillPlane[] = [
         alt: 'Framer',
         className: 'left-[65%] top-[85%]',
       },
-      { src: '/images/neptune.png', alt: 'Neptune', className: 'left-[10%] top-[20%]' },
+      { src: '/images/neptune.png', alt: 'Neptune', className: 'left-[12%] top-[22%] lg:left-[10%] lg:top-[20%]' },
       { src: '/images/gremlin.png', alt: 'Gremlin', className: 'left-[88%] top-[30%]' },
     ],
   },
@@ -285,7 +285,7 @@ export const SKILL_PLANES: readonly SkillPlane[] = [
       {
         src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/sequelize/sequelize-original.svg',
         alt: 'Sequelize',
-        className: 'right-[13%] top-[33%]',
+        className: 'right-[22%] top-[33%] lg:right-[13%]',
       },
       {
         src: 'https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg',
