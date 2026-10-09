@@ -280,12 +280,12 @@ export const SKILL_PLANES: readonly SkillPlane[] = [
       {
         src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg',
         alt: 'Express',
-        className: 'left-[29%] top-[18%]',
+        className: 'left-[33%] top-[18%] lg:left-[29%]',
       },
       {
         src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/sequelize/sequelize-original.svg',
         alt: 'Sequelize',
-        className: 'right-[22%] top-[33%] lg:right-[13%]',
+        className: 'right-[18%] top-[33%] sm:right-[22%] lg:right-[13%]',
       },
       {
         src: 'https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg',
