@@ -123,6 +123,15 @@ export const ABOUT_CHAPTERS: readonly AboutChapter[] = [
   },
 ];
 
+// Logos drawn in black or dark grey; they are lightened so they stay visible on black sections.
+export const DARK_LOGO_SOURCES: ReadonlySet<string> = new Set([
+  'https://raw.githubusercontent.com/devicons/devicon/master/icons/wordpress/wordpress-plain.svg',
+  'https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg',
+  'https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-line.svg',
+  'https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg',
+  'https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg',
+]);
+
 export const TECH_COLUMNS = [
   {
     id: 'left',
@@ -207,7 +216,7 @@ export const SKILL_PLANES: readonly SkillPlane[] = [
       {
         src: 'https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg',
         alt: 'HTML',
-        className: 'left-[80%] top-[51%]',
+        className: 'left-[80%] top-[58%] sm:top-[51%]',
       },
       {
         src: 'https://www.vectorlogo.zone/logos/w3_css/w3_css-icon.svg',

@@ -3,7 +3,7 @@
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
-import { TECH_COLUMNS } from '@/app/data/portfolio';
+import { DARK_LOGO_SOURCES, TECH_COLUMNS } from '@/app/data/portfolio';
 import useViewportSize from '@/hooks/useViewportSize';
 
 interface ColumnProps {
@@ -30,7 +30,7 @@ function Column({
   return (
     <motion.div
       style={{ transform }}
-      className='tech-column w-1/3 h-full relative flex flex-col gap-[2vw] min-w-[100px] sm:min-w-[250px] will-change-transform'
+      className='tech-column w-1/3 h-full relative flex flex-col gap-[2vw] min-w-[64px] xs:min-w-[100px] sm:min-w-[250px] will-change-transform'
     >
       {images.map((src) => (
         <div key={src} className='h-full grid place-items-center w-full relative'>
@@ -39,7 +39,7 @@ function Column({
             height={100}
             width={100}
             alt='Technology logo'
-            className='h-[100px] w-[100px] object-contain'
+            className={`h-16 w-16 object-contain xs:h-[100px] xs:w-[100px] ${DARK_LOGO_SOURCES.has(src) ? 'invert hue-rotate-180' : ''}`}
           />
         </div>
       ))}

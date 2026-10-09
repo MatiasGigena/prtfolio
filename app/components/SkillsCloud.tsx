@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, type PointerEvent } from 'react';
-import { SKILL_PLANES } from '@/app/data/portfolio';
+import { DARK_LOGO_SOURCES, SKILL_PLANES } from '@/app/data/portfolio';
 
 const SPRING_RESPONSE = 0.12;
 
@@ -72,7 +72,7 @@ export default function SkillsCloud(): JSX.Element {
     <section
       onPointerMove={handlePointerMove}
       onPointerLeave={reset}
-      className='h-screen relative w-full mt-28 text-white'
+      className='h-screen relative w-full mt-28 overflow-hidden text-white'
       aria-labelledby='skills-heading'
     >
       {SKILL_PLANES.map((plane, planeIndex) => (
@@ -84,19 +84,22 @@ export default function SkillsCloud(): JSX.Element {
           className='absolute inset-0 will-change-transform'
           aria-hidden='true'
         >
-          {plane.logos.map((logo) => (
-            <Image
-              key={logo.alt}
-              src={logo.src}
-              alt={logo.alt}
-              width={70}
-              height={70}
-              className={`absolute h-[70px] w-[70px] object-contain ${logo.className}`}
-            />
-          ))}
+          {/* Inset by one logo size so percentage positions keep every logo on screen. */}
+          <div className='absolute left-3 top-3 bottom-[calc(44px+0.75rem)] right-[calc(44px+0.75rem)] sm:left-0 sm:top-0 sm:bottom-[70px] sm:right-[70px]'>
+            {plane.logos.map((logo) => (
+              <Image
+                key={logo.alt}
+                src={logo.src}
+                alt={logo.alt}
+                width={70}
+                height={70}
+                className={`absolute h-11 w-11 object-contain sm:h-[70px] sm:w-[70px] ${logo.className} ${DARK_LOGO_SOURCES.has(logo.src) ? 'invert hue-rotate-180' : ''}`}
+              />
+            ))}
+          </div>
         </div>
       ))}
-      <div className='w-full h-full flex flex-col justify-center items-center'>
+      <div className='relative z-10 w-full h-full flex flex-col justify-center items-center'>
         <h2 id='skills-heading' className='text-4xl text-white'>
           My tech stack
         </h2>

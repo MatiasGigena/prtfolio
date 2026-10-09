@@ -22,7 +22,7 @@ export default function HomePage(): JSX.Element {
       <Hero />
       <section className='min-h-screen w-full bg-black flex flex-col relative justify-start items-start text-white'>
         <Projects />
-        <div className='bg-black h-full w-full'>
+        <div className='bg-black h-full w-full overflow-x-clip'>
           <Reveal direction='right'>
             <TechStack />
           </Reveal>
