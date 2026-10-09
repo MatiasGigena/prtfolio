@@ -89,6 +89,32 @@ body {
   top: -75%;
 }
 
+/* Same motion as the JS fallback: progress 0 -> 1 over the gallery's 'cover'
+   range moves each column down by its multiplier times the viewport height. */
+.tech-gallery.is-scroll-driven {
+  view-timeline-name: --tech-gallery;
+}
+
+.tech-gallery.is-scroll-driven .tech-column {
+  animation: tech-parallax linear both;
+  animation-timeline: --tech-gallery;
+}
+
+@keyframes tech-parallax {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, calc(var(--screen-h) * var(--tech-parallax)), 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-gallery.is-scroll-driven .tech-column {
+    animation: none;
+  }
+}
+
 .about-track {
   scrollbar-width: none;
   overscroll-behavior-inline: contain;
