@@ -94,34 +94,43 @@ export const BOOKS: readonly Book[] = [
 export const ABOUT_CHAPTERS: readonly AboutChapter[] = [
   {
     id: 'craft',
-    eyebrow: '01 / Craft',
-    title: 'I build where design and engineering meet.',
-    body: 'For more than four years, I have learned by shipping—turning rough ideas into responsive products, then refining the details until they feel obvious to use.',
+    eyebrow: 'Craft',
+    title: '4+ years.',
+    body: 'Front-end developer focused on interaction and motion.',
     details: ['Front-end development', 'Interaction and motion', 'Responsive systems'],
   },
   {
     id: 'method',
-    eyebrow: '02 / Method',
-    title: 'Clarity first. Motion with a reason.',
-    body: 'I like the point where a layout stops being a mockup and starts behaving like a product: clear hierarchy, resilient code, accessible states, and feedback that arrives exactly when it should.',
+    eyebrow: 'Method',
+    title: 'Structure, then motion.',
+    body: 'Clear layouts first, polish last, accessible throughout.',
     details: ['Purpose before polish', 'Accessible by default', 'Built for real devices'],
   },
   {
     id: 'communication',
-    eyebrow: '03 / Communication',
-    title: 'Technical enough to build it. Human enough to explain it.',
-    body: 'I am based in Buenos Aires and currently work at UseTeam. I collaborate comfortably in Spanish or English, with a C1 level backed by Cambridge CAE and time studying in Swanage, UK.',
-    details: ['Buenos Aires, Argentina', 'Spanish + C1 English', 'Currently at UseTeam'],
+    eyebrow: 'Communication',
+    title: 'Buenos Aires.',
+    body: 'Working at UseTeam · Spanish and English (C1).',
+    details: ['Buenos Aires', 'Spanish + English', 'UseTeam'],
   },
   {
     id: 'direction',
-    eyebrow: '04 / Direction',
-    title: 'Still curious. Still shipping.',
-    body: 'I am a self-directed learner who reads, prototypes, and revisits the work. The goal is never more effects for their own sake—it is a stronger product and a better experience.',
+    eyebrow: 'Direction',
+    title: 'Still learning.',
+    body: 'Reading, prototyping, refining.',
     details: ['Read widely', 'Prototype early', 'Refine relentlessly'],
     cta: { label: 'Start a conversation', href: '#Contact' },
   },
 ];
+
+// Logos drawn in black or dark grey; they are lightened so they stay visible on black sections.
+export const DARK_LOGO_SOURCES: ReadonlySet<string> = new Set([
+  'https://raw.githubusercontent.com/devicons/devicon/master/icons/wordpress/wordpress-plain.svg',
+  'https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg',
+  'https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-line.svg',
+  'https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg',
+  'https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg',
+]);
 
 export const TECH_COLUMNS = [
   {
@@ -202,12 +211,12 @@ export const SKILL_PLANES: readonly SkillPlane[] = [
       {
         src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg',
         alt: 'GitHub',
-        className: 'left-[5%] top-[8%]',
+        className: 'left-[5%] top-[12%] lg:top-[8%]',
       },
       {
         src: 'https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg',
         alt: 'HTML',
-        className: 'left-[80%] top-[51%]',
+        className: 'left-[100%] top-[58%] sm:left-[80%] sm:top-[51%]',
       },
       {
         src: 'https://www.vectorlogo.zone/logos/w3_css/w3_css-icon.svg',
@@ -240,7 +249,7 @@ export const SKILL_PLANES: readonly SkillPlane[] = [
         alt: 'Framer',
         className: 'left-[65%] top-[85%]',
       },
-      { src: '/images/neptune.png', alt: 'Neptune', className: 'left-[10%] top-[20%]' },
+      { src: '/images/neptune.png', alt: 'Neptune', className: 'left-[12%] top-[22%] lg:left-[10%] lg:top-[20%]' },
       { src: '/images/gremlin.png', alt: 'Gremlin', className: 'left-[88%] top-[30%]' },
     ],
   },
@@ -271,12 +280,12 @@ export const SKILL_PLANES: readonly SkillPlane[] = [
       {
         src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg',
         alt: 'Express',
-        className: 'left-[29%] top-[18%]',
+        className: 'left-[33%] top-[18%] lg:left-[29%]',
       },
       {
         src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/sequelize/sequelize-original.svg',
         alt: 'Sequelize',
-        className: 'right-[13%] top-[33%]',
+        className: 'right-[18%] top-[33%] sm:right-[22%] lg:right-[13%]',
       },
       {
         src: 'https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg',

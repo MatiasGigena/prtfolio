@@ -89,6 +89,33 @@ body {
   top: -75%;
 }
 
+/* Same motion as the JS fallback: progress 0 -> 1 over the gallery's 'cover'
+   range moves each column down by its multiplier times the viewport height. */
+.tech-gallery.is-scroll-driven {
+  view-timeline-name: --tech-gallery;
+}
+
+.tech-gallery.is-scroll-driven .tech-column {
+  animation: tech-parallax linear both;
+  animation-timeline: --tech-gallery;
+}
+
+@keyframes tech-parallax {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, calc(var(--screen-h) * var(--tech-parallax)), 0);
+  }
+}
+
+/* Without parallax the columns sit at the top so every logo is visible.
+   !important clears any transform the JS fallback set before the mode was known. */
+.tech-gallery.is-static .tech-column {
+  top: 0;
+  transform: none !important;
+}
+
 .about-track {
   scrollbar-width: none;
   overscroll-behavior-inline: contain;
@@ -153,6 +180,7 @@ body {
 
 .book-object {
   position: relative;
+  isolation: isolate;
   display: block;
   width: 6.9rem;
   height: 10.15rem;
@@ -184,11 +212,14 @@ body {
   display: block;
 }
 
+/* A filter or 3D transform here makes Safari paint the board over the cover,
+   so the darker shade is mixed in directly and the layering is explicit. */
 .book-board {
   inset: 0.2rem 0.45rem 0.4rem 0.18rem;
-  transform: translate3d(0.16rem, 0.16rem, 0);
+  z-index: 1;
+  transform: translate(0.16rem, 0.16rem);
   border-radius: 0.1rem 0.42rem 0.42rem 0.1rem;
-  filter: brightness(0.62);
+  background-color: color-mix(in srgb, var(--book-accent) 62%, #000);
 }
 
 .book-page-edge {

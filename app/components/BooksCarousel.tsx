@@ -12,7 +12,7 @@ export default function BooksCarousel(): JSX.Element {
 
   return (
     <section
-      className='relative w-full overflow-hidden bg-[#050505] px-5 py-20 text-white sm:px-8 md:py-24 lg:px-12 xl:px-16'
+      className='relative w-full overflow-hidden bg-black px-5 py-20 text-white sm:px-8 md:py-24 lg:px-12 xl:px-16'
       aria-labelledby='books-heading'
     >
       <div className='mx-auto w-full max-w-[90rem]'>
