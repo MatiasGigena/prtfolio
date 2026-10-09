@@ -54,7 +54,7 @@ export default function About(): JSX.Element {
   return (
     <section
       id='About'
-      className='about-section w-full overflow-hidden bg-[#050505] text-white'
+      className='about-section w-full overflow-hidden bg-black text-white'
       aria-labelledby='about-heading'
     >
       <div ref={triggerRef} className='about-trigger relative lg:h-screen'>
