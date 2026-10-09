@@ -180,6 +180,7 @@ body {
 
 .book-object {
   position: relative;
+  isolation: isolate;
   display: block;
   width: 6.9rem;
   height: 10.15rem;
@@ -211,11 +212,14 @@ body {
   display: block;
 }
 
+/* A filter or 3D transform here makes Safari paint the board over the cover,
+   so the darker shade is mixed in directly and the layering is explicit. */
 .book-board {
   inset: 0.2rem 0.45rem 0.4rem 0.18rem;
-  transform: translate3d(0.16rem, 0.16rem, 0);
+  z-index: 1;
+  transform: translate(0.16rem, 0.16rem);
   border-radius: 0.1rem 0.42rem 0.42rem 0.1rem;
-  filter: brightness(0.62);
+  background-color: color-mix(in srgb, var(--book-accent) 62%, #000);
 }
 
 .book-page-edge {
