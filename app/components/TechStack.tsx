@@ -58,7 +58,7 @@ export default function TechStack(): JSX.Element {
 
   return (
     <section
-      className='min-h-screen w-full bg-white text-sec flex flex-col justify-center items-center'
+      className='min-h-screen w-full bg-black text-sec flex flex-col justify-center items-center'
       aria-label='Technology gallery'
     >
       <div ref={ref} className='h-[calc(var(--screen-h)*1.7)] flex overflow-hidden gap-[6vw] p-[2vw] box-border'>

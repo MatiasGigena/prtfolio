@@ -72,7 +72,7 @@ export default function SkillsCloud(): JSX.Element {
     <section
       onPointerMove={handlePointerMove}
       onPointerLeave={reset}
-      className='h-screen relative w-full mt-28 text-black'
+      className='h-screen relative w-full mt-28 text-white'
       aria-labelledby='skills-heading'
     >
       {SKILL_PLANES.map((plane, planeIndex) => (
@@ -97,10 +97,10 @@ export default function SkillsCloud(): JSX.Element {
         </div>
       ))}
       <div className='w-full h-full flex flex-col justify-center items-center'>
-        <h2 id='skills-heading' className='text-4xl text-black'>
+        <h2 id='skills-heading' className='text-4xl text-white'>
           My tech stack
         </h2>
-        <p className='opacity-70 text-black'>Not just front-end.</p>
+        <p className='opacity-70 text-white'>Not just front-end.</p>
       </div>
     </section>
   );
