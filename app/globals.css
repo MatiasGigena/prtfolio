@@ -109,10 +109,11 @@ body {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .tech-gallery.is-scroll-driven .tech-column {
-    animation: none;
-  }
+/* Without parallax the columns sit at the top so every logo is visible.
+   !important clears any transform the JS fallback set before the mode was known. */
+.tech-gallery.is-static .tech-column {
+  top: 0;
+  transform: none !important;
 }
 
 .about-track {

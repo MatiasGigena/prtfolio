@@ -11,15 +11,19 @@ interface ColumnProps {
   readonly multiplier: number;
   readonly scrollProgress: MotionValue<number>;
   readonly viewportHeight: number;
-  readonly reduceMotion: boolean | null;
-  readonly scrollDriven: boolean;
+  readonly mode: ParallaxMode;
 }
 
-// Browsers with scroll-driven animations run the parallax on the compositor,
-// in step with native scrolling. Driving it from JS lags a frame behind on
-// mobile touch scrolling, which makes the columns jitter.
-function supportsScrollDrivenAnimations(): boolean {
-  return typeof CSS !== 'undefined' && CSS.supports('animation-timeline: view()');
+// 'scroll-driven' runs the parallax on the compositor, in step with native
+// scrolling. Driving it from JS ('js') lags a frame behind on touch scrolling
+// and makes the columns jitter, so touch devices without scroll-driven
+// animations (iOS < 26, Firefox for Android) get no parallax ('static').
+type ParallaxMode = 'scroll-driven' | 'js' | 'static';
+
+function getParallaxMode(reduceMotion: boolean | null): ParallaxMode {
+  if (reduceMotion) return 'static';
+  if (CSS.supports('animation-timeline: view()')) return 'scroll-driven';
+  return window.matchMedia('(hover: none) and (pointer: coarse)').matches ? 'static' : 'js';
 }
 
 function Column({
@@ -27,22 +31,22 @@ function Column({
   multiplier,
   scrollProgress,
   viewportHeight,
-  reduceMotion,
-  scrollDriven,
+  mode,
 }: ColumnProps): JSX.Element {
-  const transform = useTransform(scrollProgress, (progress) =>
-    reduceMotion
-      ? 'translate3d(0, 0px, 0)'
-      : `translate3d(0, ${progress * viewportHeight * multiplier}px, 0)`,
+  const transform = useTransform(
+    scrollProgress,
+    (progress) => `translate3d(0, ${progress * viewportHeight * multiplier}px, 0)`,
   );
+  const style: MotionStyle =
+    mode === 'js'
+      ? { transform }
+      : mode === 'scroll-driven'
+        ? ({ '--tech-parallax': multiplier } as MotionStyle)
+        : {};
 
   return (
     <motion.div
-      style={
-        scrollDriven
-          ? ({ '--tech-parallax': multiplier } as MotionStyle)
-          : { transform }
-      }
+      style={style}
       className='tech-column w-1/3 h-full relative flex flex-col gap-[2vw] min-w-[64px] xs:min-w-[100px] sm:min-w-[250px] will-change-transform'
     >
       {images.map((src) => (
@@ -64,8 +68,8 @@ export default function TechStack(): JSX.Element {
   const { height } = useViewportSize();
   const ref = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
-  const [scrollDriven, setScrollDriven] = useState(false);
-  useEffect(() => setScrollDriven(supportsScrollDrivenAnimations()), []);
+  const [mode, setMode] = useState<ParallaxMode>('js');
+  useEffect(() => setMode(getParallaxMode(reduceMotion)), [reduceMotion]);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],
@@ -78,7 +82,7 @@ export default function TechStack(): JSX.Element {
     >
       <div
         ref={ref}
-        className={`tech-gallery h-[calc(var(--screen-h)*1.7)] flex overflow-hidden gap-[6vw] p-[2vw] box-border ${scrollDriven ? 'is-scroll-driven' : ''}`}
+        className={`tech-gallery h-[calc(var(--screen-h)*1.7)] flex overflow-hidden gap-[6vw] p-[2vw] box-border ${mode === 'scroll-driven' ? 'is-scroll-driven' : ''} ${mode === 'static' ? 'is-static' : ''}`}
       >
         {TECH_COLUMNS.map((column) => (
           <Column
@@ -87,8 +91,7 @@ export default function TechStack(): JSX.Element {
             multiplier={column.multiplier}
             scrollProgress={scrollYProgress}
             viewportHeight={height}
-            reduceMotion={reduceMotion}
-            scrollDriven={scrollDriven}
+            mode={mode}
           />
         ))}
       </div>
