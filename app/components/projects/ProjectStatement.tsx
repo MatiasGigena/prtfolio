@@ -5,7 +5,7 @@ import { useEffect, useRef, type JSX } from 'react';
 import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
 import { WORK_STATEMENT } from '@/app/data/portfolio';
 
-/** Brings the letters of `container` to full strength one by one as it scrolls through; returns a cleanup. */
+/** Brings the letters of `container` to full strength one by one as it scrolls through. */
 function revealLettersOnScroll(container: HTMLElement): () => void {
   ensureScrollTrigger();
   const tween = gsap.to(container.querySelectorAll<HTMLElement>('[data-letter]'), {

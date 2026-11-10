@@ -10,7 +10,7 @@ const DESKTOP_POINTER_QUERY = `(min-width: 768px) and ${FINE_POINTER_QUERY}`;
 /**
  * Sends clicks on same-page links (#work, #about...) through Lenis. Lenis's own `anchors` option
  * lets the browser jump first and then animates back from the old position, so the default is
- * prevented here and the hash is recorded by hand. Returns a function that stops listening.
+ * prevented here and the hash is recorded by hand.
  */
 function glideToAnchors(lenis: Lenis): () => void {
   const handleClick = (event: MouseEvent): void => {
@@ -30,7 +30,7 @@ function glideToAnchors(lenis: Lenis): () => void {
   return () => document.removeEventListener('click', handleClick);
 }
 
-/** Starts Lenis and wires it to ScrollTrigger and section links; returns a function that stops it. */
+/** Starts Lenis and wires it to ScrollTrigger and section links. */
 function startLenis(): () => void {
   const ScrollTrigger = ensureScrollTrigger();
   const lenis = new Lenis({
@@ -51,7 +51,7 @@ function startLenis(): () => void {
 
 /**
  * Runs Lenis while the screen is wide, the pointer is a mouse and the reader has not asked for
- * reduced motion, starting and stopping it as those change. Returns a function that tears it down.
+ * reduced motion, starting and stopping it as those change.
  */
 function syncSmoothScrolling(): () => void {
   const reducedMotion = window.matchMedia(REDUCED_MOTION_QUERY);

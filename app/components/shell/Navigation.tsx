@@ -21,7 +21,7 @@ function setBarVisible(bar: HTMLElement, visible: boolean, reduceMotion: boolean
   });
 }
 
-/** Hides the bar once the first screen has mostly scrolled away; returns a cleanup. */
+/** Hides the bar once the first screen has mostly scrolled away. */
 function hideOnScroll(bar: HTMLElement, reduceMotion: boolean): () => void {
   const trigger = ensureScrollTrigger().create({
     trigger: document.documentElement,

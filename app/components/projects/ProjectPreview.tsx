@@ -35,7 +35,7 @@ interface PointerFollowTarget {
   readonly duration: number;
 }
 
-/** Centres each target on the pointer and makes it trail the pointer around the window; returns a cleanup. */
+/** Centres each target on the pointer and makes it trail the pointer around the window. */
 function followPointer(targets: readonly PointerFollowTarget[]): () => void {
   const elements = targets.map(({ element }) => element);
   const followers = targets.map(({ element, duration }) => createFollower(element, duration));

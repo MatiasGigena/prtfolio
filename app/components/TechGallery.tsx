@@ -85,7 +85,7 @@ interface ParallaxColumn {
 /**
  * The JS fallback for the parallax: the same motion as the CSS scroll-driven version, where
  * each column moves down by its multiplier times the viewport height while the gallery crosses
- * the screen. Returns a function that removes it.
+ * the screen.
  */
 function scrubColumns(gallery: HTMLElement, columns: readonly ParallaxColumn[]): () => void {
   ensureScrollTrigger();

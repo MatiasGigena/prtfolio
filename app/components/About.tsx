@@ -17,7 +17,7 @@ interface Focus {
 
 /**
  * Reports which block of `list` is being read: the one crossing the middle of the viewport.
- * Blocks are marked with `data-block` and numbered in document order. Returns a cleanup.
+ * Blocks are marked with `data-block` and numbered in document order.
  */
 function trackReadingPosition(list: HTMLElement, onRead: (blockIndex: number) => void): () => void {
   const blockIndex = new Map<Element, number>();

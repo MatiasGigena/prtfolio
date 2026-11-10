@@ -19,7 +19,7 @@ type Direction = 1 | -1;
 
 /**
  * Scrolls the two copies of the ticker text sideways forever, in the direction
- * `getDirection` reports on each frame. Returns a function that stops the loop.
+ * `getDirection` reports on each frame.
  */
 function loopTicker(copies: readonly HTMLElement[], getDirection: () => Direction): () => void {
   let xPercent = 0;
@@ -57,7 +57,7 @@ function shiftWithScroll(
   });
 }
 
-/** Starts the ticker loop and its scroll shift; returns a function that stops both. */
+/** Starts the ticker loop and its scroll shift. */
 function startTicker(slider: HTMLElement, copies: readonly HTMLElement[]): () => void {
   // The text runs left until the page first scrolls.
   let direction: Direction = -1;

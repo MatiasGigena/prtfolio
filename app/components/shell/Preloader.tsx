@@ -9,9 +9,9 @@ const COLUMN_COUNT = 20;
 const HOLD_MS = 2000;
 const EXIT_MS = 300;
 
-// Both the fade-out and the unmount are anchored to mount rather than to
-// navigation start, so a slow hydration delays the preloader instead of
-// eating the window in which its grid is hoverable.
+// The fade-out is a CSS animation that starts at first paint, so the overlay clears even while
+// hydration is slow. The unmount timer starts later, at mount, so the node is only removed after
+// the fade has finished.
 const overlayStyle: CSSProperties = {
   '--preloader-hold': `${HOLD_MS}ms`,
   '--preloader-exit': `${EXIT_MS}ms`,

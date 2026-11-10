@@ -1,8 +1,8 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// GSAP drives everything tied to scroll position or the pointer; Framer Motion handles
-// entrance and presence transitions.
+// GSAP drives scroll-linked motion and pointer following; see the README's motion section for
+// what Framer Motion, CSS and the Web Animations API handle instead.
 export { gsap };
 
 /**
@@ -18,7 +18,6 @@ export function ensureScrollTrigger(): typeof ScrollTrigger {
 /** The ease GSAP tweens share; it is close to EASE_OUT in feel. */
 export const GSAP_EASE_OUT = 'power3.out';
 
-/** Moves an element to a translation, easing over `duration` seconds and retargeting smoothly. */
 export type Follower = (x: number, y: number) => void;
 
 /** Makes `element` trail the offsets it is given, taking `duration` seconds to catch up. */

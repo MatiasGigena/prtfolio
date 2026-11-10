@@ -13,7 +13,7 @@ interface MagneticProps {
   readonly children: ReactNode;
 }
 
-/** Makes `element` lean toward the pointer while it hovers; returns a cleanup. */
+/** Makes `element` lean toward the pointer while it hovers. */
 function magnetize(element: HTMLElement): () => void {
   const follow = createFollower(element, FOLLOW_DURATION);
   const handlePointerMove = (event: PointerEvent): void => {
