@@ -12,7 +12,7 @@ const EXIT_MS = 300;
 // The fade-out is a CSS animation that starts at first paint, so the overlay clears even while
 // hydration is slow. The unmount timer starts later, at mount, so the node is only removed after
 // the fade has finished.
-const overlayStyle: CSSProperties = {
+const OVERLAY_STYLE: CSSProperties = {
   '--preloader-hold': `${HOLD_MS}ms`,
   '--preloader-exit': `${EXIT_MS}ms`,
 };
@@ -48,7 +48,7 @@ export default function Preloader(): JSX.Element | null {
 
   return (
     <div
-      style={overlayStyle}
+      style={OVERLAY_STYLE}
       className='preloader-overlay fixed inset-0 z-50 flex w-full items-center justify-center bg-black text-white'
     >
       <p className='flex flex-col items-center w-full'>

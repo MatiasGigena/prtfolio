@@ -27,7 +27,7 @@ describe('TechGallery', () => {
     render(<TechGallery />);
 
     expect(gallery()).toHaveAttribute('data-parallax', 'scroll-driven');
-    expect(columns()[1]?.style.getPropertyValue('--tech-parallax')).toBe('2.3');
+    expect(columns()[1]?.style.getPropertyValue('--tech-travel-screens')).toBe('2.3');
   });
 
   it('drives the parallax from JS on desktops without scroll-driven animations', () => {

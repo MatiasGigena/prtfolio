@@ -13,7 +13,7 @@ interface RevealProps {
   readonly from?: RevealOrigin;
 }
 
-const offset: Record<RevealOrigin, string> = {
+const ORIGIN_OFFSET: Record<RevealOrigin, string> = {
   right: 'translate3d(8%, 0, 0)',
   below: 'translate3d(0, 1.5rem, 0)',
 };
@@ -23,7 +23,7 @@ export default function Reveal({ children, className, from }: RevealProps): JSX.
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-10%' });
   const reduceMotion = useReducedMotion();
-  const hidden = { opacity: 0, transform: from ? offset[from] : 'none' };
+  const hidden = { opacity: 0, transform: from ? ORIGIN_OFFSET[from] : 'none' };
   const shown = { opacity: 1, transform: from ? 'translate3d(0, 0, 0)' : 'none' };
 
   return (

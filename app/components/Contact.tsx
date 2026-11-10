@@ -13,9 +13,9 @@ import {
 } from './ui/Icons';
 import Magnetic from './ui/Magnetic';
 
-const fieldClassName =
+const FIELD_CLASS =
   'contact-field w-full bg-white/5 rounded border border-white/25 focus:border-white/70 focus:bg-white/10 focus:ring-2 focus:ring-white/20 text-base outline-none text-white py-1 px-3';
-const fieldErrorClassName = 'mt-1 text-sm text-red-300';
+const FIELD_ERROR_CLASS = 'mt-1 text-sm text-red-300';
 
 interface SocialBrand {
   readonly label: string;
@@ -66,7 +66,7 @@ export default function Contact(): JSX.Element {
                 id='name'
                 name='name'
                 autoComplete='name'
-                className={`${fieldClassName} leading-8`}
+                className={`${FIELD_CLASS} leading-8`}
               />
             </Field>
             <Field id='email' label='Email' className='w-1/2' errors={state.errors}>
@@ -76,7 +76,7 @@ export default function Contact(): JSX.Element {
                 id='email'
                 name='email'
                 autoComplete='email'
-                className={`${fieldClassName} leading-8`}
+                className={`${FIELD_CLASS} leading-8`}
               />
             </Field>
             <Field id='message' label='Message' className='w-full' errors={state.errors}>
@@ -84,7 +84,7 @@ export default function Contact(): JSX.Element {
                 required
                 id='message'
                 name='message'
-                className={`${fieldClassName} h-32 resize-none leading-6`}
+                className={`${FIELD_CLASS} h-32 resize-none leading-6`}
               />
             </Field>
             <div className='p-2 w-full flex justify-center'>
@@ -151,7 +151,7 @@ function Field({ id, label, className, errors, children }: FieldProps): JSX.Elem
         {label}
       </label>
       {children}
-      <ValidationError prefix={label} field={id} errors={errors} className={fieldErrorClassName} />
+      <ValidationError prefix={label} field={id} errors={errors} className={FIELD_ERROR_CLASS} />
     </div>
   );
 }

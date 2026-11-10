@@ -13,7 +13,7 @@ interface TechColumn {
   /** How far above the gallery the column starts, so its logos travel through view. */
   readonly offset: string;
   /** Viewport heights the column travels while the gallery scrolls past; columns differ to create depth. */
-  readonly multiplier: number;
+  readonly travelScreens: number;
   readonly logos: readonly TechLogo[];
 }
 
@@ -21,7 +21,7 @@ const TECH_COLUMNS: readonly TechColumn[] = [
   {
     id: 'left',
     offset: '-55%',
-    multiplier: 2,
+    travelScreens: 2,
     logos: [
       TECH_LOGOS.javascript,
       TECH_LOGOS.typescript,
@@ -36,7 +36,7 @@ const TECH_COLUMNS: readonly TechColumn[] = [
   {
     id: 'center',
     offset: '-78%',
-    multiplier: 2.3,
+    travelScreens: 2.3,
     logos: [
       TECH_LOGOS.express,
       TECH_LOGOS.sequelize,
@@ -51,7 +51,7 @@ const TECH_COLUMNS: readonly TechColumn[] = [
   {
     id: 'right',
     offset: '-75%',
-    multiplier: 2.5,
+    travelScreens: 2.5,
     logos: [
       TECH_LOGOS.postman,
       TECH_LOGOS.git,
@@ -79,19 +79,19 @@ function getParallaxMode(reduceMotion: boolean | null): ParallaxMode {
 
 interface ParallaxColumn {
   readonly element: HTMLElement;
-  readonly multiplier: number;
+  readonly travelScreens: number;
 }
 
 /**
  * The JS fallback for the parallax: the same motion as the CSS scroll-driven version, where
- * each column moves down by its multiplier times the viewport height while the gallery crosses
+ * each column moves down travelScreens viewport heights while the gallery crosses
  * the screen.
  */
 function scrubColumns(gallery: HTMLElement, columns: readonly ParallaxColumn[]): () => void {
   ensureScrollTrigger();
-  const tweens = columns.map(({ element, multiplier }) =>
+  const tweens = columns.map(({ element, travelScreens }) =>
     gsap.to(element, {
-      y: () => window.innerHeight * multiplier,
+      y: () => window.innerHeight * travelScreens,
       ease: 'none',
       scrollTrigger: {
         trigger: gallery,
@@ -137,10 +137,10 @@ export default function TechGallery(): JSX.Element {
           <div
             key={column.id}
             ref={(element) => {
-              columnsRef.current[index] = element && { element, multiplier: column.multiplier };
+              columnsRef.current[index] = element && { element, travelScreens: column.travelScreens };
             }}
             // Without parallax the columns sit at the top so every logo is visible.
-            style={{ '--tech-parallax': column.multiplier, top: mode === 'static' ? 0 : column.offset }}
+            style={{ '--tech-travel-screens': column.travelScreens, top: mode === 'static' ? 0 : column.offset }}
             className='tech-column w-1/3 h-full relative flex flex-col gap-[2vw] min-w-[64px] xs:min-w-[100px] sm:min-w-[250px] will-change-transform'
           >
             {column.logos.map((logo) => (

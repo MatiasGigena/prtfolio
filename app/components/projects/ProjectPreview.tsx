@@ -16,7 +16,7 @@ interface ProjectPreviewProps {
 
 type LayerState = 'hidden' | 'visible';
 
-const previewVariants: Variants = {
+const PREVIEW_VARIANTS: Variants = {
   hidden: { opacity: 0, scale: 0.96 },
   visible: {
     opacity: 1,
@@ -27,7 +27,7 @@ const previewVariants: Variants = {
 
 // Seconds each layer takes to catch up with the pointer: the label leads and the image trails.
 const IMAGE_FOLLOW_DURATION = 0.32;
-const CURSOR_FOLLOW_DURATION = 0.2;
+const DISC_FOLLOW_DURATION = 0.2;
 const LABEL_FOLLOW_DURATION = 0.16;
 
 interface PointerFollowTarget {
@@ -58,20 +58,20 @@ function followPointer(targets: readonly PointerFollowTarget[]): () => void {
  */
 export default function ProjectPreview({ index, visible, projects }: ProjectPreviewProps): JSX.Element {
   const imageRef = useRef<HTMLDivElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
+  const discRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const [following, setFollowing] = useState(false);
 
   useEffect(() => {
     const image = imageRef.current;
-    const cursor = cursorRef.current;
+    const disc = discRef.current;
     const label = labelRef.current;
-    if (reduceMotion || !window.matchMedia(FINE_POINTER_QUERY).matches || !image || !cursor || !label) return;
+    if (reduceMotion || !window.matchMedia(FINE_POINTER_QUERY).matches || !image || !disc || !label) return;
 
     const stopFollowing = followPointer([
       { element: image, duration: IMAGE_FOLLOW_DURATION },
-      { element: cursor, duration: CURSOR_FOLLOW_DURATION },
+      { element: disc, duration: DISC_FOLLOW_DURATION },
       { element: label, duration: LABEL_FOLLOW_DURATION },
     ]);
     setFollowing(true);
@@ -110,7 +110,7 @@ export default function ProjectPreview({ index, visible, projects }: ProjectPrev
         </div>
       </FollowerLayer>
       <FollowerLayer
-        ref={cursorRef}
+        ref={discRef}
         state={state}
         className='w-24 h-24 bg-black shadow-xl rounded-full text-white'
       />
@@ -138,7 +138,7 @@ const FollowerLayer = forwardRef<HTMLDivElement, FollowerLayerProps>(function Fo
 ) {
   return (
     <div ref={ref} data-state={state} className='fixed left-0 top-0 pointer-events-none z-30'>
-      <motion.div variants={previewVariants} initial='hidden' animate={state} className={className}>
+      <motion.div variants={PREVIEW_VARIANTS} initial='hidden' animate={state} className={className}>
         {children}
       </motion.div>
     </div>

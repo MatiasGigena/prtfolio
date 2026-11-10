@@ -8,11 +8,14 @@ import { ArrowDownRightIcon } from './ui/Icons';
 
 const SECTION_WORD = 'About';
 
+/** 1 when the reader moved down, -1 when they moved back up. */
+type Direction = 1 | -1;
+
 interface Focus {
   /** Which block is being read: 0 is the introduction, then one per topic. */
   readonly index: number;
   /** 1 when the reader moved down to get here, -1 when they moved back up. */
-  readonly direction: 1 | -1;
+  readonly direction: Direction;
 }
 
 /**
@@ -57,7 +60,7 @@ export default function About(): JSX.Element {
   }, []);
 
   const word = ABOUT.topics[focus.index - 1]?.word ?? SECTION_WORD;
-  const offset = (from: 1 | -1): string => (reduceMotion ? '0%' : from > 0 ? '100%' : '-100%');
+  const offset = (from: Direction): string => (reduceMotion ? '0%' : from > 0 ? '100%' : '-100%');
   const blockClassName = (index: number): string =>
     `transition-opacity duration-300 motion-reduce:!opacity-100 ${
       index === focus.index ? 'opacity-100' : 'opacity-[0.35]'
@@ -85,9 +88,9 @@ export default function About(): JSX.Element {
                   className='block whitespace-nowrap'
                   custom={focus.direction}
                   variants={{
-                    enter: (direction: 1 | -1) => ({ y: offset(direction), opacity: 0 }),
+                    enter: (direction: Direction) => ({ y: offset(direction), opacity: 0 }),
                     shown: { y: '0%', opacity: 1 },
-                    exit: (direction: 1 | -1) => ({
+                    exit: (direction: Direction) => ({
                       y: offset(direction > 0 ? -1 : 1),
                       opacity: 0,
                     }),

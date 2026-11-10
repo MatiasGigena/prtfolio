@@ -1,5 +1,5 @@
 /* Same motion as the JS fallback: progress 0 -> 1 over the gallery's 'cover'
-   range moves each column down by its multiplier times the viewport height. */
+   range moves each column down --tech-travel-screens viewport heights. */
 .tech-gallery[data-parallax='scroll-driven'] {
   view-timeline-name: --tech-gallery;
 }
@@ -14,6 +14,6 @@
     transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(0, calc(var(--screen-h) * var(--tech-parallax)), 0);
+    transform: translate3d(0, calc(var(--screen-h) * var(--tech-travel-screens)), 0);
   }
 }

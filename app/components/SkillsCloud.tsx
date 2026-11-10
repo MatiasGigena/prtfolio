@@ -94,16 +94,16 @@ function createDepthFollower(planes: readonly DepthPlane[]): Follower {
 
 /** Lets the planes drift toward a mouse moving over `section`. */
 function followPointerInDepth(section: HTMLElement, planes: readonly DepthPlane[]): () => void {
-  const followPointer = createDepthFollower(planes);
+  const follow = createDepthFollower(planes);
   const handlePointerMove = (event: PointerEvent): void => {
     if (event.pointerType !== 'mouse') return;
     const rect = section.getBoundingClientRect();
-    followPointer(
+    follow(
       ((event.clientX - rect.left) / rect.width - 0.5) * POINTER_TRAVEL_PX,
       ((event.clientY - rect.top) / rect.height - 0.5) * POINTER_TRAVEL_PX,
     );
   };
-  const reset = (): void => followPointer(0, 0);
+  const reset = (): void => follow(0, 0);
 
   section.addEventListener('pointermove', handlePointerMove);
   section.addEventListener('pointerleave', reset);
