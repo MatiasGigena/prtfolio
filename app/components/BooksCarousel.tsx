@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { BOOKS } from '@/app/data/portfolio';
-import BookCard from './books/BookCard';
+import BookCard from './BookCard';
 
 const MARQUEE_COPIES = 3;
 
