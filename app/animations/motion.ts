@@ -1,3 +1,5 @@
+'use client';
+
 /** The app's standard ease-out curve, shared by Framer Motion transitions and CSS (`--ease-out`). */
 export const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 

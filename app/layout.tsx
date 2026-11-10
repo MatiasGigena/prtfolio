@@ -4,14 +4,10 @@ import type { JSX, ReactNode } from 'react';
 import SmoothScroll from './components/SmoothScroll';
 import 'lenis/dist/lenis.css';
 import './globals.css';
-// Feature styles come after Tailwind's utilities so they win ties of equal specificity.
+// Section styles come after Tailwind's utilities so they win ties of equal specificity.
 import './styles/hero.css';
-import './styles/navigation.css';
-import './styles/projects.css';
-import './styles/tech-gallery.css';
+import './styles/sections.css';
 import './styles/books.css';
-import './styles/contact.css';
-import './styles/preloader.css';
 
 const poppins = Poppins({
   subsets: ['latin'],
