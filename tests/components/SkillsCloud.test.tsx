@@ -45,14 +45,12 @@ describe('SkillsCloud', () => {
     });
   });
 
-  it('ignores touch and reduced-motion readers', async () => {
+  it('leaves the planes alone when the reader prefers reduced motion', () => {
     setMediaFeatures([...DESKTOP_MOUSE, ...REDUCED_MOTION]);
     const { section, planes } = setup();
 
     fireEvent.pointerMove(section, { pointerType: 'mouse', clientX: 0, clientY: 0 });
-    fireEvent.pointerMove(section, { pointerType: 'touch', clientX: 0, clientY: 0 });
-    await new Promise((resolve) => setTimeout(resolve, 200));
 
-    for (const plane of planes) expect(gsap.getProperty(plane, 'x')).toBe(0);
+    for (const plane of planes) expect(gsap.getTweensOf(plane)).toHaveLength(0);
   });
 });

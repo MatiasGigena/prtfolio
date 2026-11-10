@@ -38,13 +38,12 @@ describe('Magnetic', () => {
     await vi.waitFor(() => expect(gsap.getProperty(magnet, 'x')).toBe(0));
   });
 
-  it('stays still on touch screens', async () => {
+  it('stays still on touch screens', () => {
     setMediaFeatures(TOUCH_SCREEN);
     const magnet = renderMagnet();
 
     fireEvent.pointerMove(magnet, { clientX: 100, clientY: 40 });
-    await new Promise((resolve) => setTimeout(resolve, 100));
 
-    expect(gsap.getProperty(magnet, 'x')).toBe(0);
+    expect(gsap.getTweensOf(magnet)).toHaveLength(0);
   });
 });

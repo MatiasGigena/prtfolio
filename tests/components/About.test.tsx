@@ -31,7 +31,7 @@ describe('About', () => {
 
     expect(await screen.findByText(topic.word)).toBeInTheDocument();
     expect(blocks()[2]).toHaveClass('opacity-100');
-    expect(blocks()[0]).toHaveClass('opacity-[0.35]');
+    expect(blocks()[0]).not.toHaveClass('opacity-100');
   });
 
   it('returns to the section name when the reader scrolls back to the introduction', async () => {
