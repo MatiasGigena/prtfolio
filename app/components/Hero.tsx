@@ -58,7 +58,6 @@ export default function Hero(): JSX.Element {
   return (
     <section
       className='h-screen bg-black relative overflow-hidden flex'
-      style={{ position: 'relative' }}
       aria-label='Introduction'
     >
       <Image

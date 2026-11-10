@@ -5,8 +5,6 @@ export interface PortfolioProject {
   readonly href: string;
 }
 
-export type ProjectPreviewState = number | null;
-
 export interface AboutTopic {
   readonly id: string;
   /** One word that stands in for the section heading while this topic is being read. */

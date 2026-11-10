@@ -1,28 +1,27 @@
 'use client';
 
-import type { Dispatch, PointerEvent, SetStateAction } from 'react';
-import type { PortfolioProject, ProjectPreviewState } from '@/app/types/portfolio';
+import type { PointerEvent } from 'react';
+import type { PortfolioProject } from '@/app/types/portfolio';
 
 interface ProjectLinkProps {
-  readonly index: number;
   readonly project: PortfolioProject;
-  readonly setPreview: Dispatch<SetStateAction<ProjectPreviewState>>;
+  /** Called with true when a mouse pointer enters the link and false when it leaves. */
+  readonly onPreviewChange: (visible: boolean) => void;
 }
 
-export default function ProjectLink({ index, project, setPreview }: ProjectLinkProps): JSX.Element {
-  const showPreview = (event: PointerEvent<HTMLDivElement>): void => {
-    if (event.pointerType === 'mouse') setPreview(index);
-  };
-
-  const hidePreview = (event: PointerEvent<HTMLDivElement>): void => {
-    if (event.pointerType === 'mouse') setPreview(null);
-  };
+export default function ProjectLink({ project, onPreviewChange }: ProjectLinkProps): JSX.Element {
+  // Touch and pen pointers have no hover, so only a mouse shows the floating preview.
+  const handlePointer =
+    (visible: boolean) =>
+    (event: PointerEvent<HTMLDivElement>): void => {
+      if (event.pointerType === 'mouse') onPreviewChange(visible);
+    };
 
   return (
     <div
       className='project-link text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-7xl font-medium'
-      onPointerEnter={showPreview}
-      onPointerLeave={hidePreview}
+      onPointerEnter={handlePointer(true)}
+      onPointerLeave={handlePointer(false)}
     >
       <a href={project.href} target='_blank' rel='noreferrer'>
         <h3>{project.title}</h3>

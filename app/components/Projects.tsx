@@ -2,14 +2,13 @@
 
 import { useState } from 'react';
 import { PROJECTS } from '@/app/data/portfolio';
-import type { ProjectPreviewState } from '@/app/types/portfolio';
 import ProjectLink from './ProjectLink';
 import ProjectPreview from './ProjectPreview';
 import ProjectStatement from './ProjectStatement';
 import Reveal from './ui/Reveal';
 
 export default function Projects(): JSX.Element {
-  const [preview, setPreview] = useState<ProjectPreviewState>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
     <div
@@ -22,14 +21,13 @@ export default function Projects(): JSX.Element {
           {PROJECTS.map((project, index) => (
             <ProjectLink
               key={project.title}
-              index={index}
               project={project}
-              setPreview={setPreview}
+              onPreviewChange={(visible) => setActiveIndex(visible ? index : null)}
             />
           ))}
         </div>
       </Reveal>
-      <ProjectPreview activeIndex={preview} projects={PROJECTS} />
+      <ProjectPreview activeIndex={activeIndex} projects={PROJECTS} />
     </div>
   );
 }
