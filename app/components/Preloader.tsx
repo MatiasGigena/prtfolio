@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type CSSProperties, type PointerEvent } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { AnimationIcon } from './ui/Icons';
 
 const COLUMN_COUNT = 20;
@@ -16,21 +16,26 @@ const overlayStyle = {
 } as CSSProperties;
 
 interface PreloaderProps {
+  /** Called once, when the exit animation has finished; later changes to the callback are picked up. */
   readonly onFinish: () => void;
 }
 
 export default function Preloader({ onFinish }: PreloaderProps): JSX.Element {
   const [rowCount, setRowCount] = useState(0);
+  const onFinishRef = useRef(onFinish);
+  onFinishRef.current = onFinish;
 
   useEffect(() => {
     const blockSize = window.innerWidth * 0.05;
     setRowCount(Math.ceil(window.innerHeight / blockSize));
   }, []);
 
+  // The timer belongs to the mount, not to the callback, so a parent passing a new
+  // function on each render cannot restart it.
   useEffect(() => {
-    const timeout = window.setTimeout(onFinish, HOLD_MS + EXIT_MS);
+    const timeout = window.setTimeout(() => onFinishRef.current(), HOLD_MS + EXIT_MS);
     return () => window.clearTimeout(timeout);
-  }, [onFinish]);
+  }, []);
 
   const colorize = (event: PointerEvent<HTMLDivElement>): void => {
     if (
