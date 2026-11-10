@@ -8,9 +8,9 @@ import { useEffect, useRef } from 'react';
 const TICKER_SPEED = 0.006;
 
 export default function Hero(): JSX.Element {
-  const firstText = useRef<HTMLParagraphElement>(null);
-  const secondText = useRef<HTMLParagraphElement>(null);
-  const slider = useRef<HTMLDivElement>(null);
+  const firstTextRef = useRef<HTMLParagraphElement>(null);
+  const secondTextRef = useRef<HTMLParagraphElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -22,7 +22,7 @@ export default function Hero(): JSX.Element {
 
     const context = gsap.context(() => {
       if (!reduceMotion) {
-        gsap.to(slider.current, {
+        gsap.to(sliderRef.current, {
           x: -500,
           ease: 'none',
           scrollTrigger: {
@@ -44,7 +44,7 @@ export default function Hero(): JSX.Element {
       xPercent += elapsed * TICKER_SPEED * direction;
       if (xPercent < -100) xPercent += 100;
       if (xPercent > 0) xPercent -= 100;
-      gsap.set([firstText.current, secondText.current], { xPercent });
+      gsap.set([firstTextRef.current, secondTextRef.current], { xPercent });
       frameId = requestAnimationFrame(tick);
     };
 
@@ -61,25 +61,25 @@ export default function Hero(): JSX.Element {
       aria-label='Introduction'
     >
       <Image
-        src='/images/portfolio12-removebg.png'
+        src='/images/hero-portrait.png'
         width={981}
         height={1473}
         alt='Portrait of Matías Gigena'
         priority
-        className='my-image'
+        className='hero-portrait'
         sizes='100vw'
       />
-      <div className='sliderContainer' aria-hidden='true'>
-        <div ref={slider} className='relative whitespace-nowrap will-change-transform'>
+      <div className='hero-ticker' aria-hidden='true'>
+        <div ref={sliderRef} className='relative whitespace-nowrap will-change-transform'>
           <p
-            ref={firstText}
+            ref={firstTextRef}
             className='text-white text-[6rem] pr-8 sm:text-[230px] sm:pr-[50px] m-0 relative font-thin'
             style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}
           >
             Front End Developer -
           </p>
           <p
-            ref={secondText}
+            ref={secondTextRef}
             className='text-white text-[6rem] pr-8 sm:text-[230px] sm:pr-[50px] top-0 font-thin absolute left-[100%]'
           >
             Front End Developer -

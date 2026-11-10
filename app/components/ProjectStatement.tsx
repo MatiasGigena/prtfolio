@@ -8,11 +8,11 @@ const STATEMENT =
   "It's not just a Project. I take pride in crafting digital experiences that not only meet functional requirements but also delight users with intuitive interfaces and smooth interactions.";
 
 export default function ProjectStatement(): JSX.Element {
-  const container = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const element = container.current;
+    const element = containerRef.current;
     if (!element) return;
     const letters = element.querySelectorAll<HTMLElement>('[data-letter]');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -41,8 +41,8 @@ export default function ProjectStatement(): JSX.Element {
 
   return (
     <div
-      ref={container}
-      className='flex items-center xlxl:px-6 mt-8 lg:mt-16 justify-start lg:justify-evenly text-sec py-8 lg:py-12'
+      ref={containerRef}
+      className='flex items-center 3xl:px-6 mt-8 lg:mt-16 justify-start lg:justify-evenly text-white py-8 lg:py-12'
     >
       <div className='w-11/12 flex items-center h-full flex-wrap'>
         {STATEMENT.split(' ').map((word, wordIndex) => (

@@ -15,25 +15,25 @@ export const NAVIGATION_ITEMS: readonly NavigationItem[] = [
 export const PROJECTS: readonly PortfolioProject[] = [
   {
     title: 'Rekon',
-    image: '/images/266shots_so.png',
+    image: '/images/project-rekon.png',
     href: 'https://www.rekonmedia.com/',
     description: 'Design & Development',
   },
   {
     title: 'Nexiafy',
-    image: '/images/clipboard-image-1770985279.avif',
+    image: '/images/project-nexiafy.avif',
     href: 'https://nexiafy.useteam.io/',
     description: 'Design & Development',
   },
   {
     title: 'Huntek',
-    image: '/images/199shots_so.png',
+    image: '/images/project-huntek.png',
     href: 'https://huntek-website.vercel.app/',
     description: 'Design & Development & Interaction',
   },
   {
     title: '????',
-    image: '/images/693shots_so.png',
+    image: '/images/project-coming-soon.png',
     href: 'https://vercel.com/matiasgigena/pi-food-main-matias-gigena',
     description: 'Time will tell . . .',
   },

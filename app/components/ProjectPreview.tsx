@@ -106,12 +106,12 @@ export default function ProjectPreview({
       <FollowerLayer
         ref={cursorRef}
         state={state}
-        className='w-24 h-24 bg-black shadow-xl rounded-full text-sec'
+        className='w-24 h-24 bg-black shadow-xl rounded-full text-white'
       />
       <FollowerLayer
         ref={labelRef}
         state={state}
-        className='w-24 h-24 text-xl font-extralight flex items-center justify-center text-sec'
+        className='w-24 h-24 text-xl font-extralight flex items-center justify-center text-white'
       >
         Let&apos;s go!
       </FollowerLayer>

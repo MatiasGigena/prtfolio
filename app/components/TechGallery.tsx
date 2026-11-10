@@ -113,22 +113,22 @@ function Column({
 
 export default function TechGallery(): JSX.Element {
   const { height } = useViewportSize();
-  const ref = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const [mode, setMode] = useState<ParallaxMode>('js');
   useEffect(() => setMode(getParallaxMode(reduceMotion)), [reduceMotion]);
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: galleryRef,
     offset: ['start end', 'end start'],
   });
 
   return (
     <section
-      className='min-h-screen w-full bg-black text-sec flex flex-col justify-center items-center'
+      className='min-h-screen w-full bg-black text-white flex flex-col justify-center items-center'
       aria-label='Technology gallery'
     >
       <div
-        ref={ref}
+        ref={galleryRef}
         className={`tech-gallery h-[calc(var(--screen-h)*1.7)] flex overflow-hidden gap-[6vw] p-[2vw] box-border ${mode === 'scroll-driven' ? 'is-scroll-driven' : ''} ${mode === 'static' ? 'is-static' : ''}`}
       >
         {TECH_COLUMNS.map((column) => (

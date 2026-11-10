@@ -28,12 +28,12 @@ body {
   overscroll-behavior-y: none;
 }
 
-.sliderContainer {
+.hero-ticker {
   position: absolute;
   top: calc(var(--screen-h) - 290px);
 }
 
-.my-image {
+.hero-portrait {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -338,13 +338,13 @@ body {
 }
 
 @media (max-width: 640px) {
-  .sliderContainer {
+  .hero-ticker {
     top: 80%;
   }
 }
 
 @media (width: 640px) {
-  .sliderContainer {
+  .hero-ticker {
     top: 60%;
   }
 }
@@ -356,7 +356,7 @@ body {
    so the cut-off edge softens while the lit folds of the hoodie beside it stay intact. Screens narrower than
    the picture's own shape keep filling the hero instead, which leaves no edge to hide. */
 @media (min-width: 500px) and (min-aspect-ratio: 981 / 1473) {
-  .my-image {
+  .hero-portrait {
     width: min(100%, calc(var(--screen-h) * 981 / 1473));
     height: auto;
     aspect-ratio: 981 / 1473;

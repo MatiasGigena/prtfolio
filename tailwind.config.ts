@@ -6,11 +6,7 @@ const config = {
     extend: {
       screens: {
         xs: '375px',
-        xlxl: '1920px',
-      },
-      colors: {
-        black: '#000000',
-        sec: '#ffffff',
+        '3xl': '1920px',
       },
       height: {
         screen: 'var(--screen-h)',

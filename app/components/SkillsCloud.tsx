@@ -77,32 +77,32 @@ interface Point {
 
 export default function SkillsCloud(): JSX.Element {
   const planeRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const target = useRef<Point>({ x: 0, y: 0 });
-  const current = useRef<Point>({ x: 0, y: 0 });
-  const frame = useRef<number | null>(null);
+  const targetRef = useRef<Point>({ x: 0, y: 0 });
+  const currentRef = useRef<Point>({ x: 0, y: 0 });
+  const frameRef = useRef<number | null>(null);
 
   const animate = (): void => {
-    current.current.x += (target.current.x - current.current.x) * SPRING_RESPONSE;
-    current.current.y += (target.current.y - current.current.y) * SPRING_RESPONSE;
+    currentRef.current.x += (targetRef.current.x - currentRef.current.x) * SPRING_RESPONSE;
+    currentRef.current.y += (targetRef.current.y - currentRef.current.y) * SPRING_RESPONSE;
 
     planeRefs.current.forEach((element, index) => {
       const plane = SKILL_PLANES[index];
       if (!element || !plane) return;
-      element.style.transform = `translate3d(${current.current.x * plane.strength}px, ${current.current.y * plane.strength}px, 0)`;
+      element.style.transform = `translate3d(${currentRef.current.x * plane.strength}px, ${currentRef.current.y * plane.strength}px, 0)`;
     });
 
     const settled =
-      Math.abs(target.current.x - current.current.x) < 0.1 &&
-      Math.abs(target.current.y - current.current.y) < 0.1;
+      Math.abs(targetRef.current.x - currentRef.current.x) < 0.1 &&
+      Math.abs(targetRef.current.y - currentRef.current.y) < 0.1;
     if (settled) {
-      frame.current = null;
+      frameRef.current = null;
       return;
     }
-    frame.current = requestAnimationFrame(animate);
+    frameRef.current = requestAnimationFrame(animate);
   };
 
   const scheduleAnimation = (): void => {
-    if (frame.current === null) frame.current = requestAnimationFrame(animate);
+    if (frameRef.current === null) frameRef.current = requestAnimationFrame(animate);
   };
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>): void => {
@@ -113,7 +113,7 @@ export default function SkillsCloud(): JSX.Element {
       return;
     }
     const rect = event.currentTarget.getBoundingClientRect();
-    target.current = {
+    targetRef.current = {
       x: ((event.clientX - rect.left) / rect.width - 0.5) * 42,
       y: ((event.clientY - rect.top) / rect.height - 0.5) * 42,
     };
@@ -121,13 +121,13 @@ export default function SkillsCloud(): JSX.Element {
   };
 
   const reset = (): void => {
-    target.current = { x: 0, y: 0 };
+    targetRef.current = { x: 0, y: 0 };
     scheduleAnimation();
   };
 
   useEffect(
     () => () => {
-      if (frame.current !== null) cancelAnimationFrame(frame.current);
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
     },
     [],
   );
