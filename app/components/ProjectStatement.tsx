@@ -5,36 +5,33 @@ import { useEffect, useRef, type JSX } from 'react';
 import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
 import { WORK_STATEMENT } from '@/app/data/portfolio';
 
+/** Brings the letters of `container` to full strength one by one as it scrolls through; returns a cleanup. */
+function revealLettersOnScroll(container: HTMLElement): () => void {
+  ensureScrollTrigger();
+  const tween = gsap.to(container.querySelectorAll<HTMLElement>('[data-letter]'), {
+    opacity: 1,
+    ease: 'none',
+    stagger: 0.02,
+    scrollTrigger: {
+      trigger: container,
+      start: 'top 85%',
+      end: 'bottom 35%',
+      scrub: true,
+      invalidateOnRefresh: true,
+    },
+  });
+  return () => tween.revert();
+}
+
 export default function ProjectStatement(): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const element = containerRef.current;
-    if (!element) return;
-    const letters = element.querySelectorAll<HTMLElement>('[data-letter]');
-
-    if (reduceMotion) {
-      gsap.set(letters, { opacity: 1 });
-      return;
-    }
-
-    ensureScrollTrigger();
-    const context = gsap.context(() => {
-      gsap.to(letters, {
-        opacity: 1,
-        ease: 'none',
-        stagger: 0.02,
-        scrollTrigger: {
-          trigger: element,
-          start: 'top 85%',
-          end: 'bottom 35%',
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      });
-    }, element);
-    return () => context.revert();
+    const container = containerRef.current;
+    // With reduced motion the letters are simply shown at full strength by CSS.
+    if (!container || reduceMotion) return;
+    return revealLettersOnScroll(container);
   }, [reduceMotion]);
 
   return (
@@ -46,7 +43,7 @@ export default function ProjectStatement(): JSX.Element {
         {WORK_STATEMENT.split(' ').map((word, wordIndex) => (
           <p className='text-[4vw] mr-3 mb-2' key={`${word}-${wordIndex}`}>
             {Array.from(word).map((letter, letterIndex) => (
-              <span data-letter className='opacity-50' key={`${letter}-${letterIndex}`}>
+              <span data-letter className='opacity-50 motion-reduce:opacity-100' key={`${letter}-${letterIndex}`}>
                 {letter}
               </span>
             ))}
