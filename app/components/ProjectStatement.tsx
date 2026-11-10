@@ -3,9 +3,7 @@
 import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
-
-const STATEMENT =
-  "It's not just a Project. I take pride in crafting digital experiences that not only meet functional requirements but also delight users with intuitive interfaces and smooth interactions.";
+import { WORK_STATEMENT } from '@/app/data/portfolio';
 
 export default function ProjectStatement(): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -45,7 +43,7 @@ export default function ProjectStatement(): JSX.Element {
       className='flex items-center 3xl:px-6 mt-8 lg:mt-16 justify-start lg:justify-evenly text-white py-8 lg:py-12'
     >
       <div className='w-11/12 flex items-center h-full flex-wrap'>
-        {STATEMENT.split(' ').map((word, wordIndex) => (
+        {WORK_STATEMENT.split(' ').map((word, wordIndex) => (
           <p className='text-[4vw] mr-3 mb-2' key={`${word}-${wordIndex}`}>
             {Array.from(word).map((letter, letterIndex) => (
               <span data-letter className='opacity-50' key={`${letter}-${letterIndex}`}>

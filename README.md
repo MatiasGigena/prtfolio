@@ -24,7 +24,7 @@ npm run lint
 npm run build
 ```
 
-TypeScript is configured in strict mode with unchecked indexed access enabled. Application code lives in `app/`; portfolio content and typed models are centralized in `app/data/portfolio.ts` and `app/types/portfolio.ts`.
+TypeScript is configured in strict mode with unchecked indexed access enabled. Application code lives in `app/`; portfolio content (projects, the work statement, books, the About copy, contact details and social links, and technology logos) lives in `app/data/portfolio.ts`, typed by `app/types/portfolio.ts`. Section headings and short interface labels stay in their components.
 
 ## Motion and accessibility
 

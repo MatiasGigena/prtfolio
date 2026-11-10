@@ -45,3 +45,18 @@ export interface NavigationItem {
   readonly label: string;
   readonly target: SectionId;
 }
+
+export type SocialNetwork = 'facebook' | 'linkedin' | 'instagram' | 'whatsapp';
+
+export interface SocialLink {
+  readonly network: SocialNetwork;
+  readonly href: string;
+}
+
+export interface ContactDetails {
+  /** Formspree form that receives the contact form's submissions. */
+  readonly formspreeFormId: string;
+  readonly email: string;
+  readonly addressLines: readonly string[];
+  readonly socials: readonly SocialLink[];
+}

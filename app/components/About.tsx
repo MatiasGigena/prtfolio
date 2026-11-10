@@ -1,10 +1,10 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowDownRight } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { EASE_OUT } from '@/app/animations/motion';
 import { ABOUT, SECTION_IDS } from '@/app/data/portfolio';
+import { ArrowDownRightIcon } from './ui/Icons';
 
 const SECTION_WORD = 'About';
 
@@ -100,7 +100,7 @@ export default function About(): JSX.Element {
               className='pressable inline-flex items-center gap-3 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white'
             >
               {ABOUT.cta.label}
-              <ArrowDownRight className='h-4 w-4' strokeWidth={2.25} aria-hidden='true' />
+              <ArrowDownRightIcon className='h-4 w-4' strokeWidth={2.25} />
             </a>
           </div>
         </div>

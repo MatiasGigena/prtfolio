@@ -1,6 +1,7 @@
 import type {
   AboutContent,
   Book,
+  ContactDetails,
   NavigationItem,
   PortfolioProject,
   SectionId,
@@ -19,6 +20,10 @@ export const NAVIGATION_ITEMS: readonly NavigationItem[] = [
   { label: 'About', target: SECTION_IDS.about },
   { label: 'Contact', target: SECTION_IDS.contact },
 ];
+
+/** Revealed letter by letter above the project list. */
+export const WORK_STATEMENT =
+  "It's not just a Project. I take pride in crafting digital experiences that not only meet functional requirements but also delight users with intuitive interfaces and smooth interactions.";
 
 export const PROJECTS: readonly PortfolioProject[] = [
   {
@@ -131,6 +136,21 @@ export const ABOUT: AboutContent = {
     },
   ],
   cta: { label: 'Start a conversation', target: SECTION_IDS.contact },
+};
+
+export const CONTACT: ContactDetails = {
+  formspreeFormId: 'mjvqyner',
+  email: 'matias.gigena7@outlook.es',
+  addressLines: ['Agronomía, C15.', 'Ciudad Autónoma de Buenos Aires.'],
+  socials: [
+    { network: 'facebook', href: 'https://www.facebook.com/profile.php?id=100009688898482' },
+    { network: 'linkedin', href: 'https://www.linkedin.com/in/matias-gigena-7bk/' },
+    { network: 'instagram', href: 'https://www.instagram.com/matiasgigena_/' },
+    {
+      network: 'whatsapp',
+      href: 'https://api.whatsapp.com/send/?phone=541121795715&text&type=phone_number&app_absent=0',
+    },
+  ],
 };
 
 const DEVICON = 'https://raw.githubusercontent.com/devicons/devicon/master/icons';
