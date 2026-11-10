@@ -67,8 +67,7 @@ export default function Hero(): JSX.Element {
         height={1473}
         alt='Portrait of Matías Gigena'
         priority
-        className='my-image absolute inset-0 h-full w-full'
-        style={{ height: '100%', width: '100%' }}
+        className='my-image'
         sizes='100vw'
       />
       <div className='sliderContainer' aria-hidden='true'>
