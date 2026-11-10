@@ -82,6 +82,14 @@ interface ParallaxColumn {
   readonly multiplier: number;
 }
 
+/** Pairs each column with its rendered element, skipping any that has not mounted. */
+function mountedColumns(elements: readonly (HTMLElement | null)[]): ParallaxColumn[] {
+  return TECH_COLUMNS.flatMap(({ multiplier }, index) => {
+    const element = elements[index];
+    return element ? [{ element, multiplier }] : [];
+  });
+}
+
 /**
  * The JS fallback for the parallax: the same motion as the CSS scroll-driven version, where
  * each column moves down by its multiplier times the viewport height while the gallery crosses
@@ -119,11 +127,7 @@ export default function TechGallery(): JSX.Element {
   useEffect(() => {
     const gallery = galleryRef.current;
     if (mode !== 'js' || !gallery) return;
-    const columns = TECH_COLUMNS.flatMap(({ multiplier }, index) => {
-      const element = columnRefs.current[index];
-      return element ? [{ element, multiplier }] : [];
-    });
-    return scrubColumns(gallery, columns);
+    return scrubColumns(gallery, mountedColumns(columnRefs.current));
   }, [mode]);
 
   return (

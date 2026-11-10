@@ -92,6 +92,14 @@ function createDepthFollower(planes: readonly DepthPlane[]): Follower {
   };
 }
 
+/** Pairs each plane with its rendered element, skipping any that has not mounted. */
+function mountedPlanes(elements: readonly (HTMLElement | null)[]): DepthPlane[] {
+  return SKILL_PLANES.flatMap(({ strength }, index) => {
+    const element = elements[index];
+    return element ? [{ element, strength }] : [];
+  });
+}
+
 /** Lets the planes drift toward a mouse moving over `section`; returns a cleanup. */
 function followPointerInDepth(section: HTMLElement, planes: readonly DepthPlane[]): () => void {
   const followPointer = createDepthFollower(planes);
@@ -122,11 +130,7 @@ export default function SkillsCloud(): JSX.Element {
   useEffect(() => {
     const section = sectionRef.current;
     if (!section || reduceMotion || !window.matchMedia(FINE_POINTER_QUERY).matches) return;
-    const planes = SKILL_PLANES.flatMap(({ strength }, index) => {
-      const element = planeRefs.current[index];
-      return element ? [{ element, strength }] : [];
-    });
-    return followPointerInDepth(section, planes);
+    return followPointerInDepth(section, mountedPlanes(planeRefs.current));
   }, [reduceMotion]);
 
   return (

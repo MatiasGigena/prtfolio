@@ -17,16 +17,19 @@ const overlayStyle: CSSProperties = {
   '--preloader-exit': `${EXIT_MS}ms`,
 };
 
+/** Rows of square cells needed to cover the screen, given COLUMN_COUNT columns across it. */
+function gridRowCount(): number {
+  const cellSize = window.innerWidth / COLUMN_COUNT;
+  return Math.ceil(window.innerHeight / cellSize);
+}
+
 /** A full-screen greeting with a grid that lights up under the mouse; it removes itself once faded out. */
 export default function Preloader(): JSX.Element | null {
   const [rowCount, setRowCount] = useState(0);
   const [finished, setFinished] = useState(false);
   const reduceMotion = useReducedMotion();
 
-  useEffect(() => {
-    const blockSize = window.innerWidth * 0.05;
-    setRowCount(Math.ceil(window.innerHeight / blockSize));
-  }, []);
+  useEffect(() => setRowCount(gridRowCount()), []);
 
   useEffect(() => {
     const timeout = window.setTimeout(() => setFinished(true), HOLD_MS + EXIT_MS);

@@ -20,6 +20,8 @@ vi.mock('lenis', () => ({
   }),
 }));
 
+const OTHER_SITE_URL = 'https://example.com/';
+
 describe('SmoothScroll', () => {
   beforeEach(() => {
     lenis.instances = [];
@@ -79,7 +81,7 @@ describe('SmoothScroll', () => {
       <>
         <SmoothScroll />
         <a href='#about'>About</a>
-        <a href='https://example.com/'>Elsewhere</a>
+        <a href={OTHER_SITE_URL}>Elsewhere</a>
         <section id='about' />
       </>,
     );
