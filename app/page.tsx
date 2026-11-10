@@ -23,7 +23,7 @@ export default function HomePage(): JSX.Element {
       <div className='min-h-screen w-full bg-black flex flex-col relative justify-start items-start text-white'>
         <Projects />
         <div className='bg-black h-full w-full overflow-x-clip'>
-          <Reveal direction='right'>
+          <Reveal from='right'>
             <TechGallery />
           </Reveal>
           <Reveal>
@@ -34,7 +34,7 @@ export default function HomePage(): JSX.Element {
           <BooksCarousel />
         </Reveal>
         <About />
-        <Reveal className='w-full' direction='up'>
+        <Reveal className='w-full' from='below'>
           <Contact />
         </Reveal>
       </div>

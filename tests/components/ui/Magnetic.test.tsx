@@ -6,7 +6,7 @@ import Magnetic from '@/app/components/ui/Magnetic';
 
 function renderMagnet(): HTMLElement {
   render(
-    <Magnetic className='extra'>
+    <Magnetic>
       <button type='button'>Send</button>
     </Magnetic>,
   );
@@ -17,10 +17,10 @@ function renderMagnet(): HTMLElement {
 }
 
 describe('Magnetic', () => {
-  it('wraps its content in an inline box with the given classes', () => {
+  it('wraps its content in an inline box', () => {
     const magnet = renderMagnet();
     expect(magnet.tagName).toBe('SPAN');
-    expect(magnet).toHaveClass('inline-flex', 'extra');
+    expect(magnet).toHaveClass('inline-flex');
   });
 
   it('leans toward a mouse and settles back when it leaves', async () => {

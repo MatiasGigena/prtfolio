@@ -11,7 +11,6 @@ const FOLLOW_DURATION = 0.3;
 
 interface MagneticProps {
   readonly children: ReactNode;
-  readonly className?: string;
 }
 
 /** Makes `element` lean toward the pointer while it hovers; returns a cleanup. */
@@ -33,7 +32,7 @@ function magnetize(element: HTMLElement): () => void {
 }
 
 /** Leans its content toward a hovering mouse and springs back when the pointer leaves. */
-export default function Magnetic({ children, className }: MagneticProps): JSX.Element {
+export default function Magnetic({ children }: MagneticProps): JSX.Element {
   const ref = useRef<HTMLSpanElement>(null);
   const reduceMotion = useReducedMotion();
 
@@ -44,7 +43,7 @@ export default function Magnetic({ children, className }: MagneticProps): JSX.El
   }, [reduceMotion]);
 
   return (
-    <span ref={ref} className={`inline-flex ${className ?? ''}`}>
+    <span ref={ref} className='inline-flex'>
       {children}
     </span>
   );
