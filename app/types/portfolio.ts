@@ -16,13 +16,16 @@ export interface AboutTopic {
 /** The `id` of each section the navigation can jump to. */
 export type SectionId = 'work' | 'about' | 'contact';
 
+/** A labelled link to one of the page's sections. */
+export interface SectionLink {
+  readonly label: string;
+  readonly target: SectionId;
+}
+
 export interface AboutContent {
   readonly intro: string;
   readonly topics: readonly AboutTopic[];
-  readonly cta: {
-    readonly label: string;
-    readonly target: SectionId;
-  };
+  readonly cta: SectionLink;
 }
 
 export interface Book {
@@ -39,11 +42,6 @@ export interface TechLogo {
   readonly src: string;
   /** Drawn in black or dark grey, so it is inverted to stay visible on black sections. */
   readonly dark?: true;
-}
-
-export interface NavigationItem {
-  readonly label: string;
-  readonly target: SectionId;
 }
 
 export type SocialNetwork = 'facebook' | 'linkedin' | 'instagram' | 'whatsapp';

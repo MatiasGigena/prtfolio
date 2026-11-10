@@ -2,9 +2,9 @@ import type {
   AboutContent,
   Book,
   ContactDetails,
-  NavigationItem,
   PortfolioProject,
   SectionId,
+  SectionLink,
   TechLogo,
 } from '@/app/types/portfolio';
 
@@ -13,9 +13,9 @@ export const SECTION_IDS = {
   work: 'work',
   about: 'about',
   contact: 'contact',
-} as const satisfies Record<SectionId, SectionId>;
+} as const satisfies { readonly [Id in SectionId]: Id };
 
-export const NAVIGATION_ITEMS: readonly NavigationItem[] = [
+export const NAVIGATION_ITEMS: readonly SectionLink[] = [
   { label: 'Work', target: SECTION_IDS.work },
   { label: 'About', target: SECTION_IDS.about },
   { label: 'Contact', target: SECTION_IDS.contact },

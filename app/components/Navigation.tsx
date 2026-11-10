@@ -4,7 +4,6 @@ import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState, type JSX } from 'react';
 import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
 import { NAVIGATION_ITEMS } from '@/app/data/portfolio';
-import type { SectionId } from '@/app/types/portfolio';
 import { MenuIcon } from './ui/Icons';
 import Magnetic from './ui/Magnetic';
 
@@ -37,12 +36,6 @@ function hideOnScroll(bar: HTMLElement, reduceMotion: boolean): () => void {
   };
 }
 
-function scrollToSection(sectionId: SectionId, reduceMotion: boolean): void {
-  document
-    .getElementById(sectionId)
-    ?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-}
-
 export default function Navigation(): JSX.Element {
   const navRef = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -54,10 +47,8 @@ export default function Navigation(): JSX.Element {
     return hideOnScroll(bar, reduceMotion);
   }, [reduceMotion]);
 
-  const goTo = (sectionId: SectionId): void => {
-    scrollToSection(sectionId, reduceMotion);
-    setMenuOpen(false);
-  };
+  // Section links are plain anchors; smooth scrolling is handled globally (see SmoothScroll).
+  const closeMenu = (): void => setMenuOpen(false);
 
   return (
     <nav
@@ -83,13 +74,9 @@ export default function Navigation(): JSX.Element {
           {NAVIGATION_ITEMS.map((item) => (
             <li key={item.target}>
               <Magnetic>
-                <button
-                  type='button'
-                  onClick={() => goTo(item.target)}
-                  className='pressable px-3 py-2 text-sm uppercase rounded-md'
-                >
+                <a href={`#${item.target}`} className='pressable px-3 py-2 text-sm uppercase rounded-md'>
                   {item.label}
-                </button>
+                </a>
               </Magnetic>
             </li>
           ))}
@@ -102,14 +89,14 @@ export default function Navigation(): JSX.Element {
         >
           {NAVIGATION_ITEMS.map((item) => (
             <li key={item.target}>
-              <button
-                type='button'
+              <a
+                href={`#${item.target}`}
                 tabIndex={menuOpen ? 0 : -1}
                 className='pressable block w-full rounded-lg px-4 py-3 text-left'
-                onClick={() => goTo(item.target)}
+                onClick={closeMenu}
               >
                 {item.label}
-              </button>
+              </a>
             </li>
           ))}
         </ul>

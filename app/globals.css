@@ -43,9 +43,12 @@ body {
   transform: scale(0.97);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html:focus-within {
-    scroll-behavior: auto;
+/* Section links are plain anchors. Lenis glides to them on desktop (its anchors option); everywhere
+   else the browser does. CSS smoothing is kept off while Lenis runs, because it would also smooth
+   every scroll position Lenis writes on each frame. */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.lenis) {
+    scroll-behavior: smooth;
   }
 }
 

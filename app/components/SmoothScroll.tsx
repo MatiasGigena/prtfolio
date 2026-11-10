@@ -7,7 +7,31 @@ import { FINE_POINTER_QUERY, REDUCED_MOTION_QUERY } from '@/app/animations/motio
 
 const DESKTOP_POINTER_QUERY = `(min-width: 768px) and ${FINE_POINTER_QUERY}`;
 
-function startLenis(): Lenis {
+/**
+ * Sends clicks on same-page links (#work, #about...) through Lenis. Lenis's own `anchors` option
+ * lets the browser jump first and then animates back from the old position, so the default is
+ * prevented here and the hash is recorded by hand. Returns a function that stops listening.
+ */
+function glideToAnchors(lenis: Lenis): () => void {
+  const handleClick = (event: MouseEvent): void => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey) {
+      return;
+    }
+    const link = event.target instanceof Element ? event.target.closest('a[href^="#"]') : null;
+    if (!(link instanceof HTMLAnchorElement)) return;
+    const section = document.getElementById(decodeURIComponent(link.hash.slice(1)));
+    if (!section) return;
+
+    event.preventDefault();
+    lenis.scrollTo(section);
+    window.history.pushState(null, '', link.hash);
+  };
+  document.addEventListener('click', handleClick);
+  return () => document.removeEventListener('click', handleClick);
+}
+
+/** Starts Lenis and wires it to ScrollTrigger and section links; returns a function that stops it. */
+function startLenis(): () => void {
   const ScrollTrigger = ensureScrollTrigger();
   const lenis = new Lenis({
     autoRaf: true,
@@ -18,7 +42,11 @@ function startLenis(): Lenis {
   // ScrollTrigger reads the native scroll position, so it has to hear about Lenis's.
   lenis.on('scroll', ScrollTrigger.update);
   ScrollTrigger.refresh();
-  return lenis;
+  const stopGliding = glideToAnchors(lenis);
+  return () => {
+    stopGliding();
+    lenis.destroy();
+  };
 }
 
 /**
@@ -28,14 +56,14 @@ function startLenis(): Lenis {
 function syncSmoothScrolling(): () => void {
   const reducedMotion = window.matchMedia(REDUCED_MOTION_QUERY);
   const desktopPointer = window.matchMedia(DESKTOP_POINTER_QUERY);
-  let lenis: Lenis | null = null;
+  let stopLenis: (() => void) | null = null;
 
   const update = (): void => {
     const enabled = desktopPointer.matches && !reducedMotion.matches;
-    if (enabled && !lenis) lenis = startLenis();
-    if (!enabled && lenis) {
-      lenis.destroy();
-      lenis = null;
+    if (enabled && !stopLenis) stopLenis = startLenis();
+    if (!enabled && stopLenis) {
+      stopLenis();
+      stopLenis = null;
     }
   };
 
@@ -45,7 +73,7 @@ function syncSmoothScrolling(): () => void {
   return () => {
     reducedMotion.removeEventListener('change', update);
     desktopPointer.removeEventListener('change', update);
-    lenis?.destroy();
+    stopLenis?.();
   };
 }
 
