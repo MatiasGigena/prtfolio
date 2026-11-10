@@ -3,7 +3,7 @@
 import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, type JSX } from 'react';
 import { createFollower, gsap, type Follower } from '@/app/animations/gsap';
-import { hasFinePointer } from '@/app/animations/motion';
+import { FINE_POINTER_QUERY } from '@/app/animations/motion';
 import { TECH_LOGOS } from '@/app/data/portfolio';
 import type { TechLogo } from '@/app/types/portfolio';
 import TechLogoImage from './ui/TechLogoImage';
@@ -120,7 +120,7 @@ export default function SkillsCloud(): JSX.Element {
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section || reduceMotion || !hasFinePointer()) return;
+    if (!section || reduceMotion || !window.matchMedia(FINE_POINTER_QUERY).matches) return;
     const planes = SKILL_PLANES.flatMap(({ strength }, index) => {
       const element = planeRefs.current[index];
       return element ? [{ element, strength }] : [];

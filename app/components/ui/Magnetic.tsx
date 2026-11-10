@@ -3,7 +3,7 @@
 import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, type ReactNode, type JSX } from 'react';
 import { createFollower, gsap } from '@/app/animations/gsap';
-import { hasFinePointer } from '@/app/animations/motion';
+import { FINE_POINTER_QUERY } from '@/app/animations/motion';
 
 /** Fraction of the pointer's distance from the centre that the content leans toward it. */
 const PULL = 0.22;
@@ -39,7 +39,7 @@ export default function Magnetic({ children, className }: MagneticProps): JSX.El
 
   useEffect(() => {
     const element = ref.current;
-    if (!element || reduceMotion || !hasFinePointer()) return;
+    if (!element || reduceMotion || !window.matchMedia(FINE_POINTER_QUERY).matches) return;
     return magnetize(element);
   }, [reduceMotion]);
 

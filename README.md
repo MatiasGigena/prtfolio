@@ -31,7 +31,7 @@ TypeScript is configured in strict mode with unchecked indexed access enabled. A
 
 ## Motion and accessibility
 
-GSAP (with ScrollTrigger) drives everything tied to scroll position or the pointer; Framer Motion handles entrance and presence transitions. Shared easing, media queries, and GSAP helpers live in `app/animations/`, and components read the reduced-motion preference with Framer Motion's `useReducedMotion()`.
+GSAP (with ScrollTrigger) drives everything tied to scroll position or the pointer; Framer Motion handles entrance and presence transitions. Shared easing, media queries, and GSAP helpers live in `app/animations/`, and components read the reduced-motion preference with Framer Motion's `useReducedMotion()`. `'use client'` marks every component that uses hooks, browser APIs or event handlers; plain modules (data, types, animation helpers) carry no directive.
 
 - Pointer-driven interactions (magnetic buttons, the project preview, the skills cloud) are limited to fine-pointer devices.
 - Smooth wheel scrolling (Lenis) runs only on wide screens with a fine pointer.

@@ -4,7 +4,7 @@ import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import Image from 'next/image';
 import { forwardRef, useEffect, useRef, useState, type JSX, type ReactNode } from 'react';
 import { createFollower, gsap } from '@/app/animations/gsap';
-import { EASE_OUT, hasFinePointer } from '@/app/animations/motion';
+import { EASE_OUT, FINE_POINTER_QUERY } from '@/app/animations/motion';
 import type { PortfolioProject } from '@/app/types/portfolio';
 
 interface ProjectPreviewProps {
@@ -66,7 +66,7 @@ export default function ProjectPreview({ index, visible, projects }: ProjectPrev
     const image = imageRef.current;
     const cursor = cursorRef.current;
     const label = labelRef.current;
-    if (reduceMotion || !hasFinePointer() || !image || !cursor || !label) return;
+    if (reduceMotion || !window.matchMedia(FINE_POINTER_QUERY).matches || !image || !cursor || !label) return;
 
     const stopFollowing = followPointer([
       { element: image, duration: IMAGE_FOLLOW_DURATION },

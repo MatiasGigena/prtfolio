@@ -1,7 +1,11 @@
-'use client';
-
-/** The app's standard ease-out curve, shared by Framer Motion transitions and CSS (`--ease-out`). */
+/**
+ * The app's standard ease-out curve for Framer Motion and the Web Animations API. CSS reads the
+ * same curve from `--ease-out` in globals.css; a test keeps the two in step.
+ */
 export const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
+
+/** EASE_OUT as a CSS timing function, for APIs that take a string. */
+export const EASE_OUT_CSS = `cubic-bezier(${EASE_OUT.join(', ')})`;
 
 /** A mouse or trackpad: the primary pointer can hover and is precise. */
 export const FINE_POINTER_QUERY = '(hover: hover) and (pointer: fine)';
@@ -14,7 +18,3 @@ export const COARSE_POINTER_QUERY = '(hover: none) and (pointer: coarse)';
  * this query is only for code that has to listen for the preference changing.
  */
 export const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
-
-export function hasFinePointer(): boolean {
-  return window.matchMedia(FINE_POINTER_QUERY).matches;
-}
