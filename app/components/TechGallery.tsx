@@ -2,7 +2,7 @@
 
 import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState, type JSX } from 'react';
-import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
+import { scrollTween } from '@/app/animations/gsap';
 import { COARSE_POINTER_QUERY } from '@/app/animations/motion';
 import { TECH_LOGOS } from '@/app/data/portfolio';
 import type { TechLogo } from '@/app/types/portfolio';
@@ -88,19 +88,12 @@ interface ParallaxColumn {
  * the screen.
  */
 function scrubColumns(gallery: HTMLElement, columns: readonly ParallaxColumn[]): () => void {
-  ensureScrollTrigger();
   const tweens = columns.map(({ element, travelScreens }) =>
-    gsap.to(element, {
-      y: () => window.innerHeight * travelScreens,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: gallery,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
-        invalidateOnRefresh: true,
-      },
-    }),
+    scrollTween(
+      element,
+      { y: () => window.innerHeight * travelScreens, ease: 'none' },
+      { trigger: gallery, start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true },
+    ),
   );
   return () => {
     for (const tween of tweens) tween.revert();

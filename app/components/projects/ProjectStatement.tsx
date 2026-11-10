@@ -2,23 +2,15 @@
 
 import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, type JSX } from 'react';
-import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
+import { scrollTween } from '@/app/animations/gsap';
 
 /** Brings the letters of `container` to full strength one by one as it scrolls through. */
 function revealLettersOnScroll(container: HTMLElement): () => void {
-  ensureScrollTrigger();
-  const tween = gsap.to(container.querySelectorAll<HTMLElement>('[data-letter]'), {
-    opacity: 1,
-    ease: 'none',
-    stagger: 0.02,
-    scrollTrigger: {
-      trigger: container,
-      start: 'top 85%',
-      end: 'bottom 35%',
-      scrub: true,
-      invalidateOnRefresh: true,
-    },
-  });
+  const tween = scrollTween(
+    container.querySelectorAll<HTMLElement>('[data-letter]'),
+    { opacity: 1, ease: 'none', stagger: 0.02 },
+    { trigger: container, start: 'top 85%', end: 'bottom 35%', scrub: true, invalidateOnRefresh: true },
+  );
   return () => tween.revert();
 }
 

@@ -15,6 +15,19 @@ export function ensureScrollTrigger(): typeof ScrollTrigger {
   return ScrollTrigger;
 }
 
+/**
+ * A tween whose progress follows the scroll position. It registers ScrollTrigger itself, so a
+ * scroll tween can never be created before the plugin exists.
+ */
+export function scrollTween(
+  targets: gsap.TweenTarget,
+  vars: gsap.TweenVars,
+  scrollTrigger: ScrollTrigger.Vars,
+): gsap.core.Tween {
+  ensureScrollTrigger();
+  return gsap.to(targets, { ...vars, scrollTrigger });
+}
+
 /** The ease GSAP tweens share; it is close to EASE_OUT in feel. */
 export const GSAP_EASE_OUT = 'power3.out';
 

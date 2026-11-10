@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createFollower, ensureScrollTrigger, gsap } from '@/app/animations/gsap';
+import { createFollower, ensureScrollTrigger, gsap, scrollTween } from '@/app/animations/gsap';
 
 describe('createFollower', () => {
   it('eases the element to the offsets it is given and retargets on later calls', async () => {
@@ -27,6 +27,19 @@ describe('ensureScrollTrigger', () => {
     const tween = gsap.to(element, { x: 100, scrollTrigger: { trigger: element, scrub: true } });
 
     expect(tween.scrollTrigger).toBeInstanceOf(ScrollTrigger);
+    tween.revert();
+    element.remove();
+  });
+});
+
+describe('scrollTween', () => {
+  it('creates a tween driven by a ScrollTrigger without any setup by the caller', () => {
+    const element = document.createElement('div');
+    document.body.append(element);
+
+    const tween = scrollTween(element, { x: 100 }, { trigger: element, scrub: true });
+
+    expect(tween.scrollTrigger).toBeInstanceOf(ensureScrollTrigger());
     tween.revert();
     element.remove();
   });

@@ -3,7 +3,7 @@
 import { useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useRef, type JSX } from 'react';
-import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
+import { gsap, scrollTween } from '@/app/animations/gsap';
 
 /** How far the ticker text travels, in percent of its width per millisecond. */
 const TICKER_SPEED = 0.006;
@@ -42,11 +42,10 @@ function shiftWithScroll(
   slider: HTMLElement,
   setTickerDirection: (direction: Direction) => void,
 ): gsap.core.Tween {
-  ensureScrollTrigger();
-  return gsap.to(slider, {
-    x: SCROLL_SHIFT_PX,
-    ease: 'none',
-    scrollTrigger: {
+  return scrollTween(
+    slider,
+    { x: SCROLL_SHIFT_PX, ease: 'none' },
+    {
       trigger: document.documentElement,
       scrub: 0.25,
       start: 0,
@@ -54,7 +53,7 @@ function shiftWithScroll(
       invalidateOnRefresh: true,
       onUpdate: (self) => setTickerDirection(self.direction === 1 ? -1 : 1),
     },
-  });
+  );
 }
 
 /** Starts the ticker loop and its scroll shift. */
