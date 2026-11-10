@@ -20,7 +20,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: 'Matias Gigena',
-  description: 'Mi portafolio de desarrollo web',
+  description: 'Portfolio of Matías Gigena, a front-end developer in Buenos Aires building accessible, motion-rich interfaces.',
 };
 
 interface RootLayoutProps {
