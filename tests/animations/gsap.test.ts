@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createFollower, ensureScrollTrigger, gsap } from './gsap';
+import { createFollower, ensureScrollTrigger, gsap } from '@/app/animations/gsap';
 
 describe('createFollower', () => {
   it('eases the element to the offsets it is given and retargets on later calls', async () => {

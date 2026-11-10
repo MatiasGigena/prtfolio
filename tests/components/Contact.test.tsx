@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { CONTACT } from '@/app/data/portfolio';
-import Contact from './Contact';
+import Contact from '@/app/components/Contact';
 
 /** Answers every request with `respond()`'s JSON body, or fails it if `respond` throws. */
 function stubFormspree(respond: () => unknown): ReturnType<typeof vi.fn> {

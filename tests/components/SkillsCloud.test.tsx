@@ -3,8 +3,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { gsap } from '@/app/animations/gsap';
 import { TECH_LOGOS } from '@/app/data/portfolio';
 import type { TechLogo } from '@/app/types/portfolio';
-import { DESKTOP_MOUSE, REDUCED_MOTION, setMediaFeatures } from '@/test/browser';
-import SkillsCloud from './SkillsCloud';
+import { DESKTOP_MOUSE, REDUCED_MOTION, setMediaFeatures } from '@/tests/support/browser';
+import SkillsCloud from '@/app/components/SkillsCloud';
 
 function setup(): { section: HTMLElement; planes: HTMLElement[] } {
   render(<SkillsCloud />);

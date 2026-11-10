@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { BOOKS } from '@/app/data/portfolio';
-import BooksCarousel from './BooksCarousel';
+import BooksCarousel from '@/app/components/BooksCarousel';
 
 function caption(): HTMLElement {
   const element = document.querySelector<HTMLElement>('[aria-live="polite"]');

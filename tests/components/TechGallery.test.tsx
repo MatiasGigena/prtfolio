@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { gsap } from '@/app/animations/gsap';
-import { REDUCED_MOTION, TOUCH_SCREEN, setMediaFeatures } from '@/test/browser';
-import TechGallery from './TechGallery';
+import { REDUCED_MOTION, TOUCH_SCREEN, setMediaFeatures } from '@/tests/support/browser';
+import TechGallery from '@/app/components/TechGallery';
 
 function gallery(): HTMLElement {
   const element = document.querySelector<HTMLElement>('.tech-gallery');

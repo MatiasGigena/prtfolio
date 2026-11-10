@@ -10,7 +10,7 @@ import {
   PROJECTS,
   SECTION_IDS,
   TECH_LOGOS,
-} from './portfolio';
+} from '@/app/data/portfolio';
 
 interface RemotePattern {
   readonly protocol: string;
@@ -48,7 +48,7 @@ describe('section anchors', () => {
   it('gives every section exactly one navigation item', () => {
     const targets = NAVIGATION_ITEMS.map((item) => item.target);
     expect(targets).toHaveLength(Object.keys(SECTION_IDS).length);
-    expect([...targets].sort()).toEqual(Object.values(SECTION_IDS).sort());
+    expect(new Set(targets)).toEqual(new Set(Object.values(SECTION_IDS)));
   });
 
   it('points the About call to action at a section', () => {

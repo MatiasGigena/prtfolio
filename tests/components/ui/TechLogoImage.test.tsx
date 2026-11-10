@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import TechLogoImage from './TechLogoImage';
+import TechLogoImage from '@/app/components/ui/TechLogoImage';
 
 describe('TechLogoImage', () => {
   it('uses the technology name as alt text and keeps the caller classes', () => {

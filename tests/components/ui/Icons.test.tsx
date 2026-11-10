@@ -8,7 +8,7 @@ import {
   LinkedInIcon,
   MenuIcon,
   WhatsAppIcon,
-} from './Icons';
+} from '@/app/components/ui/Icons';
 
 const ICONS = {
   AnimationIcon,

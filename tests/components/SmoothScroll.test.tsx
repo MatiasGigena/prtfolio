@@ -1,7 +1,7 @@
 import { act, render } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { DESKTOP_MOUSE, REDUCED_MOTION, TOUCH_SCREEN, setMediaFeatures } from '@/test/browser';
-import SmoothScroll from './SmoothScroll';
+import { DESKTOP_MOUSE, REDUCED_MOTION, TOUCH_SCREEN, setMediaFeatures } from '@/tests/support/browser';
+import SmoothScroll from '@/app/components/SmoothScroll';
 
 const lenis = vi.hoisted(() => ({
   instances: [] as { destroy: ReturnType<typeof vi.fn>; on: ReturnType<typeof vi.fn> }[],

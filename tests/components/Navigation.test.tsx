@@ -2,8 +2,8 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { NAVIGATION_ITEMS } from '@/app/data/portfolio';
-import { REDUCED_MOTION, setMediaFeatures } from '@/test/browser';
-import Navigation from './Navigation';
+import { REDUCED_MOTION, setMediaFeatures } from '@/tests/support/browser';
+import Navigation from '@/app/components/Navigation';
 
 function renderWithSections(): Record<string, HTMLElement> {
   render(

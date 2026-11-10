@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { NAVIGATION_ITEMS } from '@/app/data/portfolio';
-import HomePage from './page';
+import HomePage from '@/app/page';
 
 describe('HomePage', () => {
   beforeEach(() => vi.useFakeTimers());

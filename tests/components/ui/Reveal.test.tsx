@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { FakeIntersectionObserver } from '@/test/browser';
-import Reveal from './Reveal';
+import { FakeIntersectionObserver } from '@/tests/support/browser';
+import Reveal from '@/app/components/ui/Reveal';
 
 function renderReveal(): { wrapper: HTMLElement; animated: HTMLElement } {
   render(

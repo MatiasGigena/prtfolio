@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import type { Book } from '@/app/types/portfolio';
-import BookCard from './BookCard';
+import BookCard from '@/app/components/BookCard';
 
 const book: Book = {
   id: 1,

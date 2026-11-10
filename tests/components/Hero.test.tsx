@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { gsap } from '@/app/animations/gsap';
-import { REDUCED_MOTION, setMediaFeatures } from '@/test/browser';
-import Hero from './Hero';
+import { REDUCED_MOTION, setMediaFeatures } from '@/tests/support/browser';
+import Hero from '@/app/components/Hero';
 
 function tickerCopies(container: HTMLElement): HTMLElement[] {
   return Array.from(container.querySelectorAll<HTMLElement>('.hero-ticker p'));

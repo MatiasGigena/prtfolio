@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { gsap } from '@/app/animations/gsap';
-import { DESKTOP_MOUSE, TOUCH_SCREEN, setMediaFeatures } from '@/test/browser';
-import Magnetic from './Magnetic';
+import { DESKTOP_MOUSE, TOUCH_SCREEN, setMediaFeatures } from '@/tests/support/browser';
+import Magnetic from '@/app/components/ui/Magnetic';
 
 function renderMagnet(): HTMLElement {
   render(

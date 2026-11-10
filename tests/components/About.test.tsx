@@ -1,8 +1,8 @@
 import { act, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { ABOUT, SECTION_IDS } from '@/app/data/portfolio';
-import { FakeIntersectionObserver } from '@/test/browser';
-import About from './About';
+import { FakeIntersectionObserver } from '@/tests/support/browser';
+import About from '@/app/components/About';
 
 function blocks(): HTMLElement[] {
   return Array.from(document.querySelectorAll<HTMLElement>('[data-block]'));

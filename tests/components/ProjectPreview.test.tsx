@@ -2,8 +2,8 @@ import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { gsap } from '@/app/animations/gsap';
 import { PROJECTS } from '@/app/data/portfolio';
-import { DESKTOP_MOUSE, REDUCED_MOTION, setMediaFeatures } from '@/test/browser';
-import ProjectPreview from './ProjectPreview';
+import { DESKTOP_MOUSE, REDUCED_MOTION, setMediaFeatures } from '@/tests/support/browser';
+import ProjectPreview from '@/app/components/ProjectPreview';
 
 function layers(container: HTMLElement): HTMLElement[] {
   return Array.from(container.querySelectorAll<HTMLElement>('.project-preview > div'));

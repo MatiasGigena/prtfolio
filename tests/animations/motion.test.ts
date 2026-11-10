@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { DESKTOP_MOUSE, TOUCH_SCREEN, setMediaFeatures } from '@/test/browser';
-import { COARSE_POINTER_QUERY, FINE_POINTER_QUERY, hasFinePointer } from './motion';
+import { DESKTOP_MOUSE, TOUCH_SCREEN, setMediaFeatures } from '@/tests/support/browser';
+import { COARSE_POINTER_QUERY, FINE_POINTER_QUERY, hasFinePointer } from '@/app/animations/motion';
 
 describe('pointer queries', () => {
   it('recognises a mouse as a fine pointer', () => {

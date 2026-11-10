@@ -1,14 +1,10 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
+import ProjectLink from '@/app/components/ProjectLink';
+import { PROJECTS } from '@/app/data/portfolio';
 import type { PortfolioProject } from '@/app/types/portfolio';
-import ProjectLink from './ProjectLink';
 
-const project: PortfolioProject = {
-  title: 'Rekon',
-  description: 'Design & Development',
-  image: '/images/project-rekon.png',
-  href: 'https://www.rekonmedia.com/',
-};
+const project = PROJECTS[0] as PortfolioProject;
 
 function renderLink(): { onPreviewChange: ReturnType<typeof vi.fn>; hoverTarget: HTMLElement } {
   const onPreviewChange = vi.fn();
@@ -21,10 +17,10 @@ function renderLink(): { onPreviewChange: ReturnType<typeof vi.fn>; hoverTarget:
 describe('ProjectLink', () => {
   it('opens the project in a new tab', () => {
     renderLink();
-    const link = screen.getByRole('link', { name: /Rekon/ });
+    const link = screen.getByRole('link', { name: new RegExp(project.title) });
     expect(link).toHaveAttribute('href', project.href);
     expect(link).toHaveAttribute('target', '_blank');
-    expect(link).toHaveTextContent('Design & Development');
+    expect(link).toHaveTextContent(project.description);
   });
 
   it('asks for the preview while a mouse hovers it', () => {

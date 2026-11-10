@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import Preloader from './Preloader';
+import Preloader from '@/app/components/Preloader';
 
 describe('Preloader', () => {
   beforeEach(() => vi.useFakeTimers());
