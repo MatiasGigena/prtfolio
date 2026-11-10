@@ -7,7 +7,11 @@ export const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 /** EASE_OUT as a CSS timing function, for APIs that take a string. */
 export const EASE_OUT_CSS = `cubic-bezier(${EASE_OUT.join(', ')})`;
 
-/** A mouse or trackpad: the primary pointer can hover and is precise. */
+/**
+ * A mouse or trackpad: the primary pointer can hover and is precise. Pointer-following effects
+ * check it once when they start, then react only to events whose pointerType is 'mouse', so a
+ * finger or pen on a touchscreen laptop does not drag them around.
+ */
 export const FINE_POINTER_QUERY = '(hover: hover) and (pointer: fine)';
 
 /** A touch screen: the primary pointer cannot hover and is imprecise. */

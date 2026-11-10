@@ -42,6 +42,7 @@ function followPointer(targets: readonly PointerFollowTarget[]): () => void {
   gsap.set(elements, { xPercent: -50, yPercent: -50 });
 
   const move = (event: PointerEvent): void => {
+    if (event.pointerType !== 'mouse') return;
     for (const follow of followers) follow(event.clientX, event.clientY);
   };
   window.addEventListener('pointermove', move, { passive: true });

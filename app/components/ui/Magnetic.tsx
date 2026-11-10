@@ -17,6 +17,7 @@ interface MagneticProps {
 function magnetize(element: HTMLElement): () => void {
   const follow = createFollower(element, FOLLOW_DURATION);
   const handlePointerMove = (event: PointerEvent): void => {
+    if (event.pointerType !== 'mouse') return;
     const { height, width, left, top } = element.getBoundingClientRect();
     follow((event.clientX - (left + width / 2)) * PULL, (event.clientY - (top + height / 2)) * PULL);
   };

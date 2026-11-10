@@ -30,7 +30,7 @@ describe('ProjectPreview', () => {
     setMediaFeatures(DESKTOP_MOUSE);
     const { container } = render(<ProjectPreview index={0} visible projects={PROJECTS} />);
 
-    window.dispatchEvent(new PointerEvent('pointermove', { clientX: 120, clientY: 80 }));
+    window.dispatchEvent(new PointerEvent('pointermove', { pointerType: 'mouse', clientX: 120, clientY: 80 }));
 
     await vi.waitFor(() => {
       for (const layer of layers(container)) {
@@ -55,7 +55,7 @@ describe('ProjectPreview', () => {
     setMediaFeatures([...DESKTOP_MOUSE, ...REDUCED_MOTION]);
     const { container } = render(<ProjectPreview index={0} visible projects={PROJECTS} />);
 
-    window.dispatchEvent(new PointerEvent('pointermove', { clientX: 120, clientY: 80 }));
+    window.dispatchEvent(new PointerEvent('pointermove', { pointerType: 'mouse', clientX: 120, clientY: 80 }));
 
     for (const layer of layers(container)) {
       expect(gsap.getTweensOf(layer)).toHaveLength(0);
