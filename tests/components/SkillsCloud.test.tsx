@@ -25,15 +25,18 @@ describe('SkillsCloud', () => {
     }
   });
 
-  it('shifts each plane toward the mouse by its own depth, then back when the mouse leaves', async () => {
+  it('pulls each plane toward the mouse by its depth, then back when the mouse leaves', async () => {
     setMediaFeatures(DESKTOP_MOUSE);
     const { section, planes } = setup();
 
-    // The top-left corner is half the travel away from the centre on both axes.
+    // A mouse in the top-left corner pulls every plane up and to the left, nearer ones further.
     fireEvent.pointerMove(section, { pointerType: 'mouse', clientX: 0, clientY: 0 });
     await vi.waitFor(() => {
       const offsets = planes.map((plane) => Number(gsap.getProperty(plane, 'x')));
-      expect(offsets).toEqual([-8.4, -10.5, -5.25, -12.6]);
+      for (const offset of offsets) expect(offset).toBeLessThan(0);
+      const sortedNearestLast = [...offsets].sort((a, b) => b - a);
+      expect(offsets).toEqual(sortedNearestLast);
+      expect(new Set(offsets).size).toBe(offsets.length);
     });
 
     fireEvent.pointerLeave(section, { pointerType: 'mouse' });

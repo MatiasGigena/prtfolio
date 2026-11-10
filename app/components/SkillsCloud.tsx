@@ -25,9 +25,21 @@ interface SkillPlane {
   readonly logos: readonly PlacedLogo[];
 }
 
+// Ordered from the farthest plane to the nearest, so nearer logos also paint on top.
 const SKILL_PLANES: readonly SkillPlane[] = [
   {
-    id: 'foreground',
+    id: 'far',
+    strength: 0.25,
+    logos: [
+      { logo: TECH_LOGOS.materialUi, position: 'left-[70%] top-[73%]' },
+      { logo: TECH_LOGOS.react, position: 'left-[40%] top-[75%]' },
+      { logo: TECH_LOGOS.framer, position: 'left-[65%] top-[85%]' },
+      { logo: TECH_LOGOS.neptune, position: 'left-[12%] top-[22%] lg:left-[10%] lg:top-[20%]' },
+      { logo: TECH_LOGOS.gremlin, position: 'left-[88%] top-[30%]' },
+    ],
+  },
+  {
+    id: 'middle',
     strength: 0.4,
     logos: [
       { logo: TECH_LOGOS.javascript, position: 'left-[8%] top-[70%]' },
@@ -47,18 +59,7 @@ const SKILL_PLANES: readonly SkillPlane[] = [
     ],
   },
   {
-    id: 'far',
-    strength: 0.25,
-    logos: [
-      { logo: TECH_LOGOS.materialUi, position: 'left-[70%] top-[73%]' },
-      { logo: TECH_LOGOS.react, position: 'left-[40%] top-[75%]' },
-      { logo: TECH_LOGOS.framer, position: 'left-[65%] top-[85%]' },
-      { logo: TECH_LOGOS.neptune, position: 'left-[12%] top-[22%] lg:left-[10%] lg:top-[20%]' },
-      { logo: TECH_LOGOS.gremlin, position: 'left-[88%] top-[30%]' },
-    ],
-  },
-  {
-    id: 'closest',
+    id: 'nearest',
     strength: 0.6,
     logos: [
       { logo: TECH_LOGOS.gsap, position: 'left-[20%] top-[80%]' },
