@@ -1,59 +1,75 @@
 'use client';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
+import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
 
+/** How far the ticker text travels, in percent of its width per millisecond. */
 const TICKER_SPEED = 0.006;
+/** Longest frame the ticker accounts for, so a stalled tab does not make the text jump. */
+const MAX_FRAME_MS = 32;
+/** How far the whole ticker slides left while the first screen scrolls away. */
+const SCROLL_SHIFT_PX = -500;
+
+type Direction = 1 | -1;
+
+/**
+ * Scrolls the two copies of the ticker text sideways forever, in the direction
+ * `getDirection` reports on each frame. Returns a function that stops the loop.
+ */
+function loopTicker(copies: readonly HTMLElement[], getDirection: () => Direction): () => void {
+  let xPercent = 0;
+  const tick = (_time: number, deltaTime: number): void => {
+    xPercent += Math.min(deltaTime, MAX_FRAME_MS) * TICKER_SPEED * getDirection();
+    // The second copy sits one width to the right, so wrapping by 100% is seamless.
+    if (xPercent < -100) xPercent += 100;
+    if (xPercent > 0) xPercent -= 100;
+    gsap.set(copies, { xPercent });
+  };
+  gsap.ticker.add(tick);
+  return () => gsap.ticker.remove(tick);
+}
+
+/** Slides the ticker left as the first screen scrolls away and reports each scroll direction. */
+function shiftWithScroll(slider: HTMLElement, onScroll: (direction: Direction) => void): gsap.core.Tween {
+  ensureScrollTrigger();
+  return gsap.to(slider, {
+    x: SCROLL_SHIFT_PX,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: document.documentElement,
+      scrub: 0.25,
+      start: 0,
+      end: () => window.innerHeight,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => onScroll(self.direction === 1 ? 1 : -1),
+    },
+  });
+}
 
 export default function Hero(): JSX.Element {
   const firstTextRef = useRef<HTMLParagraphElement>(null);
   const secondTextRef = useRef<HTMLParagraphElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let frameId = 0;
-    let xPercent = 0;
-    let direction = -1;
-    let previousTime = performance.now();
+    const slider = sliderRef.current;
+    const copies = [firstTextRef.current, secondTextRef.current];
+    if (reduceMotion || !slider || !copies[0] || !copies[1]) return;
 
-    const context = gsap.context(() => {
-      if (!reduceMotion) {
-        gsap.to(sliderRef.current, {
-          x: -500,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: document.documentElement,
-            scrub: 0.25,
-            start: 0,
-            end: window.innerHeight,
-            onUpdate: (self) => {
-              direction = self.direction * -1;
-            },
-          },
-        });
-      }
+    // The text runs left by default and against the scroll direction once the page moves.
+    let direction: Direction = -1;
+    const stopTicker = loopTicker([copies[0], copies[1]], () => direction);
+    const tween = shiftWithScroll(slider, (scrollDirection) => {
+      direction = scrollDirection === 1 ? -1 : 1;
     });
-
-    const tick = (time: number): void => {
-      const elapsed = Math.min(time - previousTime, 32);
-      previousTime = time;
-      xPercent += elapsed * TICKER_SPEED * direction;
-      if (xPercent < -100) xPercent += 100;
-      if (xPercent > 0) xPercent -= 100;
-      gsap.set([firstTextRef.current, secondTextRef.current], { xPercent });
-      frameId = requestAnimationFrame(tick);
-    };
-
-    if (!reduceMotion) frameId = requestAnimationFrame(tick);
     return () => {
-      cancelAnimationFrame(frameId);
-      context.revert();
+      stopTicker();
+      tween.revert();
     };
-  }, []);
+  }, [reduceMotion]);
 
   return (
     <section

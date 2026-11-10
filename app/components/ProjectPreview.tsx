@@ -1,11 +1,11 @@
 'use client';
 
-import { gsap } from 'gsap';
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import Image from 'next/image';
 import { forwardRef, useEffect, useRef, type ReactNode } from 'react';
+import { createFollower, gsap } from '@/app/animations/gsap';
+import { EASE_OUT, hasFinePointer } from '@/app/animations/motion';
 import type { PortfolioProject } from '@/app/types/portfolio';
-import { EASE_OUT } from '@/app/animations/motion';
 
 interface ProjectPreviewProps {
   /** Index into `projects` of the link under the pointer, or null when none is hovered. */
@@ -24,7 +24,6 @@ const previewVariants: Variants = {
   },
 };
 
-const FOLLOW_EASE = 'power3.out';
 // Seconds each layer takes to catch up with the pointer: the label leads and the image trails.
 const IMAGE_FOLLOW_DURATION = 0.32;
 const CURSOR_FOLLOW_DURATION = 0.2;
@@ -40,33 +39,22 @@ export default function ProjectPreview({
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-    if (!finePointer.matches || reduceMotion) return;
+    if (reduceMotion || !hasFinePointer()) return;
 
     const layers = [
       { element: imageRef.current, duration: IMAGE_FOLLOW_DURATION },
       { element: cursorRef.current, duration: CURSOR_FOLLOW_DURATION },
       { element: labelRef.current, duration: LABEL_FOLLOW_DURATION },
     ];
+    const elements = layers.flatMap(({ element }) => (element ? [element] : []));
     const followers = layers.flatMap(({ element, duration }) =>
-      element
-        ? [
-            {
-              element,
-              x: gsap.quickTo(element, 'x', { duration, ease: FOLLOW_EASE }),
-              y: gsap.quickTo(element, 'y', { duration, ease: FOLLOW_EASE }),
-            },
-          ]
-        : [],
+      element ? [createFollower(element, duration)] : [],
     );
-    const elements = followers.map(({ element }) => element);
+    // Centre each layer on the pointer rather than hanging it off the top-left corner.
     gsap.set(elements, { xPercent: -50, yPercent: -50 });
 
     const move = (event: PointerEvent): void => {
-      for (const follower of followers) {
-        follower.x(event.clientX);
-        follower.y(event.clientY);
-      }
+      for (const follow of followers) follow(event.clientX, event.clientY);
     };
     window.addEventListener('pointermove', move, { passive: true });
     return () => {

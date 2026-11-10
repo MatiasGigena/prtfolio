@@ -1,10 +1,11 @@
 'use client';
 
-import { motion, useReducedMotion, useScroll, useTransform, type MotionStyle, type MotionValue } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useReducedMotion } from 'framer-motion';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
+import { COARSE_POINTER_QUERY } from '@/app/animations/motion';
 import { TECH_LOGOS } from '@/app/data/portfolio';
 import type { TechLogo } from '@/app/types/portfolio';
-import useViewportSize from '@/hooks/useViewportSize';
 import TechLogoImage from './ui/TechLogoImage';
 
 interface TechColumn {
@@ -59,14 +60,6 @@ const TECH_COLUMNS: readonly TechColumn[] = [
   },
 ];
 
-interface ColumnProps {
-  readonly logos: readonly TechLogo[];
-  readonly multiplier: number;
-  readonly scrollProgress: MotionValue<number>;
-  readonly viewportHeight: number;
-  readonly mode: ParallaxMode;
-}
-
 // 'scroll-driven' runs the parallax on the compositor, in step with native
 // scrolling. Driving it from JS ('js') lags a frame behind on touch scrolling
 // and makes the columns jitter, so touch devices without scroll-driven
@@ -76,51 +69,50 @@ type ParallaxMode = 'scroll-driven' | 'js' | 'static';
 function getParallaxMode(reduceMotion: boolean | null): ParallaxMode {
   if (reduceMotion) return 'static';
   if (CSS.supports('animation-timeline: view()')) return 'scroll-driven';
-  return window.matchMedia('(hover: none) and (pointer: coarse)').matches ? 'static' : 'js';
+  return window.matchMedia(COARSE_POINTER_QUERY).matches ? 'static' : 'js';
 }
 
-function Column({
-  logos,
-  multiplier,
-  scrollProgress,
-  viewportHeight,
-  mode,
-}: ColumnProps): JSX.Element {
-  const transform = useTransform(
-    scrollProgress,
-    (progress) => `translate3d(0, ${progress * viewportHeight * multiplier}px, 0)`,
-  );
-  const style: MotionStyle =
-    mode === 'js'
-      ? { transform }
-      : mode === 'scroll-driven'
-        ? ({ '--tech-parallax': multiplier } as MotionStyle)
-        : {};
-
-  return (
-    <motion.div
-      style={style}
-      className='tech-column w-1/3 h-full relative flex flex-col gap-[2vw] min-w-[64px] xs:min-w-[100px] sm:min-w-[250px] will-change-transform'
-    >
-      {logos.map((logo) => (
-        <div key={logo.name} className='h-full grid place-items-center w-full relative'>
-          <TechLogoImage logo={logo} size={100} className='h-16 w-16 xs:h-[100px] xs:w-[100px]' />
-        </div>
-      ))}
-    </motion.div>
-  );
+/**
+ * The JS fallback for the parallax: the same motion as the CSS scroll-driven version, where
+ * each column moves down by its multiplier times the viewport height while the gallery crosses
+ * the screen. Returns a function that removes it.
+ */
+function scrubColumns(gallery: HTMLElement, columns: readonly (HTMLElement | null)[]): () => void {
+  ensureScrollTrigger();
+  const tweens = TECH_COLUMNS.flatMap((column, index) => {
+    const element = columns[index];
+    if (!element) return [];
+    return gsap.to(element, {
+      y: () => window.innerHeight * column.multiplier,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: gallery,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
+  });
+  return () => {
+    for (const tween of tweens) tween.revert();
+  };
 }
 
 export default function TechGallery(): JSX.Element {
-  const { height } = useViewportSize();
   const galleryRef = useRef<HTMLDivElement>(null);
+  const columnRefs = useRef<(HTMLDivElement | null)[]>([]);
   const reduceMotion = useReducedMotion();
-  const [mode, setMode] = useState<ParallaxMode>('js');
+  // Unknown until mounted, because it depends on browser support and the pointer type.
+  const [mode, setMode] = useState<ParallaxMode | null>(null);
+
   useEffect(() => setMode(getParallaxMode(reduceMotion)), [reduceMotion]);
-  const { scrollYProgress } = useScroll({
-    target: galleryRef,
-    offset: ['start end', 'end start'],
-  });
+
+  useEffect(() => {
+    const gallery = galleryRef.current;
+    if (mode !== 'js' || !gallery) return;
+    return scrubColumns(gallery, columnRefs.current);
+  }, [mode]);
 
   return (
     <section
@@ -131,15 +123,21 @@ export default function TechGallery(): JSX.Element {
         ref={galleryRef}
         className={`tech-gallery h-[calc(var(--screen-h)*1.7)] flex overflow-hidden gap-[6vw] p-[2vw] box-border ${mode === 'scroll-driven' ? 'is-scroll-driven' : ''} ${mode === 'static' ? 'is-static' : ''}`}
       >
-        {TECH_COLUMNS.map((column) => (
-          <Column
+        {TECH_COLUMNS.map((column, index) => (
+          <div
             key={column.id}
-            logos={column.logos}
-            multiplier={column.multiplier}
-            scrollProgress={scrollYProgress}
-            viewportHeight={height}
-            mode={mode}
-          />
+            ref={(element) => {
+              columnRefs.current[index] = element;
+            }}
+            style={{ '--tech-parallax': column.multiplier } as CSSProperties}
+            className='tech-column w-1/3 h-full relative flex flex-col gap-[2vw] min-w-[64px] xs:min-w-[100px] sm:min-w-[250px] will-change-transform'
+          >
+            {column.logos.map((logo) => (
+              <div key={logo.name} className='h-full grid place-items-center w-full relative'>
+                <TechLogoImage logo={logo} size={100} className='h-16 w-16 xs:h-[100px] xs:w-[100px]' />
+              </div>
+            ))}
+          </div>
         ))}
       </div>
     </section>

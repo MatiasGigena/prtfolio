@@ -113,11 +113,9 @@ body {
   }
 }
 
-/* Without parallax the columns sit at the top so every logo is visible.
-   !important clears any transform the JS fallback set before the mode was known. */
+/* Without parallax the columns sit at the top so every logo is visible. */
 .tech-gallery.is-static .tech-column {
   top: 0;
-  transform: none !important;
 }
 
 .book-marquee {

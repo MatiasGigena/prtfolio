@@ -1,34 +1,34 @@
 'use client';
 
-import { gsap } from 'gsap';
+import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, type ReactNode } from 'react';
+import { createFollower, gsap } from '@/app/animations/gsap';
+import { hasFinePointer } from '@/app/animations/motion';
+
+/** Fraction of the pointer's distance from the centre that the content leans toward it. */
+const PULL = 0.22;
+const FOLLOW_DURATION = 0.3;
 
 interface MagneticProps {
   readonly children: ReactNode;
   readonly className?: string;
 }
 
+/** Leans its content toward a hovering mouse and springs back when the pointer leaves. */
 export default function Magnetic({ children, className }: MagneticProps): JSX.Element {
   const ref = useRef<HTMLSpanElement>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const element = ref.current;
-    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!element || !finePointer.matches || reducedMotion.matches) return;
+    if (!element || reduceMotion || !hasFinePointer()) return;
 
-    const moveX = gsap.quickTo(element, 'x', { duration: 0.3, ease: 'power3.out' });
-    const moveY = gsap.quickTo(element, 'y', { duration: 0.3, ease: 'power3.out' });
-
+    const follow = createFollower(element, FOLLOW_DURATION);
     const handlePointerMove = (event: PointerEvent): void => {
       const { height, width, left, top } = element.getBoundingClientRect();
-      moveX((event.clientX - (left + width / 2)) * 0.22);
-      moveY((event.clientY - (top + height / 2)) * 0.22);
+      follow((event.clientX - (left + width / 2)) * PULL, (event.clientY - (top + height / 2)) * PULL);
     };
-    const reset = (): void => {
-      moveX(0);
-      moveY(0);
-    };
+    const reset = (): void => follow(0, 0);
 
     element.addEventListener('pointermove', handlePointerMove);
     element.addEventListener('pointerleave', reset);
@@ -37,7 +37,7 @@ export default function Magnetic({ children, className }: MagneticProps): JSX.El
       element.removeEventListener('pointerleave', reset);
       gsap.killTweensOf(element);
     };
-  }, []);
+  }, [reduceMotion]);
 
   return (
     <span ref={ref} className={`inline-flex ${className ?? ''}`}>

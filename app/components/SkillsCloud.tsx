@@ -1,11 +1,16 @@
 'use client';
 
-import { useEffect, useRef, type PointerEvent } from 'react';
+import { useReducedMotion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { createFollower, gsap, type Follower } from '@/app/animations/gsap';
+import { hasFinePointer } from '@/app/animations/motion';
 import { TECH_LOGOS } from '@/app/data/portfolio';
 import type { TechLogo } from '@/app/types/portfolio';
 import TechLogoImage from './ui/TechLogoImage';
 
-const SPRING_RESPONSE = 0.12;
+/** Pixels a plane of strength 1 travels as the pointer crosses the section from edge to edge. */
+const POINTER_TRAVEL_PX = 42;
+const FOLLOW_DURATION = 0.5;
 
 interface PlacedLogo {
   readonly logo: TechLogo;
@@ -70,72 +75,50 @@ const SKILL_PLANES: readonly SkillPlane[] = [
   },
 ];
 
-interface Point {
-  x: number;
-  y: number;
+/** Moves every plane toward the same pointer offset, each scaled by its strength. */
+function createDepthFollower(planeElements: readonly (HTMLElement | null)[]): Follower {
+  const planes = SKILL_PLANES.flatMap((plane, index) => {
+    const element = planeElements[index];
+    return element ? [{ follow: createFollower(element, FOLLOW_DURATION), strength: plane.strength }] : [];
+  });
+  return (x, y) => {
+    for (const { follow, strength } of planes) follow(x * strength, y * strength);
+  };
 }
 
 export default function SkillsCloud(): JSX.Element {
+  const sectionRef = useRef<HTMLElement>(null);
   const planeRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const targetRef = useRef<Point>({ x: 0, y: 0 });
-  const currentRef = useRef<Point>({ x: 0, y: 0 });
-  const frameRef = useRef<number | null>(null);
+  const reduceMotion = useReducedMotion();
 
-  const animate = (): void => {
-    currentRef.current.x += (targetRef.current.x - currentRef.current.x) * SPRING_RESPONSE;
-    currentRef.current.y += (targetRef.current.y - currentRef.current.y) * SPRING_RESPONSE;
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || reduceMotion || !hasFinePointer()) return;
 
-    planeRefs.current.forEach((element, index) => {
-      const plane = SKILL_PLANES[index];
-      if (!element || !plane) return;
-      element.style.transform = `translate3d(${currentRef.current.x * plane.strength}px, ${currentRef.current.y * plane.strength}px, 0)`;
-    });
-
-    const settled =
-      Math.abs(targetRef.current.x - currentRef.current.x) < 0.1 &&
-      Math.abs(targetRef.current.y - currentRef.current.y) < 0.1;
-    if (settled) {
-      frameRef.current = null;
-      return;
-    }
-    frameRef.current = requestAnimationFrame(animate);
-  };
-
-  const scheduleAnimation = (): void => {
-    if (frameRef.current === null) frameRef.current = requestAnimationFrame(animate);
-  };
-
-  const handlePointerMove = (event: PointerEvent<HTMLDivElement>): void => {
-    if (
-      event.pointerType !== 'mouse' ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
-      return;
-    }
-    const rect = event.currentTarget.getBoundingClientRect();
-    targetRef.current = {
-      x: ((event.clientX - rect.left) / rect.width - 0.5) * 42,
-      y: ((event.clientY - rect.top) / rect.height - 0.5) * 42,
+    const planes = planeRefs.current;
+    const followPointer = createDepthFollower(planes);
+    const handlePointerMove = (event: PointerEvent): void => {
+      if (event.pointerType !== 'mouse') return;
+      const rect = section.getBoundingClientRect();
+      followPointer(
+        ((event.clientX - rect.left) / rect.width - 0.5) * POINTER_TRAVEL_PX,
+        ((event.clientY - rect.top) / rect.height - 0.5) * POINTER_TRAVEL_PX,
+      );
     };
-    scheduleAnimation();
-  };
+    const reset = (): void => followPointer(0, 0);
 
-  const reset = (): void => {
-    targetRef.current = { x: 0, y: 0 };
-    scheduleAnimation();
-  };
-
-  useEffect(
-    () => () => {
-      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
-    },
-    [],
-  );
+    section.addEventListener('pointermove', handlePointerMove);
+    section.addEventListener('pointerleave', reset);
+    return () => {
+      section.removeEventListener('pointermove', handlePointerMove);
+      section.removeEventListener('pointerleave', reset);
+      gsap.killTweensOf(planes.filter(Boolean));
+    };
+  }, [reduceMotion]);
 
   return (
     <section
-      onPointerMove={handlePointerMove}
-      onPointerLeave={reset}
+      ref={sectionRef}
       className='h-screen relative w-full mt-28 overflow-hidden text-white'
       aria-labelledby='skills-heading'
     >

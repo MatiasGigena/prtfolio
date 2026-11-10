@@ -24,9 +24,11 @@ npm run lint
 npm run build
 ```
 
-TypeScript is configured in strict mode with unchecked indexed access enabled. Application code lives in `app/` and `hooks/`; portfolio content and typed models are centralized in `app/data/portfolio.ts` and `app/types/portfolio.ts`.
+TypeScript is configured in strict mode with unchecked indexed access enabled. Application code lives in `app/`; portfolio content and typed models are centralized in `app/data/portfolio.ts` and `app/types/portfolio.ts`.
 
 ## Motion and accessibility
+
+GSAP (with ScrollTrigger) drives everything tied to scroll position or the pointer; Framer Motion handles entrance and presence transitions. Shared easing, media queries, and GSAP helpers live in `app/animations/`, and components read the reduced-motion preference with Framer Motion's `useReducedMotion()`.
 
 - Pointer-driven interactions (magnetic buttons, the project preview, the skills cloud) are limited to fine-pointer devices.
 - Smooth wheel scrolling (Lenis) runs only on wide screens with a fine pointer.

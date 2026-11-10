@@ -1,27 +1,27 @@
 'use client';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
+import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
 
 const STATEMENT =
   "It's not just a Project. I take pride in crafting digital experiences that not only meet functional requirements but also delight users with intuitive interfaces and smooth interactions.";
 
 export default function ProjectStatement(): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
     const element = containerRef.current;
     if (!element) return;
     const letters = element.querySelectorAll<HTMLElement>('[data-letter]');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (reduceMotion) {
       gsap.set(letters, { opacity: 1 });
       return;
     }
 
+    ensureScrollTrigger();
     const context = gsap.context(() => {
       gsap.to(letters, {
         opacity: 1,
@@ -37,7 +37,7 @@ export default function ProjectStatement(): JSX.Element {
       });
     }, element);
     return () => context.revert();
-  }, []);
+  }, [reduceMotion]);
 
   return (
     <div

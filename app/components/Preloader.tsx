@@ -1,5 +1,6 @@
 'use client';
 
+import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { AnimationIcon } from './ui/Icons';
 
@@ -24,6 +25,7 @@ export default function Preloader({ onFinish }: PreloaderProps): JSX.Element {
   const [rowCount, setRowCount] = useState(0);
   const onFinishRef = useRef(onFinish);
   onFinishRef.current = onFinish;
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const blockSize = window.innerWidth * 0.05;
@@ -38,12 +40,7 @@ export default function Preloader({ onFinish }: PreloaderProps): JSX.Element {
   }, []);
 
   const colorize = (event: PointerEvent<HTMLDivElement>): void => {
-    if (
-      event.pointerType !== 'mouse' ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
-      return;
-    }
+    if (event.pointerType !== 'mouse' || reduceMotion) return;
     event.currentTarget.animate(
       [{ backgroundColor: 'rgb(255 255 255)' }, { backgroundColor: 'transparent' }],
       { duration: 300, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' },

@@ -1,53 +1,51 @@
 'use client';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
 import { NAVIGATION_ITEMS } from '@/app/data/portfolio';
 import { MenuIcon } from './ui/Icons';
 import Magnetic from './ui/Magnetic';
 
+/** The bar hides once the reader has scrolled this fraction of the first screen. */
+const HIDE_AFTER_SCREEN_FRACTION = 0.8;
+
+/** Shows or hides the bar; with reduced motion it fades in place instead of sliding up. */
+function setBarVisible(bar: HTMLElement, visible: boolean, reduceMotion: boolean): void {
+  gsap.to(bar, {
+    yPercent: visible || reduceMotion ? 0 : -110,
+    autoAlpha: visible ? 1 : 0,
+    duration: 0.2,
+    ease: 'power3.out',
+    overwrite: true,
+  });
+}
+
 export default function Navigation(): JSX.Element {
   const navRef = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const reduceMotion = useReducedMotion() ?? false;
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const element = navRef.current;
-    if (!element) return;
+    const bar = navRef.current;
+    if (!bar) return;
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const trigger = ScrollTrigger.create({
+    const trigger = ensureScrollTrigger().create({
       trigger: document.documentElement,
       start: 0,
-      end: () => window.innerHeight / 1.25,
-      onLeave: () =>
-        gsap.to(element, {
-          yPercent: reduceMotion ? 0 : -110,
-          autoAlpha: 0,
-          duration: 0.2,
-          ease: 'power3.out',
-          overwrite: true,
-        }),
-      onEnterBack: () =>
-        gsap.to(element, {
-          yPercent: 0,
-          autoAlpha: 1,
-          duration: 0.2,
-          ease: 'power3.out',
-          overwrite: true,
-        }),
+      end: () => window.innerHeight * HIDE_AFTER_SCREEN_FRACTION,
+      onLeave: () => setBarVisible(bar, false, reduceMotion),
+      onEnterBack: () => setBarVisible(bar, true, reduceMotion),
     });
     return () => {
       trigger.kill();
-      gsap.killTweensOf(element);
+      gsap.killTweensOf(bar);
     };
-  }, []);
+  }, [reduceMotion]);
 
   const scrollTo = (targetId: `#${string}`): void => {
     const target = document.querySelector(targetId);
     if (!(target instanceof HTMLElement)) return;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     setMenuOpen(false);
   };
