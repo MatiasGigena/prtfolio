@@ -1,7 +1,7 @@
 'use client';
 
 import { useForm, ValidationError } from '@formspree/react';
-import { useEffect, useRef, type JSX } from 'react';
+import { useEffect, useRef, type ComponentProps, type JSX, type ReactNode } from 'react';
 import { CONTACT, SECTION_IDS } from '@/app/data/portfolio';
 import type { SocialLink, SocialNetwork } from '@/app/types/portfolio';
 import {
@@ -44,25 +44,22 @@ export default function Contact(): JSX.Element {
   return (
     <section
       id={SECTION_IDS.contact}
-      className='text-gray-600 min-h-screen flex items-center justify-center rounded-b-full border-b-2 w-full body-font relative'
+      className='text-white min-h-screen flex items-center justify-center rounded-b-full border-b-2 w-full relative'
       aria-labelledby='contact-heading'
     >
       <div className='container px-5 border-0 lg:pt-11 lg:pb-4 pt-6 pb-3 mx-auto'>
         <div className='flex flex-col text-center w-full mb-12'>
-          <h2 id='contact-heading' className='sm:text-3xl text-2xl font-medium title-font mb-4 text-white'>
+          <h2 id='contact-heading' className='sm:text-3xl text-2xl font-medium mb-4'>
             Drop me an email.
           </h2>
-          <p className='lg:w-2/3 mx-auto text-white leading-relaxed text-base'>
+          <p className='lg:w-2/3 mx-auto leading-relaxed text-base'>
             I hope you&apos;ve found inspiration along the way. Let&apos;s connect.
           </p>
         </div>
 
         <div className='lg:w-1/2 md:w-2/3 mx-auto'>
           <form ref={formRef} onSubmit={handleSubmit} className='flex flex-wrap -m-2'>
-            <div className='p-2 w-1/2'>
-              <label htmlFor='name' className='leading-7 text-sm text-white'>
-                Name
-              </label>
+            <Field id='name' label='Name' className='w-1/2' errors={state.errors}>
               <input
                 required
                 type='text'
@@ -71,12 +68,8 @@ export default function Contact(): JSX.Element {
                 autoComplete='name'
                 className={`${fieldClassName} leading-8`}
               />
-              <ValidationError prefix='Name' field='name' errors={state.errors} className={fieldErrorClassName} />
-            </div>
-            <div className='p-2 w-1/2'>
-              <label htmlFor='email' className='leading-7 text-sm text-white'>
-                Email
-              </label>
+            </Field>
+            <Field id='email' label='Email' className='w-1/2' errors={state.errors}>
               <input
                 required
                 type='email'
@@ -85,25 +78,15 @@ export default function Contact(): JSX.Element {
                 autoComplete='email'
                 className={`${fieldClassName} leading-8`}
               />
-              <ValidationError prefix='Email' field='email' errors={state.errors} className={fieldErrorClassName} />
-            </div>
-            <div className='p-2 w-full'>
-              <label htmlFor='message' className='leading-7 text-sm text-white'>
-                Message
-              </label>
+            </Field>
+            <Field id='message' label='Message' className='w-full' errors={state.errors}>
               <textarea
                 required
                 id='message'
                 name='message'
                 className={`${fieldClassName} h-32 resize-none leading-6`}
               />
-              <ValidationError
-                prefix='Message'
-                field='message'
-                errors={state.errors}
-                className={fieldErrorClassName}
-              />
-            </div>
+            </Field>
             <div className='p-2 w-full flex justify-center'>
               <Magnetic>
                 <button
@@ -116,7 +99,7 @@ export default function Contact(): JSX.Element {
               </Magnetic>
             </div>
             {state.succeeded ? (
-              <p className='w-full p-2 text-center text-white' role='status'>
+              <p className='w-full p-2 text-center' role='status'>
                 Thanks! Your message has been sent.
               </p>
             ) : null}
@@ -127,11 +110,11 @@ export default function Contact(): JSX.Element {
             ) : null}
           </form>
 
-          <div className='p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center'>
-            <a href={`mailto:${CONTACT.email}`} className='pressable inline-block text-white'>
+          <div className='p-2 w-full pt-8 mt-8 border-t border-white/15 text-center'>
+            <a href={`mailto:${CONTACT.email}`} className='pressable inline-block'>
               {CONTACT.email}
             </a>
-            <p className='leading-normal my-5'>
+            <p className='leading-normal my-5 text-white/60'>
               {CONTACT.addressLines.map((line) => (
                 <span key={line} className='block'>
                   {line}
@@ -140,7 +123,7 @@ export default function Contact(): JSX.Element {
             </p>
             <div className='inline-flex items-center gap-4'>
               {CONTACT.socials.map((social) => (
-                <SocialButton key={social.network} social={social} />
+                <SocialProfileLink key={social.network} social={social} />
               ))}
             </div>
           </div>
@@ -150,7 +133,30 @@ export default function Contact(): JSX.Element {
   );
 }
 
-function SocialButton({ social }: { readonly social: SocialLink }): JSX.Element {
+interface FieldProps {
+  readonly id: 'name' | 'email' | 'message';
+  readonly label: string;
+  /** Width of the field within the form's row, e.g. 'w-1/2'. */
+  readonly className: string;
+  readonly errors: ComponentProps<typeof ValidationError>['errors'];
+  /** The input or textarea, whose id must match `id`. */
+  readonly children: ReactNode;
+}
+
+/** A labelled form control with the errors Formspree reports for it underneath. */
+function Field({ id, label, className, errors, children }: FieldProps): JSX.Element {
+  return (
+    <div className={`p-2 ${className}`}>
+      <label htmlFor={id} className='leading-7 text-sm'>
+        {label}
+      </label>
+      {children}
+      <ValidationError prefix={label} field={id} errors={errors} className={fieldErrorClassName} />
+    </div>
+  );
+}
+
+function SocialProfileLink({ social }: { readonly social: SocialLink }): JSX.Element {
   const { label, Icon, size } = SOCIAL_BRANDS[social.network];
   return (
     <Magnetic>
@@ -159,7 +165,7 @@ function SocialButton({ social }: { readonly social: SocialLink }): JSX.Element 
         target='_blank'
         rel='noreferrer'
         aria-label={label}
-        className='pressable inline-flex text-white'
+        className='pressable inline-flex'
       >
         <Icon size={size} />
       </a>
