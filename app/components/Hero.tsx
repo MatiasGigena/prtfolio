@@ -11,6 +11,9 @@ const TICKER_SPEED = 0.006;
 const MAX_FRAME_MS = 32;
 /** How far the whole ticker slides left while the first screen scrolls away. */
 const SCROLL_SHIFT_PX = -500;
+/** Both copies of the ticker text look the same; only their positions differ. */
+const TICKER_TEXT_CLASS =
+  'text-white text-[6rem] pr-8 sm:text-[230px] sm:pr-[50px] font-thin [text-shadow:2px_2px_4px_rgba(0,0,0,0.5)]';
 
 type Direction = 1 | -1;
 
@@ -31,8 +34,14 @@ function loopTicker(copies: readonly HTMLElement[], getDirection: () => Directio
   return () => gsap.ticker.remove(tick);
 }
 
-/** Slides the ticker left as the first screen scrolls away and reports each scroll direction. */
-function shiftWithScroll(slider: HTMLElement, onScroll: (direction: Direction) => void): gsap.core.Tween {
+/**
+ * Slides the ticker left as the first screen scrolls away, and on every scroll reports the
+ * direction the text should run: against the scroll.
+ */
+function shiftWithScroll(
+  slider: HTMLElement,
+  setTickerDirection: (direction: Direction) => void,
+): gsap.core.Tween {
   ensureScrollTrigger();
   return gsap.to(slider, {
     x: SCROLL_SHIFT_PX,
@@ -43,18 +52,18 @@ function shiftWithScroll(slider: HTMLElement, onScroll: (direction: Direction) =
       start: 0,
       end: () => window.innerHeight,
       invalidateOnRefresh: true,
-      onUpdate: (self) => onScroll(self.direction === 1 ? 1 : -1),
+      onUpdate: (self) => setTickerDirection(self.direction === 1 ? -1 : 1),
     },
   });
 }
 
 /** Starts the ticker loop and its scroll shift; returns a function that stops both. */
 function startTicker(slider: HTMLElement, copies: readonly HTMLElement[]): () => void {
-  // The text runs left by default and against the scroll direction once the page moves.
+  // The text runs left until the page first scrolls.
   let direction: Direction = -1;
   const stopLoop = loopTicker(copies, () => direction);
-  const tween = shiftWithScroll(slider, (scrollDirection) => {
-    direction = scrollDirection === 1 ? -1 : 1;
+  const tween = shiftWithScroll(slider, (next) => {
+    direction = next;
   });
   return () => {
     stopLoop();
@@ -92,17 +101,10 @@ export default function Hero(): JSX.Element {
       />
       <div className='hero-ticker' aria-hidden='true'>
         <div ref={sliderRef} className='relative whitespace-nowrap will-change-transform'>
-          <p
-            ref={firstTextRef}
-            className='text-white text-[6rem] pr-8 sm:text-[230px] sm:pr-[50px] m-0 relative font-thin'
-            style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}
-          >
+          <p ref={firstTextRef} className={`${TICKER_TEXT_CLASS} relative`}>
             Front End Developer -
           </p>
-          <p
-            ref={secondTextRef}
-            className='text-white text-[6rem] pr-8 sm:text-[230px] sm:pr-[50px] top-0 font-thin absolute left-[100%]'
-          >
+          <p ref={secondTextRef} className={`${TICKER_TEXT_CLASS} absolute left-full top-0`}>
             Front End Developer -
           </p>
         </div>
