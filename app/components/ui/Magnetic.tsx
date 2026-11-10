@@ -1,7 +1,7 @@
 'use client';
 
 import { useReducedMotion } from 'framer-motion';
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode, type JSX } from 'react';
 import { createFollower, gsap } from '@/app/animations/gsap';
 import { hasFinePointer } from '@/app/animations/motion';
 

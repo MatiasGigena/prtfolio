@@ -1,7 +1,7 @@
 'use client';
 
 import { useReducedMotion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type JSX } from 'react';
 import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
 import { WORK_STATEMENT } from '@/app/data/portfolio';
 

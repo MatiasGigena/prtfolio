@@ -1,7 +1,7 @@
 'use client';
 
 import { useForm, ValidationError } from '@formspree/react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type JSX } from 'react';
 import { CONTACT, SECTION_IDS } from '@/app/data/portfolio';
 import type { SocialLink, SocialNetwork } from '@/app/types/portfolio';
 import {

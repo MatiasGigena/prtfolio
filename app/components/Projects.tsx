@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type JSX } from 'react';
 import { PROJECTS, SECTION_IDS } from '@/app/data/portfolio';
 import ProjectLink from './ProjectLink';
 import ProjectPreview from './ProjectPreview';

@@ -1,7 +1,7 @@
 'use client';
 
 import { useReducedMotion } from 'framer-motion';
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent, type JSX } from 'react';
 import { AnimationIcon } from './ui/Icons';
 
 const COLUMN_COUNT = 20;

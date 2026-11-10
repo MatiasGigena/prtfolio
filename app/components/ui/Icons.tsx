@@ -1,4 +1,4 @@
-import type { ReactNode, SVGProps } from 'react';
+import type { JSX, ReactNode, SVGProps } from 'react';
 
 export interface IconProps extends Omit<SVGProps<SVGSVGElement>, 'children'> {
   /** Width and height in pixels. */

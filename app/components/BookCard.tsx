@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import type { Book } from '@/app/types/portfolio';
 
 interface BookCardProps {

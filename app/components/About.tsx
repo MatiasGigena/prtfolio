@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type JSX } from 'react';
 import { EASE_OUT } from '@/app/animations/motion';
 import { ABOUT, SECTION_IDS } from '@/app/data/portfolio';
 import { ArrowDownRightIcon } from './ui/Icons';

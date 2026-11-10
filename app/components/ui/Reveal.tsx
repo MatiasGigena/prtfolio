@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { useRef, type ReactNode } from 'react';
+import { useRef, type ReactNode, type JSX } from 'react';
 import { EASE_OUT } from '@/app/animations/motion';
 
 type RevealDirection = 'fade' | 'right' | 'up';

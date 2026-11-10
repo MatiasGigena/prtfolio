@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import type { JSX } from 'react';
 import type { TechLogo } from '@/app/types/portfolio';
 
 interface TechLogoImageProps {

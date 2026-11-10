@@ -1,7 +1,7 @@
 'use client';
 
 import { useReducedMotion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type JSX } from 'react';
 import { createFollower, gsap, type Follower } from '@/app/animations/gsap';
 import { hasFinePointer } from '@/app/animations/motion';
 import { TECH_LOGOS } from '@/app/data/portfolio';

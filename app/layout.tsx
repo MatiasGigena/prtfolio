@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
-import type { ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import SmoothScroll from './components/SmoothScroll';
 import 'lenis/dist/lenis.css';
 import './globals.css';

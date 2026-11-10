@@ -1,6 +1,6 @@
 'use client';
 
-import type { PointerEvent } from 'react';
+import type { JSX, PointerEvent } from 'react';
 import type { PortfolioProject } from '@/app/types/portfolio';
 
 interface ProjectLinkProps {

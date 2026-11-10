@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import Image from 'next/image';
-import { forwardRef, useEffect, useRef, type ReactNode } from 'react';
+import { forwardRef, useEffect, useRef, type ReactNode, type JSX } from 'react';
 import { createFollower, gsap } from '@/app/animations/gsap';
 import { EASE_OUT, hasFinePointer } from '@/app/animations/motion';
 import type { PortfolioProject } from '@/app/types/portfolio';

@@ -2,7 +2,7 @@
 
 import { useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type JSX } from 'react';
 import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
 
 /** How far the ticker text travels, in percent of its width per millisecond. */
