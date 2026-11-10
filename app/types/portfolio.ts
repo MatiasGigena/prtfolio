@@ -30,16 +30,12 @@ export interface Book {
   readonly accent: string;
 }
 
-export interface SkillLogo {
+export interface TechLogo {
+  /** The technology's name, also used as the image's alt text. */
+  readonly name: string;
   readonly src: string;
-  readonly alt: string;
-  readonly className: string;
-}
-
-export interface SkillPlane {
-  readonly id: string;
-  readonly strength: number;
-  readonly logos: readonly SkillLogo[];
+  /** Drawn in black or dark grey, so it is inverted to stay visible on black sections. */
+  readonly dark?: true;
 }
 
 export interface NavigationItem {

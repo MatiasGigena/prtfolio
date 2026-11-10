@@ -9,7 +9,7 @@ import Navigation from './components/Navigation';
 import Preloader from './components/Preloader';
 import Projects from './components/Projects';
 import SkillsCloud from './components/SkillsCloud';
-import TechStack from './components/TechStack';
+import TechGallery from './components/TechGallery';
 import Reveal from './components/ui/Reveal';
 
 export default function HomePage(): JSX.Element {
@@ -24,7 +24,7 @@ export default function HomePage(): JSX.Element {
         <Projects />
         <div className='bg-black h-full w-full overflow-x-clip'>
           <Reveal direction='right'>
-            <TechStack />
+            <TechGallery />
           </Reveal>
           <Reveal>
             <SkillsCloud />

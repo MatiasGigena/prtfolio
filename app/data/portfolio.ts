@@ -3,7 +3,7 @@ import type {
   Book,
   NavigationItem,
   PortfolioProject,
-  SkillPlane,
+  TechLogo,
 } from '@/app/types/portfolio';
 
 export const NAVIGATION_ITEMS: readonly NavigationItem[] = [
@@ -125,190 +125,36 @@ export const ABOUT: AboutContent = {
   cta: { label: 'Start a conversation', href: '#Contact' },
 };
 
-// Logos drawn in black or dark grey; they are lightened so they stay visible on black sections.
-export const DARK_LOGO_SOURCES: ReadonlySet<string> = new Set([
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/wordpress/wordpress-plain.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-line.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg',
-]);
+const DEVICON = 'https://raw.githubusercontent.com/devicons/devicon/master/icons';
+const VECTOR_LOGO_ZONE = 'https://www.vectorlogo.zone/logos';
 
-export const TECH_COLUMNS = [
-  {
-    id: 'left',
-    multiplier: 2,
-    images: [
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg',
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg',
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/wordpress/wordpress-plain.svg',
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg',
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/materialui/materialui-plain.svg',
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg',
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg',
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-line.svg',
-    ],
+/** Every technology logo shown on the page, defined once and referenced by key from the layouts. */
+export const TECH_LOGOS = {
+  aws: {
+    name: 'AWS',
+    src: `${DEVICON}/amazonwebservices/amazonwebservices-original-wordmark.svg`,
+    dark: true,
   },
-  {
-    id: 'center',
-    multiplier: 2.3,
-    images: [
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg',
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/sequelize/sequelize-original.svg',
-      'https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg',
-      'https://www.vectorlogo.zone/logos/w3_css/w3_css-icon.svg',
-      'https://www.vectorlogo.zone/logos/framer/framer-icon.svg',
-      'https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg',
-      'https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg',
-      'https://www.vectorlogo.zone/logos/postgresql/postgresql-icon.svg',
-    ],
-  },
-  {
-    id: 'right',
-    multiplier: 2.5,
-    images: [
-      'https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg',
-      'https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg',
-      '/images/greensock-gsap-icon-seeklogo.com.svg',
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg',
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg',
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg',
-      '/images/neptune.png',
-      '/images/gremlin.png',
-    ],
-  },
-] as const;
-
-export const SKILL_PLANES: readonly SkillPlane[] = [
-  {
-    id: 'foreground',
-    strength: 0.4,
-    logos: [
-      {
-        src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg',
-        alt: 'JavaScript',
-        className: 'left-[8%] top-[70%]',
-      },
-      {
-        src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg',
-        alt: 'TypeScript',
-        className: 'left-[5%] top-[55%]',
-      },
-      {
-        src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/wordpress/wordpress-plain.svg',
-        alt: 'WordPress',
-        className: 'left-[60%] top-0',
-      },
-      {
-        src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg',
-        alt: 'AWS',
-        className: 'left-[85%] top-[18%]',
-      },
-    ],
-  },
-  {
-    id: 'near',
-    strength: 0.5,
-    logos: [
-      {
-        src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg',
-        alt: 'GitHub',
-        className: 'left-[5%] top-[12%] lg:top-[8%]',
-      },
-      {
-        src: 'https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg',
-        alt: 'HTML',
-        className: 'left-[100%] top-[58%] sm:left-[80%] sm:top-[51%]',
-      },
-      {
-        src: 'https://www.vectorlogo.zone/logos/w3_css/w3_css-icon.svg',
-        alt: 'CSS',
-        className: 'left-[65%] top-[60%]',
-      },
-      {
-        src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg',
-        alt: 'Docker',
-        className: 'left-[35%] top-[40%]',
-      },
-    ],
-  },
-  {
-    id: 'far',
-    strength: 0.25,
-    logos: [
-      {
-        src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/materialui/materialui-plain.svg',
-        alt: 'Material UI',
-        className: 'left-[70%] top-[73%]',
-      },
-      {
-        src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg',
-        alt: 'React',
-        className: 'left-[40%] top-[75%]',
-      },
-      {
-        src: 'https://www.vectorlogo.zone/logos/framer/framer-icon.svg',
-        alt: 'Framer',
-        className: 'left-[65%] top-[85%]',
-      },
-      { src: '/images/neptune.png', alt: 'Neptune', className: 'left-[12%] top-[22%] lg:left-[10%] lg:top-[20%]' },
-      { src: '/images/gremlin.png', alt: 'Gremlin', className: 'left-[88%] top-[30%]' },
-    ],
-  },
-  {
-    id: 'closest',
-    strength: 0.6,
-    logos: [
-      {
-        src: '/images/greensock-gsap-icon-seeklogo.com.svg',
-        alt: 'GSAP',
-        className: 'left-[20%] top-[80%]',
-      },
-      {
-        src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg',
-        alt: 'Redux',
-        className: 'left-[15%] top-[32%]',
-      },
-      {
-        src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-line.svg',
-        alt: 'Next.js',
-        className: 'left-[81%] top-[2.5%]',
-      },
-      {
-        src: 'https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg',
-        alt: 'Node.js',
-        className: 'left-[63%] top-[18%]',
-      },
-      {
-        src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg',
-        alt: 'Express',
-        className: 'left-[33%] top-[18%] lg:left-[29%]',
-      },
-      {
-        src: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/sequelize/sequelize-original.svg',
-        alt: 'Sequelize',
-        className: 'right-[18%] top-[33%] sm:right-[22%] lg:right-[13%]',
-      },
-      {
-        src: 'https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg',
-        alt: 'Tailwind CSS',
-        className: 'left-[35%] top-[60%]',
-      },
-      {
-        src: 'https://www.vectorlogo.zone/logos/postgresql/postgresql-icon.svg',
-        alt: 'PostgreSQL',
-        className: 'left-[40%] top-[2%]',
-      },
-      {
-        src: 'https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg',
-        alt: 'Postman',
-        className: 'left-[15%] top-[2%]',
-      },
-      {
-        src: 'https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg',
-        alt: 'Git',
-        className: 'right-[40%] top-[30%]',
-      },
-    ],
-  },
-];
+  css: { name: 'CSS', src: `${VECTOR_LOGO_ZONE}/w3_css/w3_css-icon.svg` },
+  docker: { name: 'Docker', src: `${DEVICON}/docker/docker-original.svg` },
+  express: { name: 'Express', src: `${DEVICON}/express/express-original.svg`, dark: true },
+  framer: { name: 'Framer', src: `${VECTOR_LOGO_ZONE}/framer/framer-icon.svg` },
+  git: { name: 'Git', src: `${VECTOR_LOGO_ZONE}/git-scm/git-scm-icon.svg` },
+  github: { name: 'GitHub', src: `${DEVICON}/github/github-original.svg`, dark: true },
+  gremlin: { name: 'Gremlin', src: '/images/gremlin.png' },
+  gsap: { name: 'GSAP', src: '/images/gsap.svg' },
+  html: { name: 'HTML', src: `${VECTOR_LOGO_ZONE}/w3_html5/w3_html5-icon.svg` },
+  javascript: { name: 'JavaScript', src: `${DEVICON}/javascript/javascript-plain.svg` },
+  materialUi: { name: 'Material UI', src: `${DEVICON}/materialui/materialui-plain.svg` },
+  neptune: { name: 'Neptune', src: '/images/neptune.png' },
+  nextjs: { name: 'Next.js', src: `${DEVICON}/nextjs/nextjs-line.svg`, dark: true },
+  nodejs: { name: 'Node.js', src: `${VECTOR_LOGO_ZONE}/nodejs/nodejs-icon.svg` },
+  postgresql: { name: 'PostgreSQL', src: `${VECTOR_LOGO_ZONE}/postgresql/postgresql-icon.svg` },
+  postman: { name: 'Postman', src: `${VECTOR_LOGO_ZONE}/getpostman/getpostman-icon.svg` },
+  react: { name: 'React', src: `${DEVICON}/react/react-original.svg` },
+  redux: { name: 'Redux', src: `${DEVICON}/redux/redux-original.svg` },
+  sequelize: { name: 'Sequelize', src: `${DEVICON}/sequelize/sequelize-original.svg` },
+  tailwind: { name: 'Tailwind CSS', src: `${VECTOR_LOGO_ZONE}/tailwindcss/tailwindcss-icon.svg` },
+  typescript: { name: 'TypeScript', src: `${DEVICON}/typescript/typescript-original.svg` },
+  wordpress: { name: 'WordPress', src: `${DEVICON}/wordpress/wordpress-plain.svg`, dark: true },
+} as const satisfies Record<string, TechLogo>;
