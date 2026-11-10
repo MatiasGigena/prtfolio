@@ -29,6 +29,30 @@ const IMAGE_FOLLOW_DURATION = 0.32;
 const CURSOR_FOLLOW_DURATION = 0.2;
 const LABEL_FOLLOW_DURATION = 0.16;
 
+interface FollowingLayer {
+  readonly element: HTMLElement | null;
+  /** Seconds the layer takes to catch up with the pointer. */
+  readonly duration: number;
+}
+
+/** Centres each layer on the pointer and makes it trail the pointer around the window; returns a cleanup. */
+function followPointer(layers: readonly FollowingLayer[]): () => void {
+  const elements = layers.flatMap(({ element }) => (element ? [element] : []));
+  const followers = layers.flatMap(({ element, duration }) =>
+    element ? [createFollower(element, duration)] : [],
+  );
+  gsap.set(elements, { xPercent: -50, yPercent: -50 });
+
+  const move = (event: PointerEvent): void => {
+    for (const follow of followers) follow(event.clientX, event.clientY);
+  };
+  window.addEventListener('pointermove', move, { passive: true });
+  return () => {
+    window.removeEventListener('pointermove', move);
+    gsap.killTweensOf(elements);
+  };
+}
+
 export default function ProjectPreview({
   activeIndex,
   projects,
@@ -40,27 +64,11 @@ export default function ProjectPreview({
 
   useEffect(() => {
     if (reduceMotion || !hasFinePointer()) return;
-
-    const layers = [
+    return followPointer([
       { element: imageRef.current, duration: IMAGE_FOLLOW_DURATION },
       { element: cursorRef.current, duration: CURSOR_FOLLOW_DURATION },
       { element: labelRef.current, duration: LABEL_FOLLOW_DURATION },
-    ];
-    const elements = layers.flatMap(({ element }) => (element ? [element] : []));
-    const followers = layers.flatMap(({ element, duration }) =>
-      element ? [createFollower(element, duration)] : [],
-    );
-    // Centre each layer on the pointer rather than hanging it off the top-left corner.
-    gsap.set(elements, { xPercent: -50, yPercent: -50 });
-
-    const move = (event: PointerEvent): void => {
-      for (const follow of followers) follow(event.clientX, event.clientY);
-    };
-    window.addEventListener('pointermove', move, { passive: true });
-    return () => {
-      window.removeEventListener('pointermove', move);
-      gsap.killTweensOf(elements);
-    };
+    ]);
   }, [reduceMotion]);
 
   const state: LayerState = activeIndex !== null && !reduceMotion ? 'visible' : 'hidden';

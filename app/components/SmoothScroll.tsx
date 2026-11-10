@@ -21,31 +21,36 @@ function startLenis(): Lenis {
   return lenis;
 }
 
+/**
+ * Runs Lenis while the screen is wide, the pointer is a mouse and the reader has not asked for
+ * reduced motion, starting and stopping it as those change. Returns a function that tears it down.
+ */
+function syncSmoothScrolling(): () => void {
+  const reducedMotion = window.matchMedia(REDUCED_MOTION_QUERY);
+  const desktopPointer = window.matchMedia(DESKTOP_POINTER_QUERY);
+  let lenis: Lenis | null = null;
+
+  const update = (): void => {
+    const enabled = desktopPointer.matches && !reducedMotion.matches;
+    if (enabled && !lenis) lenis = startLenis();
+    if (!enabled && lenis) {
+      lenis.destroy();
+      lenis = null;
+    }
+  };
+
+  update();
+  reducedMotion.addEventListener('change', update);
+  desktopPointer.addEventListener('change', update);
+  return () => {
+    reducedMotion.removeEventListener('change', update);
+    desktopPointer.removeEventListener('change', update);
+    lenis?.destroy();
+  };
+}
+
 /** Smooths wheel scrolling on wide screens with a mouse, unless the reader prefers reduced motion. */
 export default function SmoothScroll(): null {
-  useEffect(() => {
-    const reducedMotion = window.matchMedia(REDUCED_MOTION_QUERY);
-    const desktopPointer = window.matchMedia(DESKTOP_POINTER_QUERY);
-    let lenis: Lenis | null = null;
-
-    const update = (): void => {
-      const enabled = desktopPointer.matches && !reducedMotion.matches;
-      if (enabled && !lenis) lenis = startLenis();
-      if (!enabled && lenis) {
-        lenis.destroy();
-        lenis = null;
-      }
-    };
-
-    update();
-    reducedMotion.addEventListener('change', update);
-    desktopPointer.addEventListener('change', update);
-    return () => {
-      reducedMotion.removeEventListener('change', update);
-      desktopPointer.removeEventListener('change', update);
-      lenis?.destroy();
-    };
-  }, []);
-
+  useEffect(syncSmoothScrolling, []);
   return null;
 }

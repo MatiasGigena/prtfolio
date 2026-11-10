@@ -22,6 +22,27 @@ function setBarVisible(bar: HTMLElement, visible: boolean, reduceMotion: boolean
   });
 }
 
+/** Hides the bar once the first screen has mostly scrolled away; returns a cleanup. */
+function hideOnScroll(bar: HTMLElement, reduceMotion: boolean): () => void {
+  const trigger = ensureScrollTrigger().create({
+    trigger: document.documentElement,
+    start: 0,
+    end: () => window.innerHeight * HIDE_AFTER_SCREEN_FRACTION,
+    onLeave: () => setBarVisible(bar, false, reduceMotion),
+    onEnterBack: () => setBarVisible(bar, true, reduceMotion),
+  });
+  return () => {
+    trigger.kill();
+    gsap.killTweensOf(bar);
+  };
+}
+
+function scrollToSection(sectionId: SectionId, reduceMotion: boolean): void {
+  document
+    .getElementById(sectionId)
+    ?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+}
+
 export default function Navigation(): JSX.Element {
   const navRef = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,24 +51,11 @@ export default function Navigation(): JSX.Element {
   useEffect(() => {
     const bar = navRef.current;
     if (!bar) return;
-
-    const trigger = ensureScrollTrigger().create({
-      trigger: document.documentElement,
-      start: 0,
-      end: () => window.innerHeight * HIDE_AFTER_SCREEN_FRACTION,
-      onLeave: () => setBarVisible(bar, false, reduceMotion),
-      onEnterBack: () => setBarVisible(bar, true, reduceMotion),
-    });
-    return () => {
-      trigger.kill();
-      gsap.killTweensOf(bar);
-    };
+    return hideOnScroll(bar, reduceMotion);
   }, [reduceMotion]);
 
-  const scrollTo = (sectionId: SectionId): void => {
-    const target = document.getElementById(sectionId);
-    if (!target) return;
-    target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  const goTo = (sectionId: SectionId): void => {
+    scrollToSection(sectionId, reduceMotion);
     setMenuOpen(false);
   };
 
@@ -77,7 +85,7 @@ export default function Navigation(): JSX.Element {
               <Magnetic>
                 <button
                   type='button'
-                  onClick={() => scrollTo(item.target)}
+                  onClick={() => goTo(item.target)}
                   className='pressable px-3 py-2 text-sm uppercase rounded-md'
                 >
                   {item.label}
@@ -98,7 +106,7 @@ export default function Navigation(): JSX.Element {
                 type='button'
                 tabIndex={menuOpen ? 0 : -1}
                 className='pressable block w-full rounded-lg px-4 py-3 text-left'
-                onClick={() => scrollTo(item.target)}
+                onClick={() => goTo(item.target)}
               >
                 {item.label}
               </button>

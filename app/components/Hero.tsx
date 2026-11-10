@@ -48,6 +48,20 @@ function shiftWithScroll(slider: HTMLElement, onScroll: (direction: Direction) =
   });
 }
 
+/** Starts the ticker loop and its scroll shift; returns a function that stops both. */
+function startTicker(slider: HTMLElement, copies: readonly HTMLElement[]): () => void {
+  // The text runs left by default and against the scroll direction once the page moves.
+  let direction: Direction = -1;
+  const stopLoop = loopTicker(copies, () => direction);
+  const tween = shiftWithScroll(slider, (scrollDirection) => {
+    direction = scrollDirection === 1 ? -1 : 1;
+  });
+  return () => {
+    stopLoop();
+    tween.revert();
+  };
+}
+
 export default function Hero(): JSX.Element {
   const firstTextRef = useRef<HTMLParagraphElement>(null);
   const secondTextRef = useRef<HTMLParagraphElement>(null);
@@ -56,19 +70,10 @@ export default function Hero(): JSX.Element {
 
   useEffect(() => {
     const slider = sliderRef.current;
-    const copies = [firstTextRef.current, secondTextRef.current];
-    if (reduceMotion || !slider || !copies[0] || !copies[1]) return;
-
-    // The text runs left by default and against the scroll direction once the page moves.
-    let direction: Direction = -1;
-    const stopTicker = loopTicker([copies[0], copies[1]], () => direction);
-    const tween = shiftWithScroll(slider, (scrollDirection) => {
-      direction = scrollDirection === 1 ? -1 : 1;
-    });
-    return () => {
-      stopTicker();
-      tween.revert();
-    };
+    const first = firstTextRef.current;
+    const second = secondTextRef.current;
+    if (reduceMotion || !slider || !first || !second) return;
+    return startTicker(slider, [first, second]);
   }, [reduceMotion]);
 
   return (

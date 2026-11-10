@@ -86,6 +86,28 @@ function createDepthFollower(planeElements: readonly (HTMLElement | null)[]): Fo
   };
 }
 
+/** Lets the planes drift toward a mouse moving over `section`; returns a cleanup. */
+function followPointerInDepth(section: HTMLElement, planeElements: readonly (HTMLElement | null)[]): () => void {
+  const followPointer = createDepthFollower(planeElements);
+  const handlePointerMove = (event: PointerEvent): void => {
+    if (event.pointerType !== 'mouse') return;
+    const rect = section.getBoundingClientRect();
+    followPointer(
+      ((event.clientX - rect.left) / rect.width - 0.5) * POINTER_TRAVEL_PX,
+      ((event.clientY - rect.top) / rect.height - 0.5) * POINTER_TRAVEL_PX,
+    );
+  };
+  const reset = (): void => followPointer(0, 0);
+
+  section.addEventListener('pointermove', handlePointerMove);
+  section.addEventListener('pointerleave', reset);
+  return () => {
+    section.removeEventListener('pointermove', handlePointerMove);
+    section.removeEventListener('pointerleave', reset);
+    gsap.killTweensOf(planeElements.filter(Boolean));
+  };
+}
+
 export default function SkillsCloud(): JSX.Element {
   const sectionRef = useRef<HTMLElement>(null);
   const planeRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -94,26 +116,7 @@ export default function SkillsCloud(): JSX.Element {
   useEffect(() => {
     const section = sectionRef.current;
     if (!section || reduceMotion || !hasFinePointer()) return;
-
-    const planes = planeRefs.current;
-    const followPointer = createDepthFollower(planes);
-    const handlePointerMove = (event: PointerEvent): void => {
-      if (event.pointerType !== 'mouse') return;
-      const rect = section.getBoundingClientRect();
-      followPointer(
-        ((event.clientX - rect.left) / rect.width - 0.5) * POINTER_TRAVEL_PX,
-        ((event.clientY - rect.top) / rect.height - 0.5) * POINTER_TRAVEL_PX,
-      );
-    };
-    const reset = (): void => followPointer(0, 0);
-
-    section.addEventListener('pointermove', handlePointerMove);
-    section.addEventListener('pointerleave', reset);
-    return () => {
-      section.removeEventListener('pointermove', handlePointerMove);
-      section.removeEventListener('pointerleave', reset);
-      gsap.killTweensOf(planes.filter(Boolean));
-    };
+    return followPointerInDepth(section, planeRefs.current);
   }, [reduceMotion]);
 
   return (

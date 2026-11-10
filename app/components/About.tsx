@@ -16,6 +16,28 @@ interface Focus {
 }
 
 /**
+ * Reports which block of `list` is being read: the one crossing the middle of the viewport.
+ * Blocks are marked with `data-block` and numbered in document order. Returns a cleanup.
+ */
+function trackReadingPosition(list: HTMLElement, onRead: (blockIndex: number) => void): () => void {
+  const blockIndex = new Map<Element, number>();
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        const index = blockIndex.get(entry.target);
+        if (entry.isIntersecting && index !== undefined) onRead(index);
+      }
+    },
+    { rootMargin: '-50% 0px -50% 0px' },
+  );
+  list.querySelectorAll('[data-block]').forEach((block, index) => {
+    blockIndex.set(block, index);
+    observer.observe(block);
+  });
+  return () => observer.disconnect();
+}
+
+/**
  * An introduction, then question and answer. The heading stays in view while the blocks
  * scroll past; each takes focus in turn and the heading changes to that block's word.
  */
@@ -27,31 +49,11 @@ export default function About(): JSX.Element {
   useEffect(() => {
     const list = listRef.current;
     if (!list) return;
-
-    const moveTo = (index: number): void =>
+    return trackReadingPosition(list, (index) =>
       setFocus((current) =>
-        current.index === index
-          ? current
-          : { index, direction: index > current.index ? 1 : -1 },
-      );
-
-    // Blocks are observed in document order, which is also their focus index.
-    const blockIndex = new Map<Element, number>();
-    // A line across the middle of the viewport: whichever block it falls in is the one being read.
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          const index = blockIndex.get(entry.target);
-          if (entry.isIntersecting && index !== undefined) moveTo(index);
-        }
-      },
-      { rootMargin: '-50% 0px -50% 0px' },
+        current.index === index ? current : { index, direction: index > current.index ? 1 : -1 },
+      ),
     );
-    list.querySelectorAll('[data-block]').forEach((block, index) => {
-      blockIndex.set(block, index);
-      observer.observe(block);
-    });
-    return () => observer.disconnect();
   }, []);
 
   const word = ABOUT.topics[focus.index - 1]?.word ?? SECTION_WORD;
