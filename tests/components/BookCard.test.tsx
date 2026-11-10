@@ -8,7 +8,7 @@ const book: Book = {
   id: 1,
   title: 'Clean Code',
   author: 'Robert C. Martin',
-  image: '/images/cleancode.avif',
+  image: '/images/book-clean-code.avif',
   accent: '#b9c7b3',
 };
 
