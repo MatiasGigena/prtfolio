@@ -3,7 +3,7 @@
 import { useReducedMotion } from 'framer-motion';
 import { useEffect, useState, type CSSProperties, type JSX, type PointerEvent } from 'react';
 import { EASE_OUT_CSS } from '@/app/animations/motion';
-import { AnimationIcon } from './ui/Icons';
+import { AnimationIcon } from '../ui/Icons';
 
 const COLUMN_COUNT = 20;
 const HOLD_MS = 2000;

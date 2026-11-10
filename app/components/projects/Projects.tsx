@@ -5,7 +5,7 @@ import { PROJECTS, SECTION_IDS } from '@/app/data/portfolio';
 import ProjectLink from './ProjectLink';
 import ProjectPreview from './ProjectPreview';
 import ProjectStatement from './ProjectStatement';
-import Reveal from './ui/Reveal';
+import Reveal from '../ui/Reveal';
 
 export default function Projects(): JSX.Element {
   // The last hovered project stays selected while the preview fades out.

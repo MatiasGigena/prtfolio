@@ -27,7 +27,7 @@ npm run build
 
 Tests use Vitest and Testing Library in jsdom. They live in `tests/`, mirroring the layout of `app/` so the app directory holds only the app, and `tests/support/browser.ts` provides controllable stand-ins for `matchMedia` and `IntersectionObserver`, so tests can switch on reduced motion, a mouse, or a touch screen, and scroll elements into view.
 
-TypeScript is configured in strict mode with unchecked indexed access enabled. Application code lives in `app/`; portfolio content (projects, the work statement, books, the About copy, contact details and social links, and technology logos) lives in `app/data/portfolio.ts`, typed by `app/types/portfolio.ts`. Section headings and short interface labels stay in their components. Styles beyond Tailwind utilities live in `app/styles/`: `globals.css` for design tokens and shared utilities, plus one stylesheet per component, named after it.
+TypeScript is configured in strict mode with unchecked indexed access enabled. Application code lives in `app/`. In `app/components/`, a section with sub-components of its own gets a folder (`projects/`, `books/`), app-wide chrome lives in `shell/` (navigation, preloader, smooth scrolling), shared primitives in `ui/`, and single-file sections sit at the top level; portfolio content (projects, the work statement, books, the About copy, contact details and social links, and technology logos) lives in `app/data/portfolio.ts`, typed by `app/types/portfolio.ts`. Section headings and short interface labels stay in their components. Styles beyond Tailwind utilities live in `app/styles/`: `globals.css` for design tokens and shared utilities, plus one stylesheet per component, named after it.
 
 ## Motion and accessibility
 

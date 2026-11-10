@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { DESKTOP_MOUSE, REDUCED_MOTION, TOUCH_SCREEN, setMediaFeatures } from '@/tests/support/browser';
-import SmoothScroll from '@/app/components/SmoothScroll';
+import SmoothScroll from '@/app/components/shell/SmoothScroll';
 
 interface FakeLenis {
   readonly options: Record<string, unknown>;

@@ -1,7 +1,7 @@
 import { isValidElement, type ReactElement, type ReactNode } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import RootLayout, { metadata } from '@/app/layout';
-import SmoothScroll from '@/app/components/SmoothScroll';
+import SmoothScroll from '@/app/components/shell/SmoothScroll';
 
 vi.mock('next/font/google', () => ({ Poppins: () => ({ className: 'font-poppins' }) }));
 

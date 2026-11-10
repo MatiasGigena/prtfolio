@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import Navigation from '@/app/components/Navigation';
+import Navigation from '@/app/components/shell/Navigation';
 import { NAVIGATION_ITEMS } from '@/app/data/portfolio';
 
 function menus(): { desktop: HTMLElement; mobile: HTMLElement } {

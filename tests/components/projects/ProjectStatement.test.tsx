@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { gsap } from '@/app/animations/gsap';
-import ProjectStatement from '@/app/components/ProjectStatement';
+import ProjectStatement from '@/app/components/projects/ProjectStatement';
 import { WORK_STATEMENT } from '@/app/data/portfolio';
 import { REDUCED_MOTION, setMediaFeatures } from '@/tests/support/browser';
 

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { PROJECTS, SECTION_IDS } from '@/app/data/portfolio';
-import Projects from '@/app/components/Projects';
+import Projects from '@/app/components/projects/Projects';
 
 function previewTrack(): HTMLElement {
   const track = document.querySelector<HTMLElement>('.preview-track');

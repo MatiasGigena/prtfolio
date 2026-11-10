@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import ProjectLink from '@/app/components/ProjectLink';
+import ProjectLink from '@/app/components/projects/ProjectLink';
 import { PROJECTS } from '@/app/data/portfolio';
 import type { PortfolioProject } from '@/app/types/portfolio';
 

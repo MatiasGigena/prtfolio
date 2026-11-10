@@ -4,8 +4,8 @@ import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState, type JSX } from 'react';
 import { ensureScrollTrigger, gsap, GSAP_EASE_OUT } from '@/app/animations/gsap';
 import { NAVIGATION_ITEMS } from '@/app/data/portfolio';
-import { MenuIcon } from './ui/Icons';
-import Magnetic from './ui/Magnetic';
+import { MenuIcon } from '../ui/Icons';
+import Magnetic from '../ui/Magnetic';
 
 /** The bar hides once the reader has scrolled this fraction of the first screen. */
 const HIDE_AFTER_SCREEN_FRACTION = 0.8;

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import type { JSX, ReactNode } from 'react';
-import SmoothScroll from './components/SmoothScroll';
+import SmoothScroll from './components/shell/SmoothScroll';
 import 'lenis/dist/lenis.css';
 import './styles/globals.css';
 // Component styles come after Tailwind's utilities so they win ties of equal specificity.

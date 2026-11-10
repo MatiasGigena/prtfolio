@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { gsap } from '@/app/animations/gsap';
-import ProjectPreview from '@/app/components/ProjectPreview';
+import ProjectPreview from '@/app/components/projects/ProjectPreview';
 import { PROJECTS } from '@/app/data/portfolio';
 import { DESKTOP_MOUSE, REDUCED_MOTION, TOUCH_SCREEN, setMediaFeatures } from '@/tests/support/browser';
 

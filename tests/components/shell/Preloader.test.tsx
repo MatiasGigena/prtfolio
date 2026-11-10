@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import Preloader from '@/app/components/Preloader';
+import Preloader from '@/app/components/shell/Preloader';
 import { REDUCED_MOTION, setMediaFeatures } from '@/tests/support/browser';
 
 const greeting = (): HTMLElement | null => screen.queryByText('Get creative!');
