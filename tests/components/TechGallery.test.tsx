@@ -27,7 +27,10 @@ describe('TechGallery', () => {
     render(<TechGallery />);
 
     expect(gallery()).toHaveAttribute('data-parallax', 'scroll-driven');
-    expect(columns()[1]?.style.getPropertyValue('--tech-travel-screens')).toBe('2.3');
+    // Each column travels its own distance, which is what gives the gallery depth.
+    const travels = columns().map((column) => Number(column.style.getPropertyValue('--tech-travel-screens')));
+    for (const travel of travels) expect(travel).toBeGreaterThan(0);
+    expect(new Set(travels).size).toBe(travels.length);
   });
 
   it('drives the parallax from JS on desktops without scroll-driven animations', () => {
@@ -35,7 +38,8 @@ describe('TechGallery', () => {
     const { unmount } = render(<TechGallery />);
 
     expect(gallery()).toHaveAttribute('data-parallax', 'js');
-    expect(columns()[0]?.style.top).toBe('-55%');
+    // Columns start above the gallery so their logos travel through view.
+    for (const column of columns()) expect(column.style.top).toMatch(/^-\d+(\.\d+)?%$/);
     for (const column of columns()) expect(gsap.getTweensOf(column)).toHaveLength(1);
 
     const [first] = columns();

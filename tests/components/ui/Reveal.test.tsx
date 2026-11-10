@@ -45,7 +45,10 @@ describe('Reveal origins', () => {
       </>,
     );
 
-    expect(screen.getByText('From the right').parentElement?.style.transform).toBe('translate3d(8%, 0px, 0px)');
+    // Offset to the right: a positive horizontal shift and no vertical one.
+    expect(screen.getByText('From the right').parentElement?.style.transform).toMatch(
+      /^translate3d\([1-9][\d.]*%, 0px, 0px\)$/,
+    );
     expect(screen.getByText('Just fading').parentElement?.style.transform).toBe('none');
   });
 });

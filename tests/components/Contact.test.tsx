@@ -3,6 +3,14 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { CONTACT } from '@/app/data/portfolio';
 import Contact from '@/app/components/Contact';
+import type { SocialNetwork } from '@/app/types/portfolio';
+
+const SOCIAL_LABELS: Record<SocialNetwork, string> = {
+  facebook: 'Facebook',
+  linkedin: 'LinkedIn',
+  instagram: 'Instagram',
+  whatsapp: 'WhatsApp',
+};
 
 /** Answers every request with `respond()`'s JSON body, or fails it if `respond` throws. */
 function stubFormspree(respond: () => unknown): ReturnType<typeof vi.fn> {
@@ -71,13 +79,11 @@ describe('Contact', () => {
       'href',
       `mailto:${CONTACT.email}`,
     );
-    for (const [label, social] of [
-      ['Facebook', CONTACT.socials[0]],
-      ['LinkedIn', CONTACT.socials[1]],
-      ['Instagram', CONTACT.socials[2]],
-      ['WhatsApp', CONTACT.socials[3]],
-    ] as const) {
-      expect(screen.getByRole('link', { name: label })).toHaveAttribute('href', social?.href);
+    for (const social of CONTACT.socials) {
+      expect(screen.getByRole('link', { name: SOCIAL_LABELS[social.network] })).toHaveAttribute(
+        'href',
+        social.href,
+      );
     }
   });
 });

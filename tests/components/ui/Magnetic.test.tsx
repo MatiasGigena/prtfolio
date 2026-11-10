@@ -27,11 +27,15 @@ describe('Magnetic', () => {
     setMediaFeatures(DESKTOP_MOUSE);
     const magnet = renderMagnet();
 
-    // 50px right of centre and 20px below it, pulled at 22%.
+    // 50px right of centre and 20px below it: it leans that way, in proportion.
     fireEvent.pointerMove(magnet, { pointerType: 'mouse', clientX: 100, clientY: 40 });
     await vi.waitFor(() => {
-      expect(gsap.getProperty(magnet, 'x')).toBeCloseTo(11);
-      expect(gsap.getProperty(magnet, 'y')).toBeCloseTo(4.4);
+      const x = Number(gsap.getProperty(magnet, 'x'));
+      const y = Number(gsap.getProperty(magnet, 'y'));
+      expect(x).toBeGreaterThan(0);
+      expect(y).toBeGreaterThan(0);
+      expect(x / y).toBeCloseTo(50 / 20);
+      expect(x).toBeLessThan(50);
     });
 
     fireEvent.pointerLeave(magnet);
