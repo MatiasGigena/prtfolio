@@ -3,7 +3,6 @@
 import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, type JSX } from 'react';
 import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
-import { WORK_STATEMENT } from '@/app/data/portfolio';
 
 /** Brings the letters of `container` to full strength one by one as it scrolls through. */
 function revealLettersOnScroll(container: HTMLElement): () => void {
@@ -23,7 +22,11 @@ function revealLettersOnScroll(container: HTMLElement): () => void {
   return () => tween.revert();
 }
 
-export default function ProjectStatement(): JSX.Element {
+interface ProjectStatementProps {
+  readonly text: string;
+}
+
+export default function ProjectStatement({ text }: ProjectStatementProps): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
 
@@ -40,7 +43,7 @@ export default function ProjectStatement(): JSX.Element {
       className='flex items-center 3xl:px-6 mt-8 lg:mt-16 justify-start lg:justify-evenly text-white py-8 lg:py-12'
     >
       <div className='w-11/12 flex items-center h-full flex-wrap'>
-        {WORK_STATEMENT.split(' ').map((word, wordIndex) => (
+        {text.split(' ').map((word, wordIndex) => (
           <p className='text-[4vw] mr-3 mb-2' key={`${word}-${wordIndex}`}>
             {Array.from(word).map((letter, letterIndex) => (
               <span data-letter className='opacity-50 motion-reduce:opacity-100' key={`${letter}-${letterIndex}`}>

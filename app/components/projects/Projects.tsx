@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, type JSX } from 'react';
-import { PROJECTS, SECTION_IDS } from '@/app/data/portfolio';
+import { PROJECTS, SECTION_IDS, WORK_STATEMENT } from '@/app/data/portfolio';
 import ProjectLink from './ProjectLink';
 import ProjectPreview from './ProjectPreview';
 import ProjectStatement from './ProjectStatement';
@@ -17,7 +17,9 @@ export default function Projects(): JSX.Element {
       aria-label='Selected work'
       className='flex flex-col px-8 pb-16 z-40 gap-7 lg:pb-32 lg:pt-9 sm:gap-10 lg:px-10 lg:gap-24 items-start lg:items-center justify-start'
     >
-      <ProjectStatement />
+      <ProjectStatement text={WORK_STATEMENT} />
+      {/* page.tsx reveals whole sections; this one reveals only its list, because the statement
+          above has its own scroll-driven reveal. */}
       <Reveal className='w-full'>
         <div className='flex flex-col gap-8 lg:flex-row lg:gap-0 justify-around lg:w-full'>
           {PROJECTS.map((project, index) => (
