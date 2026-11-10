@@ -35,16 +35,22 @@ export default function About(): JSX.Element {
           : { index, direction: index > current.index ? 1 : -1 },
       );
 
+    // Blocks are observed in document order, which is also their focus index.
+    const blockIndex = new Map<Element, number>();
     // A line across the middle of the viewport: whichever block it falls in is the one being read.
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) moveTo(Number(entry.target.getAttribute('data-block-index')));
+          const index = blockIndex.get(entry.target);
+          if (entry.isIntersecting && index !== undefined) moveTo(index);
         }
       },
       { rootMargin: '-50% 0px -50% 0px' },
     );
-    list.querySelectorAll('[data-block-index]').forEach((item) => observer.observe(item));
+    list.querySelectorAll('[data-block]').forEach((block, index) => {
+      blockIndex.set(block, index);
+      observer.observe(block);
+    });
     return () => observer.disconnect();
   }, []);
 
@@ -106,13 +112,13 @@ export default function About(): JSX.Element {
         </div>
 
         <div ref={listRef} className='mt-8 lg:mt-0 lg:pb-24'>
-          <p data-block-index={0} className={`pb-10 lg:pb-24 ${answerClassName} ${blockClassName(0)}`}>
+          <p data-block className={`pb-10 lg:pb-24 ${answerClassName} ${blockClassName(0)}`}>
             {ABOUT.intro}
           </p>
           {ABOUT.topics.map((topic, index) => (
             <article
               key={topic.id}
-              data-block-index={index + 1}
+              data-block
               className={`border-t border-white/[0.15] py-10 lg:py-16 ${blockClassName(index + 1)}`}
             >
               <h3 className='text-base text-white/[0.55] sm:text-lg'>{topic.question}</h3>
