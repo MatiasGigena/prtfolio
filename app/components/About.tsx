@@ -1,141 +1,122 @@
 'use client';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowDownRight } from 'lucide-react';
-import { useEffect, useRef, type UIEvent } from 'react';
-import { ABOUT_CHAPTERS } from '@/app/data/portfolio';
+import { useEffect, useRef, useState } from 'react';
+import { EASE_OUT } from '@/app/animations/motion';
+import { ABOUT } from '@/app/data/portfolio';
 
+const SECTION_WORD = 'About';
+
+interface Focus {
+  /** Which block is being read: 0 is the introduction, then one per topic. */
+  readonly index: number;
+  /** 1 when the reader moved down to get here, -1 when they moved back up. */
+  readonly direction: 1 | -1;
+}
+
+/**
+ * An introduction, then question and answer. The heading stays in view while the blocks
+ * scroll past; each takes focus in turn and the heading changes to that block's word.
+ */
 export default function About(): JSX.Element {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const [focus, setFocus] = useState<Focus>({ index: 0, direction: 1 });
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const track = trackRef.current;
-    const trigger = triggerRef.current;
-    const progress = progressRef.current;
-    if (!track || !trigger || !progress) return;
+    const list = listRef.current;
+    if (!list) return;
 
-    const context = gsap.context(() => {
-      ScrollTrigger.matchMedia({
-        '(min-width: 1024px) and (prefers-reduced-motion: no-preference)': () => {
-          gsap.to(track, {
-            x: () => -(track.scrollWidth - window.innerWidth),
-            ease: 'none',
-            scrollTrigger: {
-              trigger,
-              start: 'top top',
-              end: () => `+=${track.scrollWidth - window.innerWidth}`,
-              scrub: 0.55,
-              pin: true,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
-              onUpdate: ({ progress: scrollProgress }) => {
-                progress.style.transform = `scaleX(${scrollProgress})`;
-              },
-            },
-          });
-        },
-      });
-    }, trigger);
+    const moveTo = (index: number): void =>
+      setFocus((current) =>
+        current.index === index
+          ? current
+          : { index, direction: index > current.index ? 1 : -1 },
+      );
 
-    return () => context.revert();
+    // A line across the middle of the viewport: whichever block it falls in is the one being read.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) moveTo(Number(entry.target.getAttribute('data-block-index')));
+        }
+      },
+      { rootMargin: '-50% 0px -50% 0px' },
+    );
+    list.querySelectorAll('[data-block-index]').forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
   }, []);
 
-  const updateMobileProgress = (event: UIEvent<HTMLDivElement>): void => {
-    if (window.innerWidth >= 1024) return;
-    const track = event.currentTarget;
-    const scrollableWidth = track.scrollWidth - track.clientWidth;
-    const progress = scrollableWidth > 0 ? track.scrollLeft / scrollableWidth : 0;
-    if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`;
-  };
+  const word = ABOUT.topics[focus.index - 1]?.word ?? SECTION_WORD;
+  const offset = (from: 1 | -1): string => (reduceMotion ? '0%' : from > 0 ? '100%' : '-100%');
+  const blockClassName = (index: number): string =>
+    `transition-opacity duration-300 motion-reduce:!opacity-100 ${
+      index === focus.index ? 'opacity-100' : 'opacity-[0.35]'
+    }`;
+  const answerClassName =
+    'max-w-[26em] text-[clamp(1.5rem,2.7vw,2.6rem)] font-light leading-[1.18] tracking-[-0.025em]';
 
   return (
-    <section
-      id='About'
-      className='about-section w-full overflow-hidden bg-black text-white'
-      aria-labelledby='about-heading'
-    >
-      <div ref={triggerRef} className='about-trigger relative lg:h-screen'>
-        <header className='relative z-20 px-5 pt-20 sm:px-8 lg:absolute lg:inset-x-0 lg:top-0 lg:px-12 lg:pt-9 xl:px-16'>
-          <div className='mx-auto flex max-w-[90rem] items-end justify-between gap-6'>
-            <div>
-              <p className='text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-white/45'>
-                About / Four notes
-              </p>
-              <h2
-                id='about-heading'
-                className='mt-2 text-4xl font-medium leading-none tracking-[-0.04em] sm:text-5xl'
-              >
-                More than a bio.
-              </h2>
-            </div>
-            <p className='hidden max-w-64 text-right text-sm leading-relaxed text-white/50 sm:block'>
-              Scroll to follow the story. Swipe on touch screens.
-            </p>
-          </div>
-          <div className='mx-auto mt-6 h-px max-w-[90rem] overflow-hidden bg-white/15'>
-            <div
-              ref={progressRef}
-              className='h-full origin-left scale-x-0 bg-white will-change-transform'
-            />
-          </div>
-        </header>
-
-        <div
-          ref={trackRef}
-          className='about-track mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-16 outline-none sm:px-8 lg:mt-0 lg:h-full lg:w-max lg:snap-none lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0'
-          role='region'
-          aria-label='Four chapters about Matías'
-          tabIndex={0}
-          onScroll={updateMobileProgress}
-        >
-          {ABOUT_CHAPTERS.map((chapter) => (
-            <article
-              key={chapter.id}
-              aria-labelledby={`about-${chapter.id}`}
-              className='about-panel relative flex min-h-[35rem] w-[88vw] shrink-0 snap-center overflow-hidden rounded-[2rem] border border-white/10 bg-[#0e0f14] p-7 sm:w-[72vw] sm:p-10 lg:h-screen lg:w-screen lg:snap-none lg:items-center lg:rounded-none lg:border-0 lg:bg-transparent lg:px-12 lg:pb-16 lg:pt-36 xl:px-16'
+    <section id='About' className='w-full bg-black text-white' aria-labelledby='about-heading'>
+      <div className='mx-auto grid max-w-[90rem] px-5 py-24 sm:px-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20 lg:px-12 lg:py-40 xl:px-16'>
+        {/* Small screens: these children join the grid directly, so the heading can stick to the
+            top for the whole section. Large screens: the column rides the middle of the viewport,
+            level with the block being read; 6.5rem is about half the column's own height. */}
+        <div className='max-lg:contents lg:sticky lg:top-[calc(var(--screen-h)/2-6.5rem)] lg:self-start lg:[container-type:inline-size]'>
+          {/* On large screens the type is sized from the column (cqw) so the widest word always fits. */}
+          <h2
+            id='about-heading'
+            className="sticky top-0 z-10 -mx-5 bg-black px-5 pb-3 pt-4 text-[clamp(3.5rem,10vw,6.5rem)] font-thin leading-none tracking-[-0.05em] after:absolute after:inset-x-0 after:top-full after:h-8 after:bg-gradient-to-b after:from-black after:to-transparent after:content-[''] sm:-mx-8 sm:px-8 lg:static lg:mx-0 lg:bg-transparent lg:p-0 lg:text-[26cqw] lg:after:hidden"
+          >
+            <span className='sr-only'>{SECTION_WORD}</span>
+            <span className='relative block overflow-y-clip pb-[0.08em]' aria-hidden='true'>
+              <AnimatePresence initial={false} mode='popLayout' custom={focus.direction}>
+                <motion.span
+                  key={word}
+                  className='block whitespace-nowrap'
+                  custom={focus.direction}
+                  variants={{
+                    enter: (direction: 1 | -1) => ({ y: offset(direction), opacity: 0 }),
+                    shown: { y: '0%', opacity: 1 },
+                    exit: (direction: 1 | -1) => ({
+                      y: offset(direction > 0 ? -1 : 1),
+                      opacity: 0,
+                    }),
+                  }}
+                  initial='enter'
+                  animate='shown'
+                  exit='exit'
+                  transition={{ duration: reduceMotion ? 0.2 : 0.5, ease: EASE_OUT }}
+                >
+                  {word}
+                </motion.span>
+              </AnimatePresence>
+            </span>
+          </h2>
+          <div className='mt-4 max-lg:order-last lg:mt-10'>
+            <a
+              href={ABOUT.cta.href}
+              className='pressable inline-flex items-center gap-3 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white'
             >
-              <div className='relative z-10 mx-auto flex w-full max-w-[90rem] flex-col justify-between gap-12 lg:grid lg:grid-cols-[minmax(0,1.55fr)_minmax(18rem,0.75fr)] lg:items-end lg:gap-20'>
-                <div>
-                  <p className='text-xs font-semibold uppercase tracking-[0.22em] text-white/45'>
-                    {chapter.eyebrow}
-                  </p>
-                  <h3
-                    id={`about-${chapter.id}`}
-                    className='mt-6 max-w-[15ch] text-[clamp(2.65rem,6.3vw,6.75rem)] font-medium leading-[0.94] tracking-[-0.055em]'
-                  >
-                    {chapter.title}
-                  </h3>
-                </div>
+              {ABOUT.cta.label}
+              <ArrowDownRight className='h-4 w-4' strokeWidth={2.25} aria-hidden='true' />
+            </a>
+          </div>
+        </div>
 
-                <div className='lg:pb-2'>
-                  <p className='max-w-xl text-base leading-relaxed text-white/65 sm:text-lg lg:text-xl'>
-                    {chapter.body}
-                  </p>
-                  <ul className='mt-8 flex flex-wrap gap-2' aria-label='Chapter highlights'>
-                    {chapter.details.map((detail) => (
-                      <li
-                        key={detail}
-                        className='rounded-full border border-white/15 px-3 py-1.5 text-xs font-medium text-white/65 sm:text-sm'
-                      >
-                        {detail}
-                      </li>
-                    ))}
-                  </ul>
-                  {chapter.cta ? (
-                    <a
-                      href={chapter.cta.href}
-                      className='about-cta pressable mt-9 inline-flex items-center gap-3 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black'
-                    >
-                      {chapter.cta.label}
-                      <ArrowDownRight className='h-4 w-4' strokeWidth={2.25} aria-hidden='true' />
-                    </a>
-                  ) : null}
-                </div>
-              </div>
+        <div ref={listRef} className='mt-8 lg:mt-0 lg:pb-24'>
+          <p data-block-index={0} className={`pb-10 lg:pb-24 ${answerClassName} ${blockClassName(0)}`}>
+            {ABOUT.intro}
+          </p>
+          {ABOUT.topics.map((topic, index) => (
+            <article
+              key={topic.id}
+              data-block-index={index + 1}
+              className={`border-t border-white/[0.15] py-10 lg:py-16 ${blockClassName(index + 1)}`}
+            >
+              <h3 className='text-base text-white/[0.55] sm:text-lg'>{topic.question}</h3>
+              <p className={`mt-4 ${answerClassName}`}>{topic.answer}</p>
             </article>
           ))}
         </div>

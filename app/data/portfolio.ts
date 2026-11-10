@@ -1,5 +1,5 @@
 import type {
-  AboutChapter,
+  AboutContent,
   Book,
   NavigationItem,
   PortfolioProject,
@@ -91,37 +91,39 @@ export const BOOKS: readonly Book[] = [
   },
 ];
 
-export const ABOUT_CHAPTERS: readonly AboutChapter[] = [
-  {
-    id: 'craft',
-    eyebrow: 'Craft',
-    title: '4+ years.',
-    body: 'Front-end developer focused on interaction and motion.',
-    details: ['Front-end development', 'Interaction and motion', 'Responsive systems'],
-  },
-  {
-    id: 'method',
-    eyebrow: 'Method',
-    title: 'Structure, then motion.',
-    body: 'Clear layouts first, polish last, accessible throughout.',
-    details: ['Purpose before polish', 'Accessible by default', 'Built for real devices'],
-  },
-  {
-    id: 'communication',
-    eyebrow: 'Communication',
-    title: 'Buenos Aires.',
-    body: 'Working at UseTeam · Spanish and English (C1).',
-    details: ['Buenos Aires', 'Spanish + English', 'UseTeam'],
-  },
-  {
-    id: 'direction',
-    eyebrow: 'Direction',
-    title: 'Still learning.',
-    body: 'Reading, prototyping, refining.',
-    details: ['Read widely', 'Prototype early', 'Refine relentlessly'],
-    cta: { label: 'Start a conversation', href: '#Contact' },
-  },
-];
+export const ABOUT: AboutContent = {
+  intro:
+    "I'm Matías, a front-end developer in Buenos Aires. Four years in, I still build the same way: structure first, motion last, accessible throughout.",
+  topics: [
+    {
+      id: 'craft',
+      word: 'Craft',
+      question: 'What do you do?',
+      answer:
+        "I build interfaces, and most of my time goes into the part people touch: interaction, motion and layouts that hold up on any screen. I've been doing it for more than four years.",
+    },
+    {
+      id: 'method',
+      word: 'Method',
+      question: 'How do you work?',
+      answer:
+        'Layout first, polish last. I get the structure clear and accessible before anything moves, then add motion where it helps, and test it on real devices.',
+    },
+    {
+      id: 'place',
+      word: 'Place',
+      question: 'Where are you?',
+      answer: 'In Buenos Aires, working at UseTeam. I work in Spanish and in English (C1).',
+    },
+    {
+      id: 'direction',
+      word: 'Next',
+      question: "What's next?",
+      answer: 'More of the same loop: read widely, prototype early, keep refining.',
+    },
+  ],
+  cta: { label: 'Start a conversation', href: '#Contact' },
+};
 
 // Logos drawn in black or dark grey; they are lightened so they stay visible on black sections.
 export const DARK_LOGO_SOURCES: ReadonlySet<string> = new Set([

@@ -7,13 +7,18 @@ export interface PortfolioProject {
 
 export type ProjectPreviewState = number | null;
 
-export interface AboutChapter {
+export interface AboutTopic {
   readonly id: string;
-  readonly eyebrow: string;
-  readonly title: string;
-  readonly body: string;
-  readonly details: readonly string[];
-  readonly cta?: {
+  /** One word that stands in for the section heading while this topic is being read. */
+  readonly word: string;
+  readonly question: string;
+  readonly answer: string;
+}
+
+export interface AboutContent {
+  readonly intro: string;
+  readonly topics: readonly AboutTopic[];
+  readonly cta: {
     readonly label: string;
     readonly href: `#${string}`;
   };
