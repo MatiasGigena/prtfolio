@@ -1,88 +1,109 @@
 'use client';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type JSX } from 'react';
+import { gsap, scrollTween } from '@/app/animations/gsap';
 
+/** How far the ticker text travels, in percent of its width per millisecond. */
 const TICKER_SPEED = 0.006;
+/** Longest frame the ticker accounts for, so a stalled tab does not make the text jump. */
+const MAX_FRAME_MS = 32;
+/** How far the whole ticker slides left while the first screen scrolls away. */
+const SCROLL_SHIFT_PX = -500;
+/** Both copies of the ticker text look the same; only their positions differ. */
+const TICKER_TEXT_CLASS =
+  'text-white text-[6rem] pr-8 sm:text-[230px] sm:pr-[50px] font-thin [text-shadow:2px_2px_4px_rgba(0,0,0,0.5)]';
+
+type Direction = 1 | -1;
+
+/**
+ * Scrolls the two copies of the ticker text sideways forever, in the direction
+ * `getDirection` reports on each frame.
+ */
+function loopTicker(copies: readonly HTMLElement[], getDirection: () => Direction): () => void {
+  let xPercent = 0;
+  const tick = (_time: number, deltaTime: number): void => {
+    xPercent += Math.min(deltaTime, MAX_FRAME_MS) * TICKER_SPEED * getDirection();
+    // The second copy sits one width to the right, so wrapping by 100% is seamless.
+    if (xPercent < -100) xPercent += 100;
+    if (xPercent > 0) xPercent -= 100;
+    gsap.set(copies, { xPercent });
+  };
+  gsap.ticker.add(tick);
+  return () => gsap.ticker.remove(tick);
+}
+
+/**
+ * Slides the ticker left as the first screen scrolls away, and on every scroll reports the
+ * direction the text should run: against the scroll.
+ */
+function shiftWithScroll(
+  slider: HTMLElement,
+  setTickerDirection: (direction: Direction) => void,
+): gsap.core.Tween {
+  return scrollTween(
+    slider,
+    { x: SCROLL_SHIFT_PX, ease: 'none' },
+    {
+      trigger: document.documentElement,
+      scrub: 0.25,
+      start: 0,
+      end: () => window.innerHeight,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => setTickerDirection(self.direction === 1 ? -1 : 1),
+    },
+  );
+}
+
+/** Starts the ticker loop and its scroll shift. */
+function startTicker(slider: HTMLElement, copies: readonly HTMLElement[]): () => void {
+  // The text runs left until the page first scrolls.
+  let direction: Direction = -1;
+  const stopLoop = loopTicker(copies, () => direction);
+  const tween = shiftWithScroll(slider, (next) => {
+    direction = next;
+  });
+  return () => {
+    stopLoop();
+    tween.revert();
+  };
+}
 
 export default function Hero(): JSX.Element {
-  const firstText = useRef<HTMLParagraphElement>(null);
-  const secondText = useRef<HTMLParagraphElement>(null);
-  const slider = useRef<HTMLDivElement>(null);
+  const firstTextRef = useRef<HTMLParagraphElement>(null);
+  const secondTextRef = useRef<HTMLParagraphElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let frameId = 0;
-    let xPercent = 0;
-    let direction = -1;
-    let previousTime = performance.now();
-
-    const context = gsap.context(() => {
-      if (!reduceMotion) {
-        gsap.to(slider.current, {
-          x: -500,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: document.documentElement,
-            scrub: 0.25,
-            start: 0,
-            end: window.innerHeight,
-            onUpdate: (self) => {
-              direction = self.direction * -1;
-            },
-          },
-        });
-      }
-    });
-
-    const tick = (time: number): void => {
-      const elapsed = Math.min(time - previousTime, 32);
-      previousTime = time;
-      xPercent += elapsed * TICKER_SPEED * direction;
-      if (xPercent < -100) xPercent += 100;
-      if (xPercent > 0) xPercent -= 100;
-      gsap.set([firstText.current, secondText.current], { xPercent });
-      frameId = requestAnimationFrame(tick);
-    };
-
-    if (!reduceMotion) frameId = requestAnimationFrame(tick);
-    return () => {
-      cancelAnimationFrame(frameId);
-      context.revert();
-    };
-  }, []);
+    const slider = sliderRef.current;
+    const first = firstTextRef.current;
+    const second = secondTextRef.current;
+    if (reduceMotion || !slider || !first || !second) return;
+    return startTicker(slider, [first, second]);
+  }, [reduceMotion]);
 
   return (
     <section
       className='h-screen bg-black relative overflow-hidden flex'
-      style={{ position: 'relative' }}
       aria-label='Introduction'
     >
       <Image
-        src='/images/portfolio12-removebg.png'
+        src='/images/hero-portrait.png'
         width={981}
         height={1473}
         alt='Portrait of Matías Gigena'
         priority
-        className='my-image'
+        className='hero-portrait'
         sizes='100vw'
       />
-      <div className='sliderContainer' aria-hidden='true'>
-        <div ref={slider} className='relative whitespace-nowrap will-change-transform'>
-          <p
-            ref={firstText}
-            className='text-white text-[6rem] pr-8 sm:text-[230px] sm:pr-[50px] m-0 relative font-thin'
-            style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}
-          >
+      <div className='hero-ticker' aria-hidden='true'>
+        <div ref={sliderRef} className='relative whitespace-nowrap will-change-transform'>
+          <p ref={firstTextRef} className={`${TICKER_TEXT_CLASS} relative`}>
             Front End Developer -
           </p>
-          <p
-            ref={secondText}
-            className='text-white text-[6rem] pr-8 sm:text-[230px] sm:pr-[50px] top-0 font-thin absolute left-[100%]'
-          >
+          <p ref={secondTextRef} className={`${TICKER_TEXT_CLASS} absolute left-full top-0`}>
             Front End Developer -
           </p>
         </div>

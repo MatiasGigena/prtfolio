@@ -1,13 +1,24 @@
-import type { Transition, Variants } from 'framer-motion';
-
+/**
+ * The app's standard ease-out curve for Framer Motion and the Web Animations API. CSS reads the
+ * same curve from `--ease-out` in app/styles/globals.css; a test keeps the two in step.
+ */
 export const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
-export const enterTransition: Transition = {
-  duration: 0.45,
-  ease: EASE_OUT,
-};
+/** EASE_OUT as a CSS timing function, for APIs that take a string. */
+export const EASE_OUT_CSS = `cubic-bezier(${EASE_OUT.join(', ')})`;
 
-export const fadeVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: enterTransition },
-};
+/**
+ * A mouse or trackpad: the primary pointer can hover and is precise. Pointer-following effects
+ * check it once when they start, then react only to events whose pointerType is 'mouse', so a
+ * finger or pen on a touchscreen laptop does not drag them around.
+ */
+export const FINE_POINTER_QUERY = '(hover: hover) and (pointer: fine)';
+
+/** A touch screen: the primary pointer cannot hover and is imprecise. */
+export const COARSE_POINTER_QUERY = '(hover: none) and (pointer: coarse)';
+
+/**
+ * Components read the reduced-motion preference with Framer Motion's `useReducedMotion()`;
+ * this query is only for code that has to listen for the preference changing.
+ */
+export const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';

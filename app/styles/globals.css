@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens, page base and the utilities every component shares. Section and shell styles
+   live next to this file, one stylesheet each, named after the section or shell component. */
+
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  /* svh stays fixed while mobile toolbars collapse, so full-height sections
+     measure the same in every browser instead of tracking the URL bar. */
+  --screen-h: 100vh;
+}
+
+@supports (height: 100svh) {
+  :root {
+    --screen-h: 100svh;
+  }
+}
+
+html {
+  background: #000;
+}
+
+body {
+  margin: 0;
+  overflow-x: clip;
+  background: #000;
+  color: #fff;
+  overscroll-behavior-y: none;
+}
+
+.pressable {
+  transition:
+    transform 140ms var(--ease-out),
+    color 160ms ease,
+    background-color 160ms ease,
+    opacity 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pressable:active {
+  transform: scale(0.97);
+}
+
+/* Section links are plain anchors. While Lenis runs (wide screens with a mouse), SmoothScroll
+   intercepts them and glides with Lenis; everywhere else the browser scrolls. CSS smoothing stays
+   off while Lenis runs, because it would also smooth every position Lenis writes on each frame. */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.lenis) {
+    scroll-behavior: smooth;
+  }
+}

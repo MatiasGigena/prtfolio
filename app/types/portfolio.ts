@@ -5,8 +5,6 @@ export interface PortfolioProject {
   readonly href: string;
 }
 
-export type ProjectPreviewState = number | null;
-
 export interface AboutTopic {
   readonly id: string;
   /** One word that stands in for the section heading while this topic is being read. */
@@ -15,13 +13,19 @@ export interface AboutTopic {
   readonly answer: string;
 }
 
+/** The `id` of each section the navigation can jump to. */
+export type SectionId = 'work' | 'about' | 'contact';
+
+/** A labelled link to one of the page's sections. */
+export interface SectionLink {
+  readonly label: string;
+  readonly target: SectionId;
+}
+
 export interface AboutContent {
   readonly intro: string;
   readonly topics: readonly AboutTopic[];
-  readonly cta: {
-    readonly label: string;
-    readonly href: `#${string}`;
-  };
+  readonly cta: SectionLink;
 }
 
 export interface Book {
@@ -32,26 +36,25 @@ export interface Book {
   readonly accent: string;
 }
 
-export interface SkillLogo {
+export interface TechLogo {
+  /** The technology's name, also used as the image's alt text. */
+  readonly name: string;
   readonly src: string;
-  readonly alt: string;
-  readonly className: string;
+  /** Drawn in black or dark grey, so it is inverted to stay visible on black sections. */
+  readonly dark?: true;
 }
 
-export interface SkillPlane {
-  readonly id: string;
-  readonly strength: number;
-  readonly logos: readonly SkillLogo[];
+export type SocialNetwork = 'facebook' | 'linkedin' | 'instagram' | 'whatsapp';
+
+export interface SocialLink {
+  readonly network: SocialNetwork;
+  readonly href: string;
 }
 
-export interface EmphasizedText {
-  readonly emphasis: string;
-}
-
-export type RichTextSegment = string | EmphasizedText;
-export type RichPhrase = readonly RichTextSegment[];
-
-export interface NavigationItem {
-  readonly label: string;
-  readonly targetId: `#${string}`;
+export interface ContactDetails {
+  /** Formspree form that receives the contact form's submissions. */
+  readonly formspreeFormId: string;
+  readonly email: string;
+  readonly addressLines: readonly string[];
+  readonly socials: readonly SocialLink[];
 }

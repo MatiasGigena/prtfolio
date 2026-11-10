@@ -1,30 +1,26 @@
-'use client';
-
-import { useState } from 'react';
+import type { JSX } from 'react';
 import About from './components/About';
-import BooksCarousel from './components/BooksCarousel';
+import BooksCarousel from './components/books/BooksCarousel';
 import Contact from './components/Contact';
 import Hero from './components/Hero';
-import Navigation from './components/Navigation';
-import Preloader from './components/Preloader';
-import Projects from './components/Projects';
+import Navigation from './components/shell/Navigation';
+import Preloader from './components/shell/Preloader';
+import Projects from './components/projects/Projects';
 import SkillsCloud from './components/SkillsCloud';
-import TechStack from './components/TechStack';
+import TechGallery from './components/TechGallery';
 import Reveal from './components/ui/Reveal';
 
 export default function HomePage(): JSX.Element {
-  const [isLoading, setIsLoading] = useState(true);
-
   return (
     <main>
-      {isLoading ? <Preloader onFinish={() => setIsLoading(false)} /> : null}
+      <Preloader />
       <Navigation />
       <Hero />
-      <section className='min-h-screen w-full bg-black flex flex-col relative justify-start items-start text-white'>
+      <div className='min-h-screen w-full bg-black flex flex-col relative justify-start items-start text-white'>
         <Projects />
         <div className='bg-black h-full w-full overflow-x-clip'>
-          <Reveal direction='right'>
-            <TechStack />
+          <Reveal from='right'>
+            <TechGallery />
           </Reveal>
           <Reveal>
             <SkillsCloud />
@@ -34,8 +30,10 @@ export default function HomePage(): JSX.Element {
           <BooksCarousel />
         </Reveal>
         <About />
-        <Contact />
-      </section>
+        <Reveal className='w-full' from='below'>
+          <Contact />
+        </Reveal>
+      </div>
     </main>
   );
 }
