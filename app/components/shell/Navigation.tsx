@@ -84,7 +84,8 @@ export default function Navigation(): JSX.Element {
 
         <ul
           id='mobile-navigation'
-          className={`mobile-menu absolute right-4 top-14 w-52 rounded-xl bg-black/75 p-2 shadow-xl backdrop-blur-xl sm:hidden ${menuOpen ? 'is-open' : ''}`}
+          data-state={menuOpen ? 'open' : 'closed'}
+          className='mobile-menu absolute right-4 top-14 w-52 rounded-xl bg-black/75 p-2 shadow-xl backdrop-blur-xl sm:hidden'
           aria-hidden={!menuOpen}
         >
           {NAVIGATION_ITEMS.map((item) => (

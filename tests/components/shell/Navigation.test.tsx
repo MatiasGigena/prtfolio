@@ -45,6 +45,7 @@ describe('Navigation', () => {
     await user.click(toggle);
     expect(toggle).toHaveAttribute('aria-expanded', 'true');
     expect(mobile).toHaveAttribute('aria-hidden', 'false');
+    expect(mobile).toHaveAttribute('data-state', 'open');
 
     const [first] = within(mobile).getAllByRole('link');
     if (!first) throw new Error('Mobile menu has no links');
@@ -52,5 +53,6 @@ describe('Navigation', () => {
 
     expect(toggle).toHaveAttribute('aria-expanded', 'false');
     expect(mobile).toHaveAttribute('aria-hidden', 'true');
+    expect(mobile).toHaveAttribute('data-state', 'closed');
   });
 });

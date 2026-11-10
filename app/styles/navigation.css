@@ -8,7 +8,7 @@
     transform 180ms var(--ease-out);
 }
 
-.mobile-menu.is-open {
+.mobile-menu[data-state='open'] {
   opacity: 1;
   pointer-events: auto;
   transform: none;
