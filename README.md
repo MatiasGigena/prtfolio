@@ -28,7 +28,7 @@ TypeScript is configured in strict mode with unchecked indexed access enabled. A
 
 ## Motion and accessibility
 
-- Pointer-driven interactions are limited to fine-pointer devices.
-- Gesture animations are interruptible and preserve release velocity.
-- `prefers-reduced-motion` disables marquee, parallax, pinned horizontal movement, and carousel auto-rotation.
+- Pointer-driven interactions (magnetic buttons, the project preview, the skills cloud) are limited to fine-pointer devices.
+- Smooth wheel scrolling (Lenis) runs only on wide screens with a fine pointer.
+- `prefers-reduced-motion` disables the hero ticker, smooth scrolling, the tech gallery parallax, pointer-following effects, and the book marquee.
 - `prefers-reduced-transparency` and `prefers-contrast` provide more legible navigation materials.
