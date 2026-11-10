@@ -11,15 +11,11 @@
   object-fit: cover;
 }
 
-@media (max-width: 640px) {
+/* Below Tailwind's sm breakpoint the ticker text is small, so it sits lower. Using the same
+   breakpoint as the font size keeps position and size switching together. */
+@media not all and (min-width: 640px) {
   .hero-ticker {
     top: 80%;
-  }
-}
-
-@media (width: 640px) {
-  .hero-ticker {
-    top: 60%;
   }
 }
 
