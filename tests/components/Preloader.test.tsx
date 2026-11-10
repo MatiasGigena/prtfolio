@@ -1,47 +1,50 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Preloader from '@/app/components/Preloader';
+import { REDUCED_MOTION, setMediaFeatures } from '@/tests/support/browser';
+
+const greeting = (): HTMLElement | null => screen.queryByText('Get creative!');
 
 describe('Preloader', () => {
   beforeEach(() => vi.useFakeTimers());
   afterEach(() => vi.useRealTimers());
 
   it('greets the visitor while the page loads', () => {
-    render(<Preloader onFinish={() => undefined} />);
-    expect(screen.getByText('Get creative!')).toBeInTheDocument();
+    render(<Preloader />);
+    expect(greeting()).toBeInTheDocument();
   });
 
-  it('finishes once its hold and exit animation have played', () => {
-    const onFinish = vi.fn();
-    render(<Preloader onFinish={onFinish} />);
+  it('removes itself once its hold and exit animation have played, not before', () => {
+    render(<Preloader />);
 
     act(() => vi.advanceTimersByTime(2299));
-    expect(onFinish).not.toHaveBeenCalled();
+    expect(greeting()).toBeInTheDocument();
 
     act(() => vi.advanceTimersByTime(1));
-    expect(onFinish).toHaveBeenCalledOnce();
+    expect(greeting()).not.toBeInTheDocument();
   });
 
-  it('does not restart the countdown when the parent passes a new callback', () => {
-    const first = vi.fn();
-    const second = vi.fn();
-    const { rerender } = render(<Preloader onFinish={first} />);
+  it('flashes a grid cell under the mouse, but not for touch or reduced motion', () => {
+    const animate = vi.fn();
+    Element.prototype.animate = animate;
+    const { container, unmount } = render(<Preloader />);
+    const cell = (): Element => container.querySelector('[aria-hidden="true"] > div > div') as Element;
 
-    act(() => vi.advanceTimersByTime(2000));
-    rerender(<Preloader onFinish={second} />);
-    act(() => vi.advanceTimersByTime(300));
+    // The grid is sized from the viewport after mounting.
+    expect(cell()).not.toBeNull();
+    fireEvent.pointerEnter(cell(), { pointerType: 'touch' });
+    expect(animate).not.toHaveBeenCalled();
 
-    expect(first).not.toHaveBeenCalled();
-    expect(second).toHaveBeenCalledOnce();
-  });
-
-  it('never finishes after it has been removed', () => {
-    const onFinish = vi.fn();
-    const { unmount } = render(<Preloader onFinish={onFinish} />);
+    fireEvent.pointerEnter(cell(), { pointerType: 'mouse' });
+    expect(animate).toHaveBeenCalledOnce();
 
     unmount();
-    act(() => vi.advanceTimersByTime(5000));
-
-    expect(onFinish).not.toHaveBeenCalled();
+    setMediaFeatures(REDUCED_MOTION);
+    animate.mockClear();
+    const reduced = render(<Preloader />);
+    fireEvent.pointerEnter(reduced.container.querySelector('[aria-hidden="true"] > div > div') as Element, {
+      pointerType: 'mouse',
+    });
+    expect(animate).not.toHaveBeenCalled();
   });
 });

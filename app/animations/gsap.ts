@@ -15,15 +15,16 @@ export function ensureScrollTrigger(): typeof ScrollTrigger {
   return ScrollTrigger;
 }
 
-const FOLLOW_EASE = 'power3.out';
+/** The ease GSAP tweens share; it is close to EASE_OUT in feel. */
+export const GSAP_EASE_OUT = 'power3.out';
 
 /** Moves an element to a translation, easing over `duration` seconds and retargeting smoothly. */
 export type Follower = (x: number, y: number) => void;
 
 /** Makes `element` trail the offsets it is given, taking `duration` seconds to catch up. */
 export function createFollower(element: HTMLElement, duration: number): Follower {
-  const toX = gsap.quickTo(element, 'x', { duration, ease: FOLLOW_EASE });
-  const toY = gsap.quickTo(element, 'y', { duration, ease: FOLLOW_EASE });
+  const toX = gsap.quickTo(element, 'x', { duration, ease: GSAP_EASE_OUT });
+  const toY = gsap.quickTo(element, 'y', { duration, ease: GSAP_EASE_OUT });
   return (x, y) => {
     toX(x);
     toY(y);

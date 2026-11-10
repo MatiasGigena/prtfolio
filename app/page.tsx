@@ -1,6 +1,4 @@
-'use client';
-
-import { useState, type JSX } from 'react';
+import type { JSX } from 'react';
 import About from './components/About';
 import BooksCarousel from './components/BooksCarousel';
 import Contact from './components/Contact';
@@ -13,11 +11,9 @@ import TechGallery from './components/TechGallery';
 import Reveal from './components/ui/Reveal';
 
 export default function HomePage(): JSX.Element {
-  const [isLoading, setIsLoading] = useState(true);
-
   return (
     <main>
-      {isLoading ? <Preloader onFinish={() => setIsLoading(false)} /> : null}
+      <Preloader />
       <Navigation />
       <Hero />
       <div className='min-h-screen w-full bg-black flex flex-col relative justify-start items-start text-white'>

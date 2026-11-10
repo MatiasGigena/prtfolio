@@ -11,7 +11,7 @@ describe('HomePage', () => {
     render(<HomePage />);
     expect(screen.getByText('Get creative!')).toBeInTheDocument();
 
-    act(() => vi.advanceTimersByTime(2300));
+    act(() => vi.runOnlyPendingTimers());
 
     expect(screen.queryByText('Get creative!')).not.toBeInTheDocument();
   });

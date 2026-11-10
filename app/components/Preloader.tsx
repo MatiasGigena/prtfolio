@@ -1,7 +1,8 @@
 'use client';
 
 import { useReducedMotion } from 'framer-motion';
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent, type JSX } from 'react';
+import { useEffect, useState, type CSSProperties, type JSX, type PointerEvent } from 'react';
+import { EASE_OUT_CSS } from '@/app/animations/motion';
 import { AnimationIcon } from './ui/Icons';
 
 const COLUMN_COUNT = 20;
@@ -16,15 +17,10 @@ const overlayStyle = {
   '--preloader-exit': `${EXIT_MS}ms`,
 } as CSSProperties;
 
-interface PreloaderProps {
-  /** Called once, when the exit animation has finished; later changes to the callback are picked up. */
-  readonly onFinish: () => void;
-}
-
-export default function Preloader({ onFinish }: PreloaderProps): JSX.Element {
+/** A full-screen greeting with a grid that lights up under the mouse; it removes itself once faded out. */
+export default function Preloader(): JSX.Element | null {
   const [rowCount, setRowCount] = useState(0);
-  const onFinishRef = useRef(onFinish);
-  onFinishRef.current = onFinish;
+  const [finished, setFinished] = useState(false);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -32,10 +28,8 @@ export default function Preloader({ onFinish }: PreloaderProps): JSX.Element {
     setRowCount(Math.ceil(window.innerHeight / blockSize));
   }, []);
 
-  // The timer belongs to the mount, not to the callback, so a parent passing a new
-  // function on each render cannot restart it.
   useEffect(() => {
-    const timeout = window.setTimeout(() => onFinishRef.current(), HOLD_MS + EXIT_MS);
+    const timeout = window.setTimeout(() => setFinished(true), HOLD_MS + EXIT_MS);
     return () => window.clearTimeout(timeout);
   }, []);
 
@@ -43,9 +37,11 @@ export default function Preloader({ onFinish }: PreloaderProps): JSX.Element {
     if (event.pointerType !== 'mouse' || reduceMotion) return;
     event.currentTarget.animate(
       [{ backgroundColor: 'rgb(255 255 255)' }, { backgroundColor: 'transparent' }],
-      { duration: 300, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' },
+      { duration: 300, easing: EASE_OUT_CSS },
     );
   };
+
+  if (finished) return null;
 
   return (
     <div

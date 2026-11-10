@@ -2,7 +2,7 @@
 
 import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState, type JSX } from 'react';
-import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
+import { ensureScrollTrigger, gsap, GSAP_EASE_OUT } from '@/app/animations/gsap';
 import { NAVIGATION_ITEMS } from '@/app/data/portfolio';
 import { MenuIcon } from './ui/Icons';
 import Magnetic from './ui/Magnetic';
@@ -16,7 +16,7 @@ function setBarVisible(bar: HTMLElement, visible: boolean, reduceMotion: boolean
     yPercent: visible || reduceMotion ? 0 : -110,
     autoAlpha: visible ? 1 : 0,
     duration: 0.2,
-    ease: 'power3.out',
+    ease: GSAP_EASE_OUT,
     overwrite: true,
   });
 }
