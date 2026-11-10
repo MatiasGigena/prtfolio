@@ -1,7 +1,7 @@
 'use client';
 
 import { useReducedMotion } from 'framer-motion';
-import { useEffect, useRef, useState, type CSSProperties, type JSX } from 'react';
+import { useEffect, useRef, useState, type JSX } from 'react';
 import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
 import { COARSE_POINTER_QUERY } from '@/app/animations/motion';
 import { TECH_LOGOS } from '@/app/data/portfolio';
@@ -10,6 +10,8 @@ import TechLogoImage from './ui/TechLogoImage';
 
 interface TechColumn {
   readonly id: string;
+  /** How far above the gallery the column starts, so its logos travel through view. */
+  readonly offset: string;
   /** Viewport heights the column travels while the gallery scrolls past; columns differ to create depth. */
   readonly multiplier: number;
   readonly logos: readonly TechLogo[];
@@ -18,6 +20,7 @@ interface TechColumn {
 const TECH_COLUMNS: readonly TechColumn[] = [
   {
     id: 'left',
+    offset: '-55%',
     multiplier: 2,
     logos: [
       TECH_LOGOS.javascript,
@@ -32,6 +35,7 @@ const TECH_COLUMNS: readonly TechColumn[] = [
   },
   {
     id: 'center',
+    offset: '-78%',
     multiplier: 2.3,
     logos: [
       TECH_LOGOS.express,
@@ -46,6 +50,7 @@ const TECH_COLUMNS: readonly TechColumn[] = [
   },
   {
     id: 'right',
+    offset: '-75%',
     multiplier: 2.5,
     logos: [
       TECH_LOGOS.postman,
@@ -128,7 +133,8 @@ export default function TechGallery(): JSX.Element {
     >
       <div
         ref={galleryRef}
-        className={`tech-gallery h-[calc(var(--screen-h)*1.7)] flex overflow-hidden gap-[6vw] p-[2vw] box-border ${mode === 'scroll-driven' ? 'is-scroll-driven' : ''} ${mode === 'static' ? 'is-static' : ''}`}
+        data-parallax={mode ?? undefined}
+        className='tech-gallery h-[calc(var(--screen-h)*1.7)] flex overflow-hidden gap-[6vw] p-[2vw] box-border'
       >
         {TECH_COLUMNS.map((column, index) => (
           <div
@@ -136,7 +142,8 @@ export default function TechGallery(): JSX.Element {
             ref={(element) => {
               columnRefs.current[index] = element;
             }}
-            style={{ '--tech-parallax': column.multiplier } as CSSProperties}
+            // Without parallax the columns sit at the top so every logo is visible.
+            style={{ '--tech-parallax': column.multiplier, top: mode === 'static' ? 0 : column.offset }}
             className='tech-column w-1/3 h-full relative flex flex-col gap-[2vw] min-w-[64px] xs:min-w-[100px] sm:min-w-[250px] will-change-transform'
           >
             {column.logos.map((logo) => (

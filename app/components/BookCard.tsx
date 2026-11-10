@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import type { CSSProperties, JSX } from 'react';
+import type { JSX } from 'react';
 import type { Book } from '@/app/types/portfolio';
 
 interface BookCardProps {
@@ -27,7 +27,7 @@ export default function BookCard({
       onClick={onSelect}
     >
       <span className='book-object'>
-        <span className='book-board' style={{ '--book-accent': book.accent } as CSSProperties} />
+        <span className='book-board' style={{ '--book-accent': book.accent }} />
         <span className='book-page-edge book-page-edge-right' aria-hidden='true' />
         <span className='book-page-edge book-page-edge-bottom' aria-hidden='true' />
         <span className='shelf-book-cover'>

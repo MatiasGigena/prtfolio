@@ -26,7 +26,7 @@ describe('TechGallery', () => {
     vi.spyOn(CSS, 'supports').mockReturnValue(true);
     render(<TechGallery />);
 
-    expect(gallery()).toHaveClass('is-scroll-driven');
+    expect(gallery()).toHaveAttribute('data-parallax', 'scroll-driven');
     expect(columns()[1]?.style.getPropertyValue('--tech-parallax')).toBe('2.3');
   });
 
@@ -34,8 +34,8 @@ describe('TechGallery', () => {
     vi.spyOn(CSS, 'supports').mockReturnValue(false);
     const { unmount } = render(<TechGallery />);
 
-    expect(gallery()).not.toHaveClass('is-scroll-driven');
-    expect(gallery()).not.toHaveClass('is-static');
+    expect(gallery()).toHaveAttribute('data-parallax', 'js');
+    expect(columns()[0]?.style.top).toBe('-55%');
     for (const column of columns()) expect(gsap.getTweensOf(column)).toHaveLength(1);
 
     const [first] = columns();
@@ -48,7 +48,9 @@ describe('TechGallery', () => {
     setMediaFeatures(TOUCH_SCREEN);
     render(<TechGallery />);
 
-    expect(gallery()).toHaveClass('is-static');
+    expect(gallery()).toHaveAttribute('data-parallax', 'static');
+    // Without parallax the columns start at the top so every logo is in view.
+    for (const column of columns()) expect(column.style.top).toBe('0px');
   });
 
   it('holds the columns still when the reader prefers reduced motion', () => {
@@ -56,6 +58,6 @@ describe('TechGallery', () => {
     vi.spyOn(CSS, 'supports').mockReturnValue(true);
     render(<TechGallery />);
 
-    expect(gallery()).toHaveClass('is-static');
+    expect(gallery()).toHaveAttribute('data-parallax', 'static');
   });
 });

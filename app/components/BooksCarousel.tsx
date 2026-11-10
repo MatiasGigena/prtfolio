@@ -36,7 +36,7 @@ export default function BooksCarousel(): JSX.Element {
           role='region'
           aria-label='Selected books, scrolling automatically. Hover or focus to pause.'
         >
-          <div className='book-marquee-track'>
+          <div className='book-marquee-track' style={{ '--marquee-copies': MARQUEE_COPIES }}>
             {Array.from({ length: MARQUEE_COPIES }, (_, copy) => (
               <div
                 key={copy}

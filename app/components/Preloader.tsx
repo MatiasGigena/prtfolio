@@ -12,10 +12,10 @@ const EXIT_MS = 300;
 // Both the fade-out and the unmount are anchored to mount rather than to
 // navigation start, so a slow hydration delays the preloader instead of
 // eating the window in which its grid is hoverable.
-const overlayStyle = {
+const overlayStyle: CSSProperties = {
   '--preloader-hold': `${HOLD_MS}ms`,
   '--preloader-exit': `${EXIT_MS}ms`,
-} as CSSProperties;
+};
 
 /** A full-screen greeting with a grid that lights up under the mouse; it removes itself once faded out. */
 export default function Preloader(): JSX.Element | null {

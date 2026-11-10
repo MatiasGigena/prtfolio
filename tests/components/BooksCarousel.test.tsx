@@ -35,6 +35,9 @@ describe('BooksCarousel', () => {
     const marquee = screen.getByRole('region', { name: /Selected books/ });
 
     expect(within(marquee).getAllByRole('button')).toHaveLength(BOOKS.length);
+    // The CSS animation shifts the track by one copy, so it needs to know how many there are.
+    const track = marquee.firstElementChild as HTMLElement;
+    expect(track.children).toHaveLength(Number(track.style.getPropertyValue('--marquee-copies')));
     const focusable = marquee.querySelectorAll('button:not([tabindex="-1"])');
     expect(focusable).toHaveLength(BOOKS.length);
   });
