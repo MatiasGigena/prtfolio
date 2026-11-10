@@ -5,9 +5,20 @@ import { REDUCED_MOTION, setMediaFeatures } from '@/tests/support/browser';
 
 const greeting = (): HTMLElement | null => screen.queryByText('Get creative!');
 
+// jsdom has no Web Animations API. Framer Motion uses it whenever it exists, so the stand-in is
+// installed for these tests only.
+const animate = vi.fn();
+
 describe('Preloader', () => {
-  beforeEach(() => vi.useFakeTimers());
-  afterEach(() => vi.useRealTimers());
+  beforeEach(() => {
+    vi.useFakeTimers();
+    Object.defineProperty(Element.prototype, 'animate', { configurable: true, value: animate });
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+    animate.mockClear();
+    delete (Element.prototype as Partial<Element>).animate;
+  });
 
   it('greets the visitor while the page loads', () => {
     render(<Preloader />);
@@ -24,27 +35,34 @@ describe('Preloader', () => {
     expect(greeting()).not.toBeInTheDocument();
   });
 
-  it('flashes a grid cell under the mouse, but not for touch or reduced motion', () => {
-    const animate = vi.fn();
-    Element.prototype.animate = animate;
-    const { container, unmount } = render(<Preloader />);
-    const cell = (): Element => container.querySelector('[aria-hidden="true"] > div > div') as Element;
+  it('sizes square cells so the columns span the screen', () => {
+    const { container } = render(<Preloader />);
+    const cell = container.querySelector<HTMLElement>('[data-preloader-cell]');
 
-    // The grid is sized from the viewport after mounting.
-    expect(cell()).not.toBeNull();
-    fireEvent.pointerEnter(cell(), { pointerType: 'touch' });
+    expect(cell?.style.height).toBe('5vw');
+    expect(cell?.parentElement?.style.width).toBe('5vw');
+  });
+
+  it('flashes a grid cell under the mouse but not under a finger', () => {
+    const { container } = render(<Preloader />);
+    const cell = container.querySelector('[data-preloader-cell]');
+    if (!cell) throw new Error('Grid has no cells');
+
+    fireEvent.pointerEnter(cell, { pointerType: 'touch' });
     expect(animate).not.toHaveBeenCalled();
 
-    fireEvent.pointerEnter(cell(), { pointerType: 'mouse' });
+    fireEvent.pointerEnter(cell, { pointerType: 'mouse' });
     expect(animate).toHaveBeenCalledOnce();
+  });
 
-    unmount();
+  it('keeps the grid still when the reader prefers reduced motion', () => {
     setMediaFeatures(REDUCED_MOTION);
-    animate.mockClear();
-    const reduced = render(<Preloader />);
-    fireEvent.pointerEnter(reduced.container.querySelector('[aria-hidden="true"] > div > div') as Element, {
-      pointerType: 'mouse',
-    });
+    const { container } = render(<Preloader />);
+    const cell = container.querySelector('[data-preloader-cell]');
+    if (!cell) throw new Error('Grid has no cells');
+
+    fireEvent.pointerEnter(cell, { pointerType: 'mouse' });
+
     expect(animate).not.toHaveBeenCalled();
   });
 });

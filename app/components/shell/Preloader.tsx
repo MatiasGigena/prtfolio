@@ -6,6 +6,8 @@ import { EASE_OUT_CSS } from '@/app/animations/motion';
 import { AnimationIcon } from '../ui/Icons';
 
 const COLUMN_COUNT = 20;
+/** Cells are square and the columns span the viewport, so each side is this share of its width. */
+const CELL_SIZE = `${100 / COLUMN_COUNT}vw`;
 const HOLD_MS = 2000;
 const EXIT_MS = 300;
 
@@ -60,9 +62,15 @@ export default function Preloader(): JSX.Element | null {
       </p>
       <div className='absolute w-full h-full flex' aria-hidden='true'>
         {Array.from({ length: COLUMN_COUNT }, (_, column) => (
-          <div key={column} className='w-[5vw] rounded-2xl h-full'>
+          <div key={column} className='rounded-2xl h-full' style={{ width: CELL_SIZE }}>
             {Array.from({ length: rowCount }, (_, row) => (
-              <div key={row} onPointerEnter={colorize} className='w-full rounded-2xl h-[5vw]' />
+              <div
+                key={row}
+                data-preloader-cell
+                onPointerEnter={colorize}
+                className='w-full rounded-2xl'
+                style={{ height: CELL_SIZE }}
+              />
             ))}
           </div>
         ))}
