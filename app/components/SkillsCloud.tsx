@@ -75,20 +75,25 @@ const SKILL_PLANES: readonly SkillPlane[] = [
   },
 ];
 
+interface DepthPlane {
+  readonly element: HTMLElement;
+  readonly strength: number;
+}
+
 /** Moves every plane toward the same pointer offset, each scaled by its strength. */
-function createDepthFollower(planeElements: readonly (HTMLElement | null)[]): Follower {
-  const planes = SKILL_PLANES.flatMap((plane, index) => {
-    const element = planeElements[index];
-    return element ? [{ follow: createFollower(element, FOLLOW_DURATION), strength: plane.strength }] : [];
-  });
+function createDepthFollower(planes: readonly DepthPlane[]): Follower {
+  const followers = planes.map(({ element, strength }) => ({
+    follow: createFollower(element, FOLLOW_DURATION),
+    strength,
+  }));
   return (x, y) => {
-    for (const { follow, strength } of planes) follow(x * strength, y * strength);
+    for (const { follow, strength } of followers) follow(x * strength, y * strength);
   };
 }
 
 /** Lets the planes drift toward a mouse moving over `section`; returns a cleanup. */
-function followPointerInDepth(section: HTMLElement, planeElements: readonly (HTMLElement | null)[]): () => void {
-  const followPointer = createDepthFollower(planeElements);
+function followPointerInDepth(section: HTMLElement, planes: readonly DepthPlane[]): () => void {
+  const followPointer = createDepthFollower(planes);
   const handlePointerMove = (event: PointerEvent): void => {
     if (event.pointerType !== 'mouse') return;
     const rect = section.getBoundingClientRect();
@@ -104,7 +109,7 @@ function followPointerInDepth(section: HTMLElement, planeElements: readonly (HTM
   return () => {
     section.removeEventListener('pointermove', handlePointerMove);
     section.removeEventListener('pointerleave', reset);
-    gsap.killTweensOf(planeElements.filter(Boolean));
+    gsap.killTweensOf(planes.map(({ element }) => element));
   };
 }
 
@@ -116,7 +121,11 @@ export default function SkillsCloud(): JSX.Element {
   useEffect(() => {
     const section = sectionRef.current;
     if (!section || reduceMotion || !hasFinePointer()) return;
-    return followPointerInDepth(section, planeRefs.current);
+    const planes = SKILL_PLANES.flatMap(({ strength }, index) => {
+      const element = planeRefs.current[index];
+      return element ? [{ element, strength }] : [];
+    });
+    return followPointerInDepth(section, planes);
   }, [reduceMotion]);
 
   return (

@@ -2,14 +2,15 @@
 
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import Image from 'next/image';
-import { forwardRef, useEffect, useRef, type ReactNode, type JSX } from 'react';
+import { forwardRef, useEffect, useRef, useState, type JSX, type ReactNode } from 'react';
 import { createFollower, gsap } from '@/app/animations/gsap';
 import { EASE_OUT, hasFinePointer } from '@/app/animations/motion';
 import type { PortfolioProject } from '@/app/types/portfolio';
 
 interface ProjectPreviewProps {
-  /** Index into `projects` of the link under the pointer, or null when none is hovered. */
-  readonly activeIndex: number | null;
+  /** Index into `projects` of the screenshot to show; kept while the preview fades out. */
+  readonly index: number;
+  readonly visible: boolean;
   readonly projects: readonly PortfolioProject[];
 }
 
@@ -29,18 +30,15 @@ const IMAGE_FOLLOW_DURATION = 0.32;
 const CURSOR_FOLLOW_DURATION = 0.2;
 const LABEL_FOLLOW_DURATION = 0.16;
 
-interface FollowingLayer {
-  readonly element: HTMLElement | null;
-  /** Seconds the layer takes to catch up with the pointer. */
+interface PointerFollowTarget {
+  readonly element: HTMLElement;
   readonly duration: number;
 }
 
-/** Centres each layer on the pointer and makes it trail the pointer around the window; returns a cleanup. */
-function followPointer(layers: readonly FollowingLayer[]): () => void {
-  const elements = layers.flatMap(({ element }) => (element ? [element] : []));
-  const followers = layers.flatMap(({ element, duration }) =>
-    element ? [createFollower(element, duration)] : [],
-  );
+/** Centres each target on the pointer and makes it trail the pointer around the window; returns a cleanup. */
+function followPointer(targets: readonly PointerFollowTarget[]): () => void {
+  const elements = targets.map(({ element }) => element);
+  const followers = targets.map(({ element, duration }) => createFollower(element, duration));
   gsap.set(elements, { xPercent: -50, yPercent: -50 });
 
   const move = (event: PointerEvent): void => {
@@ -53,25 +51,36 @@ function followPointer(layers: readonly FollowingLayer[]): () => void {
   };
 }
 
-export default function ProjectPreview({
-  activeIndex,
-  projects,
-}: ProjectPreviewProps): JSX.Element {
+/**
+ * A screenshot, a dark disc and a label that trail a mouse over the project list. It only
+ * appears where it can follow the pointer, so it never shows up parked in a corner.
+ */
+export default function ProjectPreview({ index, visible, projects }: ProjectPreviewProps): JSX.Element {
   const imageRef = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
+  const [following, setFollowing] = useState(false);
 
   useEffect(() => {
-    if (reduceMotion || !hasFinePointer()) return;
-    return followPointer([
-      { element: imageRef.current, duration: IMAGE_FOLLOW_DURATION },
-      { element: cursorRef.current, duration: CURSOR_FOLLOW_DURATION },
-      { element: labelRef.current, duration: LABEL_FOLLOW_DURATION },
+    const image = imageRef.current;
+    const cursor = cursorRef.current;
+    const label = labelRef.current;
+    if (reduceMotion || !hasFinePointer() || !image || !cursor || !label) return;
+
+    const stopFollowing = followPointer([
+      { element: image, duration: IMAGE_FOLLOW_DURATION },
+      { element: cursor, duration: CURSOR_FOLLOW_DURATION },
+      { element: label, duration: LABEL_FOLLOW_DURATION },
     ]);
+    setFollowing(true);
+    return () => {
+      stopFollowing();
+      setFollowing(false);
+    };
   }, [reduceMotion]);
 
-  const state: LayerState = activeIndex !== null && !reduceMotion ? 'visible' : 'hidden';
+  const state: LayerState = visible && following ? 'visible' : 'hidden';
 
   return (
     <div className='project-preview' aria-hidden='true'>
@@ -82,7 +91,7 @@ export default function ProjectPreview({
       >
         <div
           className='preview-track h-full w-full'
-          style={{ transform: `translate3d(0, ${(activeIndex ?? 0) * -100}%, 0)` }}
+          style={{ transform: `translate3d(0, ${index * -100}%, 0)` }}
         >
           {projects.map((project) => (
             <div key={project.title} className='relative h-full w-full flex items-center justify-center'>
@@ -127,7 +136,7 @@ const FollowerLayer = forwardRef<HTMLDivElement, FollowerLayerProps>(function Fo
   ref,
 ) {
   return (
-    <div ref={ref} className='fixed left-0 top-0 pointer-events-none z-30'>
+    <div ref={ref} data-state={state} className='fixed left-0 top-0 pointer-events-none z-30'>
       <motion.div variants={previewVariants} initial='hidden' animate={state} className={className}>
         {children}
       </motion.div>

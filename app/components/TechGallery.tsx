@@ -72,18 +72,21 @@ function getParallaxMode(reduceMotion: boolean | null): ParallaxMode {
   return window.matchMedia(COARSE_POINTER_QUERY).matches ? 'static' : 'js';
 }
 
+interface ParallaxColumn {
+  readonly element: HTMLElement;
+  readonly multiplier: number;
+}
+
 /**
  * The JS fallback for the parallax: the same motion as the CSS scroll-driven version, where
  * each column moves down by its multiplier times the viewport height while the gallery crosses
  * the screen. Returns a function that removes it.
  */
-function scrubColumns(gallery: HTMLElement, columns: readonly (HTMLElement | null)[]): () => void {
+function scrubColumns(gallery: HTMLElement, columns: readonly ParallaxColumn[]): () => void {
   ensureScrollTrigger();
-  const tweens = TECH_COLUMNS.flatMap((column, index) => {
-    const element = columns[index];
-    if (!element) return [];
-    return gsap.to(element, {
-      y: () => window.innerHeight * column.multiplier,
+  const tweens = columns.map(({ element, multiplier }) =>
+    gsap.to(element, {
+      y: () => window.innerHeight * multiplier,
       ease: 'none',
       scrollTrigger: {
         trigger: gallery,
@@ -92,8 +95,8 @@ function scrubColumns(gallery: HTMLElement, columns: readonly (HTMLElement | nul
         scrub: true,
         invalidateOnRefresh: true,
       },
-    });
-  });
+    }),
+  );
   return () => {
     for (const tween of tweens) tween.revert();
   };
@@ -111,7 +114,11 @@ export default function TechGallery(): JSX.Element {
   useEffect(() => {
     const gallery = galleryRef.current;
     if (mode !== 'js' || !gallery) return;
-    return scrubColumns(gallery, columnRefs.current);
+    const columns = TECH_COLUMNS.flatMap(({ multiplier }, index) => {
+      const element = columnRefs.current[index];
+      return element ? [{ element, multiplier }] : [];
+    });
+    return scrubColumns(gallery, columns);
   }, [mode]);
 
   return (

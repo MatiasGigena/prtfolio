@@ -22,7 +22,7 @@ describe('Projects', () => {
     }
   });
 
-  it('slides the preview to the screenshot of the hovered project', () => {
+  it('slides the preview to the hovered project and holds it there as it fades', () => {
     render(<Projects />);
     const links = screen.getAllByRole('link');
     const third = links[2]?.parentElement;
@@ -31,7 +31,8 @@ describe('Projects', () => {
     fireEvent.pointerEnter(third, { pointerType: 'mouse' });
     expect(previewTrack().style.transform).toBe('translate3d(0px, -200%, 0px)');
 
+    // Leaving keeps the screenshot in place so it fades out instead of sliding away.
     fireEvent.pointerLeave(third, { pointerType: 'mouse' });
-    expect(previewTrack().style.transform).toBe('translate3d(0px, 0%, 0px)');
+    expect(previewTrack().style.transform).toBe('translate3d(0px, -200%, 0px)');
   });
 });

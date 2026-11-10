@@ -8,7 +8,8 @@ import ProjectStatement from './ProjectStatement';
 import Reveal from './ui/Reveal';
 
 export default function Projects(): JSX.Element {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  // The last hovered project stays selected while the preview fades out.
+  const [preview, setPreview] = useState({ index: 0, visible: false });
 
   return (
     <section
@@ -23,12 +24,14 @@ export default function Projects(): JSX.Element {
             <ProjectLink
               key={project.title}
               project={project}
-              onPreviewChange={(visible) => setActiveIndex(visible ? index : null)}
+              onPreviewChange={(visible) =>
+                setPreview((current) => ({ index: visible ? index : current.index, visible }))
+              }
             />
           ))}
         </div>
       </Reveal>
-      <ProjectPreview activeIndex={activeIndex} projects={PROJECTS} />
+      <ProjectPreview index={preview.index} visible={preview.visible} projects={PROJECTS} />
     </section>
   );
 }
