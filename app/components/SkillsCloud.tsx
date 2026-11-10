@@ -92,14 +92,6 @@ function createDepthFollower(planes: readonly DepthPlane[]): Follower {
   };
 }
 
-/** Pairs each plane with its rendered element, skipping any that has not mounted. */
-function mountedPlanes(elements: readonly (HTMLElement | null)[]): DepthPlane[] {
-  return SKILL_PLANES.flatMap(({ strength }, index) => {
-    const element = elements[index];
-    return element ? [{ element, strength }] : [];
-  });
-}
-
 /** Lets the planes drift toward a mouse moving over `section`; returns a cleanup. */
 function followPointerInDepth(section: HTMLElement, planes: readonly DepthPlane[]): () => void {
   const followPointer = createDepthFollower(planes);
@@ -124,13 +116,14 @@ function followPointerInDepth(section: HTMLElement, planes: readonly DepthPlane[
 
 export default function SkillsCloud(): JSX.Element {
   const sectionRef = useRef<HTMLElement>(null);
-  const planeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const planesRef = useRef<(DepthPlane | null)[]>([]);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section || reduceMotion || !window.matchMedia(FINE_POINTER_QUERY).matches) return;
-    return followPointerInDepth(section, mountedPlanes(planeRefs.current));
+    const planes = planesRef.current.filter((plane): plane is DepthPlane => plane !== null);
+    return followPointerInDepth(section, planes);
   }, [reduceMotion]);
 
   return (
@@ -143,7 +136,7 @@ export default function SkillsCloud(): JSX.Element {
         <div
           key={plane.id}
           ref={(element) => {
-            planeRefs.current[planeIndex] = element;
+            planesRef.current[planeIndex] = element && { element, strength: plane.strength };
           }}
           className='absolute inset-0 will-change-transform'
           aria-hidden='true'

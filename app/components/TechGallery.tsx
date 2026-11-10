@@ -82,14 +82,6 @@ interface ParallaxColumn {
   readonly multiplier: number;
 }
 
-/** Pairs each column with its rendered element, skipping any that has not mounted. */
-function mountedColumns(elements: readonly (HTMLElement | null)[]): ParallaxColumn[] {
-  return TECH_COLUMNS.flatMap(({ multiplier }, index) => {
-    const element = elements[index];
-    return element ? [{ element, multiplier }] : [];
-  });
-}
-
 /**
  * The JS fallback for the parallax: the same motion as the CSS scroll-driven version, where
  * each column moves down by its multiplier times the viewport height while the gallery crosses
@@ -117,7 +109,7 @@ function scrubColumns(gallery: HTMLElement, columns: readonly ParallaxColumn[]):
 
 export default function TechGallery(): JSX.Element {
   const galleryRef = useRef<HTMLDivElement>(null);
-  const columnRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const columnsRef = useRef<(ParallaxColumn | null)[]>([]);
   const reduceMotion = useReducedMotion();
   // Unknown until mounted, because it depends on browser support and the pointer type.
   const [mode, setMode] = useState<ParallaxMode | null>(null);
@@ -127,7 +119,8 @@ export default function TechGallery(): JSX.Element {
   useEffect(() => {
     const gallery = galleryRef.current;
     if (mode !== 'js' || !gallery) return;
-    return scrubColumns(gallery, mountedColumns(columnRefs.current));
+    const columns = columnsRef.current.filter((column): column is ParallaxColumn => column !== null);
+    return scrubColumns(gallery, columns);
   }, [mode]);
 
   return (
@@ -144,7 +137,7 @@ export default function TechGallery(): JSX.Element {
           <div
             key={column.id}
             ref={(element) => {
-              columnRefs.current[index] = element;
+              columnsRef.current[index] = element && { element, multiplier: column.multiplier };
             }}
             // Without parallax the columns sit at the top so every logo is visible.
             style={{ '--tech-parallax': column.multiplier, top: mode === 'static' ? 0 : column.offset }}
