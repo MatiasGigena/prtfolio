@@ -1,0 +1,27 @@
+/* Compositor-driven so the overlay still clears when the main thread is busy hydrating. */
+.preloader-overlay {
+  height: var(--screen-h);
+  animation: preloader-out var(--preloader-exit) var(--ease-out) var(--preloader-hold) forwards;
+}
+
+@keyframes preloader-out {
+  to {
+    opacity: 0;
+  }
+}
+
+.preloader-icon {
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader-icon {
+    animation: none;
+  }
+}

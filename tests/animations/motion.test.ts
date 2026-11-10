@@ -6,7 +6,7 @@ import { DESKTOP_MOUSE, TOUCH_SCREEN, setMediaFeatures } from '@/tests/support/b
 
 describe('EASE_OUT', () => {
   it('is the same curve CSS uses as --ease-out', () => {
-    const css = readFileSync(resolve('app/globals.css'), 'utf8');
+    const css = readFileSync(resolve('app/styles/globals.css'), 'utf8');
     const token = /--ease-out:\s*([^;]+);/.exec(css)?.[1]?.trim();
 
     expect(token).toBe(EASE_OUT_CSS);

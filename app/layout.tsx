@@ -3,11 +3,15 @@ import { Poppins } from 'next/font/google';
 import type { JSX, ReactNode } from 'react';
 import SmoothScroll from './components/SmoothScroll';
 import 'lenis/dist/lenis.css';
-import './globals.css';
-// Section styles come after Tailwind's utilities so they win ties of equal specificity.
+import './styles/globals.css';
+// Component styles come after Tailwind's utilities so they win ties of equal specificity.
+import './styles/navigation.css';
+import './styles/preloader.css';
 import './styles/hero.css';
-import './styles/sections.css';
+import './styles/projects.css';
+import './styles/tech-gallery.css';
 import './styles/books.css';
+import './styles/contact.css';
 
 const poppins = Poppins({
   subsets: ['latin'],

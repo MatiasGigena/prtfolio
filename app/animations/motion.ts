@@ -1,6 +1,6 @@
 /**
  * The app's standard ease-out curve for Framer Motion and the Web Animations API. CSS reads the
- * same curve from `--ease-out` in globals.css; a test keeps the two in step.
+ * same curve from `--ease-out` in app/styles/globals.css; a test keeps the two in step.
  */
 export const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
