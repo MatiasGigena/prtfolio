@@ -20,7 +20,7 @@ export default function HomePage(): JSX.Element {
       {isLoading ? <Preloader onFinish={() => setIsLoading(false)} /> : null}
       <Navigation />
       <Hero />
-      <section className='min-h-screen w-full bg-black flex flex-col relative justify-start items-start text-white'>
+      <div className='min-h-screen w-full bg-black flex flex-col relative justify-start items-start text-white'>
         <Projects />
         <div className='bg-black h-full w-full overflow-x-clip'>
           <Reveal direction='right'>
@@ -34,8 +34,10 @@ export default function HomePage(): JSX.Element {
           <BooksCarousel />
         </Reveal>
         <About />
-        <Contact />
-      </section>
+        <Reveal className='w-full' direction='up'>
+          <Contact />
+        </Reveal>
+      </div>
     </main>
   );
 }

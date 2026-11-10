@@ -13,12 +13,15 @@ export interface AboutTopic {
   readonly answer: string;
 }
 
+/** The `id` of each section the navigation can jump to. */
+export type SectionId = 'work' | 'about' | 'contact';
+
 export interface AboutContent {
   readonly intro: string;
   readonly topics: readonly AboutTopic[];
   readonly cta: {
     readonly label: string;
-    readonly href: `#${string}`;
+    readonly target: SectionId;
   };
 }
 
@@ -40,5 +43,5 @@ export interface TechLogo {
 
 export interface NavigationItem {
   readonly label: string;
-  readonly targetId: `#${string}`;
+  readonly target: SectionId;
 }

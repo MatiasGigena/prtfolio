@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowDownRight } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { EASE_OUT } from '@/app/animations/motion';
-import { ABOUT } from '@/app/data/portfolio';
+import { ABOUT, SECTION_IDS } from '@/app/data/portfolio';
 
 const SECTION_WORD = 'About';
 
@@ -58,7 +58,7 @@ export default function About(): JSX.Element {
     'max-w-[26em] text-[clamp(1.5rem,2.7vw,2.6rem)] font-light leading-[1.18] tracking-[-0.025em]';
 
   return (
-    <section id='About' className='w-full bg-black text-white' aria-labelledby='about-heading'>
+    <section id={SECTION_IDS.about} className='w-full bg-black text-white' aria-labelledby='about-heading'>
       <div className='mx-auto grid max-w-[90rem] px-5 py-24 sm:px-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20 lg:px-12 lg:py-40 xl:px-16'>
         {/* Small screens: these children join the grid directly, so the heading can stick to the
             top for the whole section. Large screens: the column rides the middle of the viewport,
@@ -96,7 +96,7 @@ export default function About(): JSX.Element {
           </h2>
           <div className='mt-4 max-lg:order-last lg:mt-10'>
             <a
-              href={ABOUT.cta.href}
+              href={`#${ABOUT.cta.target}`}
               className='pressable inline-flex items-center gap-3 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white'
             >
               {ABOUT.cta.label}

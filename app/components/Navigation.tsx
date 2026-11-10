@@ -4,6 +4,7 @@ import { useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { ensureScrollTrigger, gsap } from '@/app/animations/gsap';
 import { NAVIGATION_ITEMS } from '@/app/data/portfolio';
+import type { SectionId } from '@/app/types/portfolio';
 import { MenuIcon } from './ui/Icons';
 import Magnetic from './ui/Magnetic';
 
@@ -43,9 +44,9 @@ export default function Navigation(): JSX.Element {
     };
   }, [reduceMotion]);
 
-  const scrollTo = (targetId: `#${string}`): void => {
-    const target = document.querySelector(targetId);
-    if (!(target instanceof HTMLElement)) return;
+  const scrollTo = (sectionId: SectionId): void => {
+    const target = document.getElementById(sectionId);
+    if (!target) return;
     target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     setMenuOpen(false);
   };
@@ -72,11 +73,11 @@ export default function Navigation(): JSX.Element {
 
         <ul className='hidden sm:flex items-center gap-1'>
           {NAVIGATION_ITEMS.map((item) => (
-            <li key={item.targetId}>
+            <li key={item.target}>
               <Magnetic>
                 <button
                   type='button'
-                  onClick={() => scrollTo(item.targetId)}
+                  onClick={() => scrollTo(item.target)}
                   className='pressable px-3 py-2 text-sm uppercase rounded-md'
                 >
                   {item.label}
@@ -92,12 +93,12 @@ export default function Navigation(): JSX.Element {
           aria-hidden={!menuOpen}
         >
           {NAVIGATION_ITEMS.map((item) => (
-            <li key={item.targetId}>
+            <li key={item.target}>
               <button
                 type='button'
                 tabIndex={menuOpen ? 0 : -1}
                 className='pressable block w-full rounded-lg px-4 py-3 text-left'
-                onClick={() => scrollTo(item.targetId)}
+                onClick={() => scrollTo(item.target)}
               >
                 {item.label}
               </button>

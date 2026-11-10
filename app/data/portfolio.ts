@@ -3,13 +3,21 @@ import type {
   Book,
   NavigationItem,
   PortfolioProject,
+  SectionId,
   TechLogo,
 } from '@/app/types/portfolio';
 
+/** Section ids, so the components that render a section and the links that target it agree. */
+export const SECTION_IDS = {
+  work: 'work',
+  about: 'about',
+  contact: 'contact',
+} as const satisfies Record<SectionId, SectionId>;
+
 export const NAVIGATION_ITEMS: readonly NavigationItem[] = [
-  { label: 'Work', targetId: '#Work' },
-  { label: 'About', targetId: '#About' },
-  { label: 'Contact', targetId: '#Contact' },
+  { label: 'Work', target: SECTION_IDS.work },
+  { label: 'About', target: SECTION_IDS.about },
+  { label: 'Contact', target: SECTION_IDS.contact },
 ];
 
 export const PROJECTS: readonly PortfolioProject[] = [
@@ -122,7 +130,7 @@ export const ABOUT: AboutContent = {
       answer: 'More of the same loop: read widely, prototype early, keep refining.',
     },
   ],
-  cta: { label: 'Start a conversation', href: '#Contact' },
+  cta: { label: 'Start a conversation', target: SECTION_IDS.contact },
 };
 
 const DEVICON = 'https://raw.githubusercontent.com/devicons/devicon/master/icons';
