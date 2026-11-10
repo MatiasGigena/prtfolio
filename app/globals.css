@@ -331,19 +331,9 @@ body {
   animation: spin 800ms linear infinite;
 }
 
-.scroll-cue {
-  animation: scroll-cue 1.4s var(--ease-in-out) infinite alternate;
-}
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes scroll-cue {
-  to {
-    transform: translate3d(0, 0.75rem, 0);
   }
 }
 
@@ -410,8 +400,7 @@ body {
     scroll-behavior: auto;
   }
 
-  .preloader-icon,
-  .scroll-cue {
+  .preloader-icon {
     animation: none;
   }
 

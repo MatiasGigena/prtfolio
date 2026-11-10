@@ -44,13 +44,6 @@ export interface SkillPlane {
   readonly logos: readonly SkillLogo[];
 }
 
-export interface EmphasizedText {
-  readonly emphasis: string;
-}
-
-export type RichTextSegment = string | EmphasizedText;
-export type RichPhrase = readonly RichTextSegment[];
-
 export interface NavigationItem {
   readonly label: string;
   readonly targetId: `#${string}`;
