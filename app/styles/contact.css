@@ -1,0 +1,20 @@
+.contact-field {
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.contact-submit {
+  transition:
+    transform 140ms var(--ease-out),
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-submit:hover {
+    color: #fff;
+    background: #000;
+  }
+}

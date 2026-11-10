@@ -1,0 +1,30 @@
+.project-link h3,
+.project-link p {
+  transition:
+    transform 180ms var(--ease-out),
+    opacity 180ms ease;
+}
+
+.preview-track {
+  transition: transform 220ms var(--ease-in-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-link:hover h3 {
+    opacity: 0.7;
+    transform: translate3d(0, -0.5rem, 0);
+  }
+
+  .project-link:hover p {
+    opacity: 0.7;
+    transform: translate3d(0, 0.5rem, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-track,
+  .project-link h3,
+  .project-link p {
+    transition-duration: 1ms;
+  }
+}
