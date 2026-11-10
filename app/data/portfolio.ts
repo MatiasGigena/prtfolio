@@ -160,7 +160,7 @@ const VECTOR_LOGO_ZONE = 'https://www.vectorlogo.zone/logos';
 export const TECH_LOGOS = {
   aws: {
     name: 'AWS',
-    src: `${DEVICON}/amazonwebservices/amazonwebservices-original-wordmark.svg`,
+    src: `${DEVICON}/amazonwebservices/amazonwebservices-original.svg`,
     dark: true,
   },
   css: { name: 'CSS', src: `${VECTOR_LOGO_ZONE}/w3_css/w3_css-icon.svg` },
